@@ -81,6 +81,12 @@
     <ClInclude Include="sceneobjects\genericobject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="win\input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="builtresources\color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winmain.cpp">
@@ -120,6 +126,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sceneobjects\genericobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="win\input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="builtresources\color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

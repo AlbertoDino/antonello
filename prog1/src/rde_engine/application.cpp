@@ -94,6 +94,8 @@ LOAD
 
 void Application::loadRenderingContexts()
 {
+	colors::InitColors();
+
 	rex::FlatShader flShader;
 	if (flShader.init())
 	{
@@ -101,22 +103,37 @@ void Application::loadRenderingContexts()
 		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::ShaderFlatCtx);
 		layout->shader.init(flShader.programId);
 		renderingLayouts.push_back(layout);
+		tracelog(format("shader: FlatShader [%i] added.", flShader.programId));
 	}
 	else {
 		tracelog("Error loading flat shader");
-	}
-
+	}	
+	//---------------------------------------------------
 	rex::LightShader lgShader;
 	if (lgShader.init())
 	{
-		// Add Rendering Layout
 		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::LightShaderCtx);
 		layout->shader.init(lgShader.programId);
 		renderingLayouts.push_back(layout);
+		tracelog(format("shader: LightShader [%i] added.", lgShader.programId));
 	}
 	else {
 		tracelog("Error loading LightShader");
+	}	
+	//---------------------------------------------------
+	rex::Light_temp_2 lgTemp2;
+	if (lgTemp2.init())
+	{
+		// Add Rendering Layout
+		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::Light_temp_2);
+		layout->shader.init(lgTemp2.programId);
+		renderingLayouts.push_back(layout);
+		tracelog(format("shader: Light_temp_2 [%i] added.", lgTemp2.programId));
 	}
+	else {
+		tracelog("Error loading Light_temp_2");
+	}
+	//---------------------------------------------------
 	renderingLayouts.push_back(new render::UIContext(api::eRenderingContext::UICxt));
 
 }

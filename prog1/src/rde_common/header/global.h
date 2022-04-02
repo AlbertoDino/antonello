@@ -50,9 +50,10 @@
 #define ALPHA				1.0f
 #define DEGREES_TO_RADIANT	0.0174532924f//3.14159265359f/180.0f
 #define RADIANT_TO_DEGREE	57.295779513078550f//180.0f/3.14159265359.0f
-#define f_EPSILON						1e-6f//0.0001
-#define EPSILON					0.001f
-#define HALF_PI							1.57079632679f
+#define f_EPSILON			1e-6f//0.0001
+#define EPSILON				0.001f
+#define HALF_PI				1.57079632679f
+#define FROM255TO1			0.003921569f
 
 //+++++++++++++++++++++++++++++++++++++
 // SOLUTION SETTINGS

@@ -8,6 +8,7 @@ namespace api {
 		UICxt,
 		ShaderFlatCtx,
 		LightShaderCtx,
+		Light_temp_2
 
 	};
 

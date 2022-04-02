@@ -25,25 +25,27 @@ Demo::~Demo()
 void Demo::init(oglElements::WinObj* gWininstance)
 {
 	window = gWininstance;
-
+	
 	render::UIContext* uiCtx = (render::UIContext*)api::getRenderingContext(api::eRenderingContext::UICxt);
 	ui.dialogName = "stats";
 	ui.textList.push_back("<place_holder>");
 	ui.textList.push_back("<place_holder>");
 	ui.textList.push_back("<place_holder>");
+	ui.textList.push_back("<place_holder>");
 	ui.textList.push_back("press v : reset camera");
-	uiCtx->render(&ui);
-
+	
 	uiFileBrowser = std::make_unique<sceneobjs::UiFileBrowser>();
 	uiFileBrowser->set_mesh_load_callback(
 		[this](std::string filepath) { addObjectFromFile(filepath); });
 	ui.uiComponents.push_back(uiFileBrowser.get());
 
+	uiCtx->render(&ui);
+	
 	oglElements::CameraScene* cameraNode = cameraAgent->getCameraScene();
 	cameraNode->setDebugName("camera");
 	cameraAgent->setOrigin(CVector3f(0, 0, 0));
 	cameraAgent->setSpeed(150);
-	cameraAgent->setSpeedRotation(20);
+	cameraAgent->setSpeedRotation(10);
 
 	// Create Grid
 	oglElements::ArrayMesh gridCreate;
@@ -57,12 +59,11 @@ void Demo::init(oglElements::WinObj* gWininstance)
 	}
 
 	gridCreate.create((oglElements::DrawArrayObject*)grid1->pRender);
-	grid1->color[0] = 0.3F;
-	grid1->color[1] = 0.17F;
-	grid1->color[2] = 0.6F;
+	vSet(grid1->color, colors::Green);
 	grid1->add2scene();
 
-	light->position.Set(-150, 80, 3);
+	light->color.Set(colors::Yellow[0], colors::Yellow[1], colors::Yellow[2]);
+	light->direction.Set(-150, 80, 3);
 	light->add2scene();
 	
 	gApp->getRoot().addChild(cameraNode);
@@ -94,26 +95,26 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 
 	// Keyboard
 	bool8 isActive;
-	isActive = (key == GLFW_KEY_W && (action == GLFW_PRESS || action == GLFW_REPEAT));
+	isActive = (key == GLFW_KEY_UP && (action == GLFW_PRESS || action == GLFW_REPEAT));
 	moveforward.Set(
 		vDirection[0] * isActive,
 		vDirection[1] * isActive,
 		vDirection[2] * isActive);
 
-	isActive = (key == GLFW_KEY_S && (action == GLFW_PRESS || action == GLFW_REPEAT));
+	isActive = (key == GLFW_KEY_DOWN && (action == GLFW_PRESS || action == GLFW_REPEAT));
 	movebackwards.Set(
 		-vDirection[0] * isActive,
 		-vDirection[1] * isActive,
 		-vDirection[2] * isActive);
 
-	isActive = (key == GLFW_KEY_A && (action == GLFW_PRESS || action == GLFW_REPEAT));
+	isActive = (key == GLFW_KEY_LEFT && (action == GLFW_PRESS || action == GLFW_REPEAT));
 	moveLeft.Cross(World::World_Y_Axis, vDirection);
 	moveLeft.Set(
 		moveLeft[0] * isActive,
 		moveLeft[1] * isActive,
 		moveLeft[2] * isActive);
 
-	isActive = (key == GLFW_KEY_D && (action == GLFW_PRESS || action == GLFW_REPEAT));
+	isActive = (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS || action == GLFW_REPEAT));
 	moveRight.Cross(World::World_Y_Axis, vDirection);
 	moveRight.Set(
 		-moveRight[0] * isActive,
@@ -128,6 +129,16 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 	if (key == GLFW_KEY_V && action == GLFW_PRESS)
 	{
 		cameraAgent->reset();
+	}
+
+	if (key == GLFW_KEY_A && action == GLFW_PRESS)
+	{
+		cameraAgent->turn90();
+	}
+
+	if (key == GLFW_KEY_D && action == GLFW_PRESS)
+	{
+		cameraAgent->turnless90();
 	}
 }
 
@@ -166,10 +177,12 @@ void Demo::updateUIScene()
 {
 	auto const pos = cameraAgent->getPosition();
 	auto const dir = cameraAgent->getDirection();
+	auto const rot = cameraAgent->getRotation();
 
 	ui.textList.at(0) = format("Fps %2i ", gApp->stats.fps);
 	ui.textList.at(1) = format("Camera Pos [%2.2f,%2.2f,%2.2f]", pos[0], pos[1], pos[2]);
 	ui.textList.at(2) = format("Camera Dir [%2.2f,%2.2f,%2.2f]", dir[0], dir[1], dir[2]);
+	ui.textList.at(3) = format("Camera Rot [%2.2f,%2.2f,%2.2f]", rot[0], rot[1], rot[2]);
 
 }
 
@@ -183,7 +196,7 @@ void Demo::addObjectFromFile(std::string filepath)
 
 
 	sceneobjs::GenericObject* obj = new sceneobjs::GenericObject();
-
+	vSet(obj->color, colors::Red);
 	obj->position.Set(30 * objects.size(), 2, 20 * objects.size());
 	mesh.create((oglElements::DrawElementObject*)obj->pRender);
 
@@ -192,8 +205,24 @@ void Demo::addObjectFromFile(std::string filepath)
 	objects.push_back(obj);
 }
 
+void Demo::handleInput()
+{
+
+}
+
+float32 rotationActive = 1.0f;
+
 void Demo::loop(float32 elapse)
 {
+
+	win::eMouseButton mouseButton= win::getMousePressedButton(window);
+
+	if (mouseButton == win::eMouseButton::Right)
+	{
+		rotationActive = func::IsEqual(rotationActive, 0.0) ? 1.0f : 0.0f;
+	}
+	inputRotation *= rotationActive;
+
 	cameraAgent->setProjection(window->width, window->height, CAMERA_FOVX, CAMERA_ZNEAR, CAMERA_ZFAR);
 	cameraAgent->move(inputMovement, elapse);
 	cameraAgent->rotateCamera(inputRotation, elapse);
@@ -202,7 +231,8 @@ void Demo::loop(float32 elapse)
 	for (auto* obj : objects) {
 		obj->updateViewMatrix();
 	}
-	light->updateViewMatrix();
+	
+	//light->updateViewMatrix();
 
 	updateUIScene();
 

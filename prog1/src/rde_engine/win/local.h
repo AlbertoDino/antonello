@@ -4,3 +4,4 @@
 #include "window.h"
 #include "stopwatch.h"
 #include "gamestats.h"
+#include "input.h"

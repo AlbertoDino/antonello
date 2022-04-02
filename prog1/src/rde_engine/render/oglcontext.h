@@ -1,4 +1,5 @@
 #pragma once
+#include <rde_common/lib.h>
 
 namespace render {
 

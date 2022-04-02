@@ -11,6 +11,8 @@ namespace oglElements {
 
 	void UniformLocation_M3f(const void* v, const int32 count, int32 index, int32 location, bool8 transpose) {
 		glUniformMatrix3fv(location, count, transpose, (const float32*)v);
+
+		const Matrix3f32* d = (const Matrix3f32*)v;
 	}
 
 	void UniformLocation_V4f(const void* v, const int32 count, int32 index, int32 location, bool8 transpose) {
@@ -21,18 +23,26 @@ namespace oglElements {
 
 	void UniformLocation_V3f(const void* v, const int32 count, int32 index, int32 location, bool8 transpose) {
 		glUniform3fv(location, count, (const float32*)v);
+
+		const Vector3f* d = (const Vector3f*)v;
 	}
 
 	void UniformLocation_V2f(const void* v, const int32 count, int32 index, int32 location, bool8 transpose) {
 		glUniform2fv(location, count, (const float32*)v);
+
+		const Vector2f* d = (const Vector2f*)v;
 	}
 
 	void UniformLocation_V1f(const void* v, const int32 count, int32 index, int32 location, bool8 transpose) {
 		glUniform1fv(location, count, (const float32*)v);
+
+		const float32* d = (const float32*)v;
 	}
 
 	void UniformLocation_V1i(const void* v, const int32 count, int32 index, int32 location, bool8 transpose) {
 		glUniform1iv(location, count, (const int32*)v);
+
+		const int32* d = (const int32*)v;
 	}
 
 	/**/

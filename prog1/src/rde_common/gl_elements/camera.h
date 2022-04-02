@@ -32,6 +32,8 @@ namespace oglElements {
 		void	updateViewMatrix();
 		void	setProjection(int32 screenWidth, int32 screenHeight, float32 fovx, float32 znear, float32 zfar);
 		void	reset();
+		void	turn90();
+		void	turnless90();
 		
 		CameraScene* getCameraScene();
 

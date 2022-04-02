@@ -40,4 +40,13 @@ namespace rex {
 		return programId != 0;
 	}
 
+	//Light_temp_2
+
+	bool8 Light_temp_2::init()
+	{
+		oglElements::Shader shader;
+		shader.loadFromFile("assets/shaders/lighting.vs", "assets/shaders/lighting.fs");
+		programId = shader.get_program_id();
+		return programId != 0;
+	}
 }

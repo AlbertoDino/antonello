@@ -34,8 +34,8 @@ INLINE_ void Win_Run(int nShowCmd)
 	MSG msg;
 	GAME* game = new GAME();
 
-	gApp->gWinHandler.width = 800;
-	gApp->gWinHandler.height = 600;
+	gApp->gWinHandler.width = 1600;
+	gApp->gWinHandler.height = 1024;
 	gApp->gWinHandler.title = "Demo";
 	gApp->gWinHandler.user_pointer = game;
 	gApp->init();

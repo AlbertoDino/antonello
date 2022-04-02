@@ -9,10 +9,12 @@ namespace sceneobjs {
 		~Light();
 
 		void add2scene();
-		void updateViewMatrix();
 
-		func::CVector3f position;
-		func::CVector3f color;
-		float Strength;
+		func::CVector3f direction;
+		CVector3f color;
+		float32 ambientIntensity;
+		float32 diffuseIntensity;
+	private:
+		oglElements::ShaderContext* set_shader_temp2();
 	};
 }

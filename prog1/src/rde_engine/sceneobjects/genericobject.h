@@ -18,5 +18,7 @@ namespace sceneobjs {
 	private:
 		func::Quaternion orientation;
 
+		oglElements::ShaderContext* set_shader_1();
+		oglElements::ShaderContext* set_shader_2();
 	};
 }

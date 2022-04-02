@@ -20,18 +20,35 @@ namespace sceneobjs {
 	}
 
 	void GenericObject::add2scene()
-	{
-		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::LightShaderCtx);
-		shaderValues = rendering->shader;
+	{		
+		//auto rendering = set_shader_1();
+		auto rendering = set_shader_2();
+		
+		rendering->add2Context(this);
+	}
 
+	oglElements::ShaderContext* GenericObject::set_shader_1() {
+		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::LightShaderCtx);
+
+		shaderValues = rendering->shader;
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_M4f, "mvpMatrix", &pSceneNode->worldmvp.data);
+		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_M4f, "viewMatrix", &pSceneNode->worldview.data);
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V4f, "color", &color);
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "albedo", &color);
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1f, "metallic", &metallic);
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1f, "roughness", &roughness);
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1f, "ao", &ao);
+		return rendering;
+	}
 
-		rendering->add2Context(this);
+	oglElements::ShaderContext* GenericObject::set_shader_2() {
+		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::Light_temp_2);
+
+		shaderValues = rendering->shader;
+		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_M4f, "mvpMatrix", &pSceneNode->worldmvp.data);
+		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_M4f, "viewMatrix", &pSceneNode->view.data);
+		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "objColor", &color);
+		return rendering;
 	}
 
 	void GenericObject::updateViewMatrix()

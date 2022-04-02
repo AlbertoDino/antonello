@@ -7,9 +7,11 @@ namespace sceneobjs {
 
 	Light::Light()
 	{
-		color.Set(500.0f, 500.0f, 500.0f);
-		position.Set( 1.5f, 3.5f, 3.0f );
-		Strength = 100.0f;
+		color.Set(1.0f, 1.0f, 1.0f);
+		direction.Set( 1.f, 0.0f, 0.0f );
+		ambientIntensity = 0.4f;
+		diffuseIntensity = 0.3f;
+
 	}
 
 	Light::~Light()
@@ -18,17 +20,24 @@ namespace sceneobjs {
 
 	void Light::add2scene()
 	{
-		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::LightShaderCtx);
-		shaderValues = rendering->shader;
-		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "lightPosition", &position);
-		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "lightColor", &color);
+		auto rendering = set_shader_temp2();
+
 
 		rendering->add2Context(this);
 	}
 
-	void Light::updateViewMatrix()
+	oglElements::ShaderContext* Light::set_shader_temp2()
 	{
-		pSceneNode->view.Translate(position.data);
+		direction.Normalize();
+			
+		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::Light_temp_2);
+		shaderValues = rendering->shader;
+		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "gDirectionalLight.Color", &color.data);
+		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "gDirectionalLight.Direction", &direction.data);
+		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1f, "gDirectionalLight.AmbientIntensity", &ambientIntensity);
+		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1f, "gDirectionalLight.DiffuseIntensity", &diffuseIntensity);
+		return rendering;
 	}
+
 
 }

@@ -108,6 +108,9 @@ namespace func {
 		return (fabs(val1 - val2) < fEpsilon);
 	}
 
+	float32 Color255To1(float32 x) { return  (float32)(x * FROM255TO1); }
+	float32 Color1To255(float32 x) { return  (float32)(x / FROM255TO1); }
+
 	void Zero(Vector3f& v)
 	{
 		v[0] = 0; v[1] = 0; v[2] = 0;
@@ -143,6 +146,17 @@ namespace func {
 		v[1] = y;
 		v[2] = z;
 		v[3] = w;
+	}
+
+	void vSet(Vector3f& v, const Vector3f& b)
+	{
+		v[0] = b[0]; v[1] = b[1]; v[2] = b[2];
+	}
+
+
+	void  vSet(Vector4f& v, const Vector4f& b)
+	{
+		v[0] = b[0]; v[1] = b[1]; v[2] = b[2]; v[3] = b[3];
 	}
 
 #define A33(row,col)  m[(col*3)+row]

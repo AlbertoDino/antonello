@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="builtresources\builtshaders.h" />
+    <ClInclude Include="builtresources\color.h" />
     <ClInclude Include="builtresources\local.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="header\api.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="console.h" />
     <ClInclude Include="lib.h" />
     <ClInclude Include="sceneobjects\uifilebrowser.h" />
+    <ClInclude Include="win\input.h" />
     <ClInclude Include="win\local.h" />
     <ClInclude Include="win\gamestats.h" />
     <ClInclude Include="win\stopwatch.h" />
@@ -176,6 +178,7 @@
   <ItemGroup>
     <ClCompile Include="builtresources\builtshaders.cpp" />
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="builtresources\color.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="render\oglcontext.cpp" />
     <ClCompile Include="render\uicontext.cpp" />
@@ -184,6 +187,7 @@
     <ClCompile Include="sceneobjects\grid.cpp" />
     <ClCompile Include="sceneobjects\light.cpp" />
     <ClCompile Include="sceneobjects\uifilebrowser.cpp" />
+    <ClCompile Include="win\input.cpp" />
     <ClCompile Include="win\stopwatch.cpp" />
     <ClCompile Include="win\window.cpp" />
     <ClCompile Include="winmain.cpp" />

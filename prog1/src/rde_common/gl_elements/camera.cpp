@@ -112,6 +112,20 @@ namespace oglElements {
 		position.Set(0);
 	}
 
+	void Camera::turn90()
+	{
+		Quaternion rot;
+		rot.FromAxisAngle(World::World_Y_Axis, 90);
+		quaternion = rot; 
+	}
+
+	void Camera::turnless90()
+	{
+		Quaternion rot;
+		rot.FromAxisAngle(World::World_Y_Axis, -90);
+		quaternion = rot;
+	}
+
 	void Camera::updateFrustum()
 	{
 		frustum->calculateFrom(cameraNode->worldview, cameraNode->worldprojection);

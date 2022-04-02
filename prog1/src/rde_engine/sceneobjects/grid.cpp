@@ -7,7 +7,7 @@ namespace sceneobjs {
 
 	Grid::Grid()
 	{
-		func::vSet(color, 1.0f, 0.0f, 0.0f, 1.0f);
+		func::vSet(color, 1.0f, 0.0f, 1.0f, 1.0f);
 		pRender = new oglElements::DrawArrayObject();
 		pSceneNode->setDebugName("Grid");
 	}
