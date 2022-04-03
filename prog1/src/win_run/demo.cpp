@@ -5,7 +5,10 @@
 
 using namespace func;
 
-Demo::Demo() : running{ true }
+Demo::Demo() : 
+	running{ true },
+	currentModelSelected(0)
+
 {
 
 	cameraAgent = std::make_unique<oglElements::Camera>();
@@ -33,14 +36,20 @@ void Demo::init(oglElements::WinObj* gWininstance)
 	ui.textList.push_back("<place_holder>");
 	ui.textList.push_back("<place_holder>");
 	ui.textList.push_back("press v : reset camera");
+	ui.textList.push_back("press A : turn campera 90 dg");
+	ui.textList.push_back("press D : turn campera -90 dg");
 	
-	uiFileBrowser = std::make_unique<sceneobjs::UiFileBrowser>();
-	uiFileBrowser->set_mesh_load_callback(
-		[this](std::string filepath) { addObjectFromFile(filepath); });
-	ui.uiComponents.push_back(uiFileBrowser.get());
+	uiModelProperties = std::make_unique<sceneobjs::UiModelProperties>();
+	uiModelProperties->set_mesh_load_callback([this](std::string filepath) { addObjectFromFile(filepath); });
+	uiModelProperties->set_model_selected_callback([this](uint32 id) { onModelSelected(id); });
+	ui.uiComponents.push_back(uiModelProperties.get());	
+
+	uiLightProperties = std::make_unique<sceneobjs::UILightProperties>();
+	uiLightProperties->setLight(light.get());
+	ui.uiComponents.push_back(uiLightProperties.get());
 
 	uiCtx->render(&ui);
-	
+
 	oglElements::CameraScene* cameraNode = cameraAgent->getCameraScene();
 	cameraNode->setDebugName("camera");
 	cameraAgent->setOrigin(CVector3f(0, 0, 0));
@@ -73,8 +82,6 @@ void Demo::init(oglElements::WinObj* gWininstance)
 	sceneNode->addChild(grid1->pSceneNode);
 	sceneNode->addChild(light->pSceneNode);
 
-
-	
 }
 
 bool8 Demo::isRunning() const
@@ -184,6 +191,8 @@ void Demo::updateUIScene()
 	ui.textList.at(2) = format("Camera Dir [%2.2f,%2.2f,%2.2f]", dir[0], dir[1], dir[2]);
 	ui.textList.at(3) = format("Camera Rot [%2.2f,%2.2f,%2.2f]", rot[0], rot[1], rot[2]);
 
+	uiModelProperties->setModelList(models);
+
 }
 
 void Demo::addObjectFromFile(std::string filepath)
@@ -194,15 +203,29 @@ void Demo::addObjectFromFile(std::string filepath)
 		return;
 	}
 
-
-	sceneobjs::GenericObject* obj = new sceneobjs::GenericObject();
+	sceneobjs::Model* obj = new sceneobjs::Model();
 	vSet(obj->color, colors::Red);
-	obj->position.Set(30 * objects.size(), 2, 20 * objects.size());
+	obj->name = filepath.substr(filepath.find_last_of("/\\") + 1);
+	obj->position.Set(10 * models.size(), 2, 5 * models.size());
 	mesh.create((oglElements::DrawElementObject*)obj->pRender);
 
 	sceneNode->addChild(obj->pSceneNode);
 	obj->add2scene();
-	objects.push_back(obj);
+	models.push_back(obj);
+
+	tracelog(format("Model [%s] loaded with id [%i]", obj->name.c_str(), obj->id));
+		
+}
+
+void Demo::onModelSelected(uint32 id)
+{
+	currentModelSelected = 0;
+	for (auto model : models) {
+		if (model->id == id) {
+			currentModelSelected = model;
+			tracelog(format("Model [%s] [%i] has been selected", currentModelSelected->name.c_str(),currentModelSelected->id));
+		}
+	}
 }
 
 void Demo::handleInput()
@@ -228,11 +251,11 @@ void Demo::loop(float32 elapse)
 	cameraAgent->rotateCamera(inputRotation, elapse);
 	cameraAgent->updateViewMatrix();
 
-	for (auto* obj : objects) {
+	for (auto* obj : models) {
 		obj->updateViewMatrix();
 	}
 	
-	//light->updateViewMatrix();
+	light->update(cameraAgent->getPosition());
 
 	updateUIScene();
 

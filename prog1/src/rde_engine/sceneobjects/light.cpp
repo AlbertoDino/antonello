@@ -18,6 +18,11 @@ namespace sceneobjs {
 	{
 	}
 
+	void Light::update(const CVector3f& _cameraPos)
+	{
+		cameraPos = _cameraPos;
+	}
+
 	void Light::add2scene()
 	{
 		auto rendering = set_shader_temp2();
@@ -36,6 +41,7 @@ namespace sceneobjs {
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "gDirectionalLight.Direction", &direction.data);
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1f, "gDirectionalLight.AmbientIntensity", &ambientIntensity);
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1f, "gDirectionalLight.DiffuseIntensity", &diffuseIntensity);
+		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "camPos", &cameraPos.data);
 		return rendering;
 	}
 

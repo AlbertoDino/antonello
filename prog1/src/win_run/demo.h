@@ -22,6 +22,8 @@ public:
 
 	void addObjectFromFile(std::string filepath);
 
+	void onModelSelected(uint32 id);
+
 	void loop(float32 elapse);
 
 private:
@@ -36,9 +38,12 @@ private:
 	std::unique_ptr<sceneobjs::Grid> grid1;
 	std::unique_ptr<sceneobjs::Light> light;
 	std::unique_ptr<oglElements::Camera> cameraAgent;
-	std::unique_ptr<sceneobjs::UiFileBrowser> uiFileBrowser;
-	std::vector<sceneobjs::GenericObject*> objects;
+	std::unique_ptr<sceneobjs::UiModelProperties> uiModelProperties;
+	std::unique_ptr<sceneobjs::UILightProperties> uiLightProperties;
+	std::vector<sceneobjs::Model*> models;
+
 	bool8 running;
+	sceneobjs::Model* currentModelSelected;
 	
 	render::UIScene ui;
 };

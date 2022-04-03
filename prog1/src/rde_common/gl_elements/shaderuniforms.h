@@ -20,7 +20,7 @@ namespace oglElements {
 		int32					location;
 		int32					count;
 		bool8					transpose;
-
+		std::string				__debugName;
 		ShaderValueInput();
 		~ShaderValueInput();
 

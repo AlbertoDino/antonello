@@ -102,6 +102,7 @@ namespace oglElements {
 		unif.uniformFunc = f;
 		unif.count = 1;
 		unif.value = value;
+		unif.__debugName = uniformName;
 	
 		if (unif.location < 0) {
 			tracelog(format("Uniform [%s] not valid", uniformName));

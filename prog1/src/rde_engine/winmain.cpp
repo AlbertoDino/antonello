@@ -19,6 +19,7 @@ void throwError(std::string msg) {
 std::string	format(const char8* fmt, ...)
 {
 	static char8 text[TEXT_FORMAT_MAX_SIZE];
+	memset(text, 0, sizeof(char8) * TEXT_FORMAT_MAX_SIZE);
 	va_list ap;
 	va_start(ap, fmt);                              // Parses The String For Variables
 	vsprintf(text, fmt, ap);                    // And Converts Symbols To Actual Numbers

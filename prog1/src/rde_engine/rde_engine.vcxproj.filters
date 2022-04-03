@@ -72,19 +72,25 @@
     <ClInclude Include="win\gamestats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sceneobjects\uifilebrowser.h">
+    <ClInclude Include="sceneobjects\uimodelproperties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sceneobjects\light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sceneobjects\genericobject.h">
+    <ClInclude Include="sceneobjects\model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="win\input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="builtresources\color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneobjects\uilightproperties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneobjects\globalobjects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -119,19 +125,22 @@
     <ClCompile Include="win\stopwatch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sceneobjects\uifilebrowser.cpp">
+    <ClCompile Include="sceneobjects\uimodelproperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sceneobjects\light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sceneobjects\genericobject.cpp">
+    <ClCompile Include="sceneobjects\model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="win\input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="builtresources\color.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneobjects\uilightproperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
