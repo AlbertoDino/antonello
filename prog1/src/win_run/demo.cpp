@@ -71,7 +71,7 @@ void Demo::init(oglElements::WinObj* gWininstance)
 	vSet(grid1->color, colors::Green);
 	grid1->add2scene();
 
-	light->color.Set(colors::Yellow[0], colors::Yellow[1], colors::Yellow[2]);
+	light->color.Set(colors::White[0], colors::White[1], colors::White[2]);
 	light->direction.Set(-150, 80, 3);
 	light->add2scene();
 	
@@ -207,7 +207,7 @@ void Demo::addObjectFromFile(std::string filepath)
 	vSet(obj->color, colors::Red);
 	obj->name = filepath.substr(filepath.find_last_of("/\\") + 1);
 	obj->position.Set(10 * models.size(), 2, 5 * models.size());
-	mesh.create((oglElements::DrawElementObject*)obj->pRender);
+	mesh.create((oglElements::DrawElementTextured*)obj->pRender);
 
 	sceneNode->addChild(obj->pSceneNode);
 	obj->add2scene();

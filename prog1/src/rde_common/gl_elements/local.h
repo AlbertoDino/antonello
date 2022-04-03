@@ -16,3 +16,4 @@
 #include "irenderingctx.h"
 #include "shadercontext.h"
 #include "iuicomponent.h"
+#include "texture.h"

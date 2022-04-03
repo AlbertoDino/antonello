@@ -79,5 +79,9 @@ namespace api {
 		}
 		return 0;
 	}
+
+	const oglElements::gl_to& getDefaultTexture() {
+		return gApp->textures.at(0);
+	}
 }
 

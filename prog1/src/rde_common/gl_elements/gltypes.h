@@ -8,9 +8,10 @@ namespace oglElements {
 		gl_vertexObject() : VBO{ 0 }, VAO{ 0 }, IBO{ 0 }, count{0}, drawMode{ GL_TRIANGLES }{}
 		GLsizei count;
 		GLsizei drawMode;
-		GLuint VBO;
-		GLuint VAO;
-		GLuint IBO;
+		GLuint VAO;  // Vertex Array Object
+		GLuint VBO;  // Vertex Buffer Object		
+		GLuint IBO;	 // Index Buffer Object
+		//GLuint UVO;  // UV Coortdinate Object
 	};
 
 	class gl_facts

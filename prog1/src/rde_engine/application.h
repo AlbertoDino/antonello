@@ -11,6 +11,7 @@ public:
 	win::StopWatch		timer;
 	oglElements::WinObj gWinHandler;
 
+	std::vector<oglElements::gl_to> textures;
 	std::vector<oglElements::IRenderingCtx*> renderingLayouts;
 
 	void init();
@@ -22,14 +23,15 @@ public:
 	void calculateStats(float32 elapse);
 
 	static void TransformSceneTree(oglElements::SceneUnitNode* node);
-	
+
 	oglElements::SceneUnitNode& getRoot();
 
 private:
 	std::unique_ptr<render::OglContext> renderCtx;
 	oglElements::SceneUnitNode			sceneRoot;
 
-	
+
 	void loadRenderingContexts();
+	void loadTextures();
 };
 

@@ -21,7 +21,7 @@ namespace oglElements {
             aiProcess_CalcTangentSpace |
             aiProcess_Triangulate |
             aiProcess_SortByPType |
-            aiProcess_GenNormals |
+            aiProcess_GenSmoothNormals |
             aiProcess_GenUVCoords |
             aiProcess_OptimizeMeshes |
             aiProcess_ValidateDataStructure;
@@ -43,6 +43,10 @@ namespace oglElements {
                 Vertex vh;
                 vh.Pos = { mesh->mVertices[i].x, mesh->mVertices[i].y ,mesh->mVertices[i].z };
                 vh.Normal = { mesh->mNormals[i].x, mesh->mNormals[i].y ,mesh->mNormals[i].z };
+                if (mesh->HasTextureCoords(0)) {
+                    aiVector3D uv = mesh->mTextureCoords[0][i];
+                    vh.UV = { uv.x,uv.y };
+                }
 
                 add_vertex(vh);
             }
@@ -80,6 +84,9 @@ namespace oglElements {
         vertexBuffer.create_buffers(&pElement->vertexObject, GL_TRIANGLES, Vertices, VertexIndices);
     }
 
-
+    void Mesh::create(DrawElementTextured* pElement)
+    {
+        vertexBuffer.create_buffers(&pElement->vertexObject, GL_TRIANGLES, Vertices, VertexIndices);
+    }
 
 }

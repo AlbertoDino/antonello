@@ -11,10 +11,12 @@ namespace sceneobjs {
 		position(func::CVector3f{0,0,0})		
 		, specularPower (16.0f)
 		, specularIntensity (1.0f)
+		, textureUnit(0)
 	{
 		id = Model::getNextId();
-		func::vSet(color, 1.0, 0.2, 0.8,1.0);
-		pRender = new oglElements::DrawElementObject();
+		func::vSet(color, 1.0, 1.0, 1.0,1.0);
+
+		pRender = new oglElements::DrawElementTextured(api::getDefaultTexture());
 	}
 
 	Model::~Model()
@@ -46,6 +48,7 @@ namespace sceneobjs {
 		shaderValues = rendering->shader;
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_M4f, "mvpMatrix", &pSceneNode->worldmvp.data);
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_M4f, "viewMatrix", &pSceneNode->view.data);
+		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1i, "sampler", &textureUnit);
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "objColor", &color);
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1f, "objSpecularIntensity", &specularIntensity);
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1f, "objSpecularPower", &specularPower);

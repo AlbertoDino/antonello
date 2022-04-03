@@ -20,6 +20,7 @@ void Application::init()
 	renderCtx->init(&gWinHandler);
 	
 	loadRenderingContexts();
+	loadTextures();
 
 	for (auto const& renderingCtx : renderingLayouts) {
 		renderingCtx->init(&gWinHandler);
@@ -136,6 +137,16 @@ void Application::loadRenderingContexts()
 	//---------------------------------------------------
 	renderingLayouts.push_back(new render::UIContext(api::eRenderingContext::UICxt));
 
+}
+
+void Application::loadTextures()
+{
+	oglElements::Texture texture;
+
+	oglElements::gl_to textObj;
+	texture.createByFilename(textObj, GL_TEXTURE_2D, "assets/textures/default.jpg");
+
+	textures.push_back(textObj);
 }
 
 

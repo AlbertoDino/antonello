@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\plugins\imgui\ImFileBrowser.h" />
+    <ClInclude Include="include\stb\stb_image.h" />
     <ClInclude Include="lib.h" />
   </ItemGroup>
   <ItemGroup>

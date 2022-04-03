@@ -15,5 +15,5 @@ namespace api {
 
 	EXTERN_	oglElements::IRenderingCtx* getRenderingContext(eRenderingContext rndCtxId);
 
-
+	EXTERN_ const oglElements::gl_to& getDefaultTexture();
 }

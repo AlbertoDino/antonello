@@ -151,6 +151,7 @@
     <ClInclude Include="gl_elements\irenderingctx.h" />
     <ClInclude Include="gl_elements\iuicomponent.h" />
     <ClInclude Include="gl_elements\renderingelement.h" />
+    <ClInclude Include="gl_elements\texture.h" />
     <ClInclude Include="header\externals.h" />
     <ClInclude Include="math\matrix.h" />
     <ClInclude Include="gl_elements\perspective.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="gl_elements\frustum.cpp" />
     <ClCompile Include="gl_elements\irenderingctx.cpp" />
     <ClCompile Include="gl_elements\renderingelement.cpp" />
+    <ClCompile Include="gl_elements\texture.cpp" />
     <ClCompile Include="math\matrix.cpp" />
     <ClCompile Include="gl_elements\perspective.cpp" />
     <ClCompile Include="math\quaternion.cpp" />

@@ -17,6 +17,7 @@ namespace sceneobjs {
 		float32			specularIntensity;
 		std::string		name;
 		uint32			id;
+		int32			textureUnit;
 	private:
 		func::Quaternion orientation;
 		oglElements::ShaderContext* set_shader_1();

@@ -1,7 +1,9 @@
 #version 330
 
-in vec3 Normal0;   
 in vec3 VertexPos0;
+in vec3 Normal0;
+in vec2 TexCoord0;   
+  
 
 // light parameters
 struct DirectionalLight
@@ -15,6 +17,7 @@ uniform DirectionalLight gDirectionalLight;
 // camera parameters
 uniform vec3 			camPos;
 // material parameters
+uniform sampler2D 		sampler;  
 uniform vec3 			objColor;
 uniform float 			objSpecularIntensity;
 uniform float 			objSpecularPower;
@@ -37,7 +40,7 @@ void main()
 	if (DiffuseFactor > 0) {                                                        
         DiffuseColor      = vec4(gDirectionalLight.Color * gDirectionalLight.DiffuseIntensity * DiffuseFactor, 1.0f);				 
 		vec3 VertexToEye  = normalize(camPos - VertexPos0); 
-		vec3 LightReflect = normalize(reflect(lightDir, N));
+		vec3 LightReflect = normalize(reflect(gDirectionalLight.Direction, N));
 		float SpecularFactor = dot(VertexToEye, LightReflect); 
 		if (SpecularFactor > 0) {                                                   
             SpecularFactor = pow(SpecularFactor, objSpecularPower);
@@ -46,5 +49,5 @@ void main()
 		
     }                                                                               
 	
-	FragColor = vec4(objColor,1.f) * AmbientColor + DiffuseColor + SpecularColor;
+	FragColor = texture2D(sampler, TexCoord0.xy) *vec4(objColor,1.f) * AmbientColor + DiffuseColor + SpecularColor;
 }

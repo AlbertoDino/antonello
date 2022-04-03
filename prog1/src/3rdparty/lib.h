@@ -11,5 +11,6 @@
 
 #include <imgui.h>
 #include <ImFileBrowser.h>
+#include <stb/stb_image.h>
 
 

@@ -17,7 +17,9 @@ namespace oglElements {
 
         std::vector<unsigned int> get_vertex_indices();
 
-        void create(DrawElementObject* pElement);
+		void create(DrawElementObject* pElement);
+
+		void create(DrawElementTextured* pElement);
 
 	private:
 
