@@ -10,12 +10,9 @@ namespace oglElements {
 
 		void vertex3f(const float32 x, const float32 y, const float32 z);
 
-		void create(DrawArrayObject* pElement);
+		void vertex(const func::CVector3f& v, const func::CVector3f& n,const func::CVector2f& t);
 
-
-		//glm::vec3 Color = { 1.0f, 0.0f, 0.0f };
-		//float Roughness = 0.2f;
-		//float Metallic = 0.1f;
+		void create(DrawArrayObject* pElement, GLenum drawmode = GL_LINES);
 
 	private:
 		VertexIndexBuffer vertexBuffer;

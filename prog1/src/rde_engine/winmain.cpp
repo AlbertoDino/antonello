@@ -1,5 +1,6 @@
 #include <rde_common/lib.h>
 #include "rde_engine/render/local.h"
+#include "rde_engine/builtresources/local.h"
 #include "rde_engine/header/api.h"
 #include "rde_engine/win/local.h"
 #include "application.h"
@@ -54,6 +55,7 @@ namespace render {
 
 	void Win_On_Window_Size_Callback(GLFWwindow* window, int width, int height) {
 		auto pWindow = static_cast<render::WinEventHandler*>(glfwGetWindowUserPointer(window));
+		gApp->resize(width,height);
 		pWindow->OnWindowSizeChange(width, height);
 	}
 
@@ -71,6 +73,10 @@ namespace render {
 
 namespace api {
 
+	uint32 getModelId(void* model) {
+		return func::CreateIdFromPointer(model);
+	}
+
 	oglElements::IRenderingCtx* getRenderingContext(api::eRenderingContext rndCtxId) {
 		for (auto& ctx : gApp->renderingLayouts) {
 			if (rndCtxId == ctx->getContextId()) {
@@ -78,6 +84,10 @@ namespace api {
 			}
 		}
 		return 0;
+	}
+
+	render::PixelReadContext* getPixelReadContext() {
+		return gApp->getPixelReadCtx();
 	}
 
 	const oglElements::gl_to& getDefaultTexture() {

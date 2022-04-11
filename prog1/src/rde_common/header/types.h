@@ -46,6 +46,7 @@ typedef int32		Vector6i[6];
 typedef byte		Coord2b[2];
 typedef int32		Coord2i[2];
 typedef int32		Recti[4];
+typedef long		Rectl[4];
 
 struct t_char
 {

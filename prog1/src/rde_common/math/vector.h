@@ -1,7 +1,22 @@
 #pragma once
+#include "matrix.h"
 
 namespace func {
 
+	class CVector2f
+	{
+	public:
+		Vector2f	data;
+
+		CVector2f();
+		CVector2f(const CVector2f& _v);
+		CVector2f(float32 _x, float32 _y);
+
+		void init();
+
+		CVector2f&	operator=	(const CVector2f& a);
+		float32		operator[]	(const int32 _i) const;
+	};
 
 	class CVector3f
 	{

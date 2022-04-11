@@ -94,7 +94,7 @@ namespace oglElements {
 
 		realPosition = position + offset;
 		translateMatrix.Translate(realPosition.data);
-
+		
 		cameraNode->view = viewMatrix * translateMatrix;
 		updateFrustum();
 	}

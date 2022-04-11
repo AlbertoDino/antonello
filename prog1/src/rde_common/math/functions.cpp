@@ -111,6 +111,44 @@ namespace func {
 	float32 Color255To1(float32 x) { return  (float32)(x * FROM255TO1); }
 	float32 Color1To255(float32 x) { return  (float32)(x / FROM255TO1); }
 
+	uint32 CreateIdFromPointer(void* p)
+	{
+		uint32* me_int = (uint32*)&p;
+		uint32 id = *me_int;
+
+		byte m_ID[4];
+
+		m_ID[0] = (id >> 24) & 0xFF;
+		m_ID[1] = (id >> 16) & 0xFF;
+		m_ID[2] = (id >> 8) & 0xFF;
+		m_ID[3] = id & 0xFF;
+
+		//### WARNING
+		//attualmente non riesco a leggere il canale alpha (sempre a 1) per cui mi devo accontentare di 3 byte
+		//e non posso usare il trick di passare il puntatore
+		m_ID[3] = 255;//Id & 0xFF; 						
+		uint32 add = 0;
+		add = (add << 8) + (m_ID[0]);
+		add = (add << 8) + (m_ID[1]);
+		add = (add << 8) + (m_ID[2]);
+		add = (add << 8) + (m_ID[3]);
+		return add;
+	}
+
+	void ColorFromUID(uint32 id, Vector4f& color)
+	{
+		byte    m_colorb[4];
+		m_colorb[0] = (id >> 24) & 0xFF;
+		m_colorb[1] = (id >> 16) & 0xFF;
+		m_colorb[2] = (id >> 8) & 0xFF;
+		m_colorb[3] = id & 0xFF;
+
+		color[0] = Color255To1(m_colorb[0]);
+		color[1] = Color255To1(m_colorb[1]);
+		color[2] = Color255To1(m_colorb[2]);
+		color[3] = Color255To1(m_colorb[3]);
+	}
+
 	void Zero(Vector3f& v)
 	{
 		v[0] = 0; v[1] = 0; v[2] = 0;

@@ -39,7 +39,7 @@ namespace render {
 			return false;
 		}
 
-		glEnable(GL_DEPTH_TEST);
+		
 		return true;
     }
 
@@ -48,12 +48,18 @@ namespace render {
 		glViewport(0, 0, Window->width, Window->height);
 		glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glfwPollEvents();
+		
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
 	}
 
 	void OglContext::post_render()
 	{
+		glDisable(GL_CULL_FACE);
+		glDisable(GL_DEPTH_TEST);
 		glfwSwapBuffers((GLFWwindow*)Window->glWindowHandler);
+		glfwPollEvents();
 	}
 
 	void OglContext::end()

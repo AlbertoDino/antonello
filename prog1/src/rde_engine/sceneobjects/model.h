@@ -6,9 +6,15 @@ namespace sceneobjs {
 	public:
 
 		Model();
+		Model(oglElements::RenderingElement * rndElem);
 		~Model();
 
-		void add2scene();
+		//Add Model to mouse selection layer
+		void add2PickingLayer();
+
+		void add2SceneWithFlatShader();
+		void add2SceneWithLightShader();
+
 		void updateViewMatrix();
 
 		func::CVector3f position;
@@ -20,10 +26,6 @@ namespace sceneobjs {
 		int32			textureUnit;
 	private:
 		func::Quaternion orientation;
-		oglElements::ShaderContext* set_shader_1();
-		oglElements::ShaderContext* set_shader_2();
-
-		static uint32 modelIdCount;
-		static uint32 getNextId();
+		void init();
 	};
 }

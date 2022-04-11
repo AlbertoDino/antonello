@@ -4,7 +4,9 @@
 
 namespace oglElements {
 
-
+	/*
+	SceneShaderObject represents an object with all the data for being drawn in the scene
+	*/
 	class SceneShaderObject {
 	public:
 		SceneShaderObject();

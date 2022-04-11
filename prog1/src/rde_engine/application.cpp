@@ -11,6 +11,7 @@ Application::Application(HINSTANCE hInstance)
 	gWinHandler.osWindowHandler = hInstance;
 
 	renderCtx = std::make_unique< render::OglContext>();
+	pixelReadCtx = std::make_unique< render::PixelReadContext>();
 }
 
 void Application::init()
@@ -18,10 +19,11 @@ void Application::init()
 	sceneRoot.pParent = &sceneRoot;
 	sceneRoot.setDebugName("root");
 	renderCtx->init(&gWinHandler);
-	
+
 	loadRenderingContexts();
 	loadTextures();
 
+	pixelReadCtx->resize(&gWinHandler);
 	for (auto const& renderingCtx : renderingLayouts) {
 		renderingCtx->init(&gWinHandler);
 	}
@@ -35,13 +37,20 @@ void Application::end()
 	renderCtx->end();
 }
 
-void Application::preRender() {
-	renderCtx->pre_render();
+void Application::resize(int32 width, int32 height)
+{
+	gWinHandler.width = width;
+	gWinHandler.height = height;
+	pixelReadCtx->resize(&gWinHandler);
 }
 
-void Application::postRender() {
+void Application::render() {
 
 	TransformSceneTree(&getRoot());
+
+	pixelReadCtx->render();
+
+	renderCtx->pre_render();
 
 	for (auto const& renderingLayout : std::as_const(renderingLayouts)) {
 		renderingLayout->render();
@@ -56,7 +65,7 @@ void Application::calculateStats(float32 elapse)
 
 	frames_count++;
 	stats.accumElapse += elapse;
-	
+
 	if (stats.accumElapse >= 1)
 	{
 		stats.fps = frames_count;
@@ -85,6 +94,11 @@ oglElements::SceneUnitNode& Application::getRoot()
 	return sceneRoot;
 }
 
+render::PixelReadContext* Application::getPixelReadCtx()
+{
+	return pixelReadCtx.get();
+}
+
 
 
 /*
@@ -98,17 +112,18 @@ void Application::loadRenderingContexts()
 	colors::InitColors();
 
 	rex::FlatShader flShader;
-	if (flShader.init())
-	{
-		// Add Rendering Layout
-		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::ShaderFlatCtx);
-		layout->shader.init(flShader.programId);
-		renderingLayouts.push_back(layout);
-		tracelog(format("shader: FlatShader [%i] added.", flShader.programId));
-	}
-	else {
+	if (!flShader.init())
 		tracelog("Error loading flat shader");
-	}	
+
+	pixelReadCtx->shader.init(flShader.programId);
+	//---------------------------------------------------
+
+	// Add Rendering Layout
+	oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::ShaderFlatCtx);
+	layout->shader.init(flShader.programId);
+	renderingLayouts.push_back(layout);
+	tracelog(format("ShaderContext: FlatShader [%i] added.", flShader.programId));
+
 	//---------------------------------------------------
 	rex::LightShader lgShader;
 	if (lgShader.init())
@@ -116,11 +131,11 @@ void Application::loadRenderingContexts()
 		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::LightShaderCtx);
 		layout->shader.init(lgShader.programId);
 		renderingLayouts.push_back(layout);
-		tracelog(format("shader: LightShader [%i] added.", lgShader.programId));
+		tracelog(format("ShaderContext: LightShader [%i] added.", lgShader.programId));
 	}
 	else {
 		tracelog("Error loading LightShader");
-	}	
+	}
 	//---------------------------------------------------
 	rex::Light_temp_2 lgTemp2;
 	if (lgTemp2.init())
@@ -134,7 +149,8 @@ void Application::loadRenderingContexts()
 	else {
 		tracelog("Error loading Light_temp_2");
 	}
-	//---------------------------------------------------
+
+
 	renderingLayouts.push_back(new render::UIContext(api::eRenderingContext::UICxt));
 
 }

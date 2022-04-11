@@ -5,6 +5,7 @@
 #include "renderingelement.h"
 #include "gltypes.h"
 #include "drawobjects.h"
+#include "..\math\vector.h"
 #include "arraymesh.h"
 
 
@@ -27,9 +28,18 @@ namespace oglElements {
 		Vertices.push_back(v);
 	}
 
-	void ArrayMesh::create(DrawArrayObject* pElement)
+	void ArrayMesh::vertex(const func::CVector3f& v, const func::CVector3f& n,const func::CVector2f& t)
 	{
-		vertexBuffer.create_buffers(&pElement->vertexObject, GL_LINES, Vertices);
+		Vertex vv;
+		vv.Pos = { v[0], v[1], v[2] };
+		vv.Normal = { n[0], n[1], n[2]};
+		vv.UV = { t[0], t[1] };
+		Vertices.push_back(vv);
+	}
+
+	void ArrayMesh::create(DrawArrayObject* pElement, GLenum drawmode)
+	{
+		vertexBuffer.create_buffers(&pElement->vertexObject, drawmode, Vertices);
 	}
 
 

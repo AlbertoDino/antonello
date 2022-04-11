@@ -1,9 +1,48 @@
 #include <rdecommon.h>
 #include "functions.h"
-#include "matrix.h"
+
 #include "vector.h"
 
 namespace func {
+
+/*
+========================================================================
+CVector2f
+========================================================================
+*/
+
+	CVector2f::CVector2f()
+	{
+		init();
+	}
+
+	CVector2f::CVector2f(const CVector2f& _v)
+	{
+		(*this) = _v;
+	}
+
+	CVector2f::CVector2f(float32 _x, float32 _y)
+	{
+		data[0] = _x;
+		data[1] = _y;
+	}
+
+	void CVector2f::init()
+	{
+		data[0] = 0; data[1] = 0;
+	}
+
+	CVector2f& CVector2f::operator=(const CVector2f& a)
+	{
+		data[0] = a[0];
+		data[1] = a[1];
+		return *this;
+	}
+
+	float32 CVector2f::operator[](const int32 _i) const
+	{
+		return data[_i];
+	}
 
 /*
 ========================================================================

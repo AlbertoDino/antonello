@@ -8,16 +8,13 @@ using namespace func;
 Demo::Demo() : 
 	running{ true },
 	currentModelSelected(0)
-
 {
-
 	cameraAgent = std::make_unique<oglElements::Camera>();
 	sceneNode	= std::make_unique<oglElements::SceneUnitNode>();
 	grid1		= std::make_unique<sceneobjs::Grid>();
 	light		= std::make_unique<sceneobjs::Light>();
 
-
-	lastRotation.Set(0);
+	lastRotation.Set(0);	
 }
 
 Demo::~Demo()
@@ -54,7 +51,7 @@ void Demo::init(oglElements::WinObj* gWininstance)
 	cameraNode->setDebugName("camera");
 	cameraAgent->setOrigin(CVector3f(0, 0, 0));
 	cameraAgent->setSpeed(150);
-	cameraAgent->setSpeedRotation(10);
+	cameraAgent->setSpeedRotation(20);
 
 	// Create Grid
 	oglElements::ArrayMesh gridCreate;
@@ -81,6 +78,9 @@ void Demo::init(oglElements::WinObj* gWininstance)
 	cameraNode->addChild(sceneNode.get());
 	sceneNode->addChild(grid1->pSceneNode);
 	sceneNode->addChild(light->pSceneNode);
+
+	pickingCtx = api::getPixelReadContext();
+	pickingCtx->setOnSelected([this](uint32 id) { onModelSelected(id); uiModelProperties->setModelSelected(currentModelSelected); });
 
 }
 
@@ -135,7 +135,8 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 
 	if (key == GLFW_KEY_V && action == GLFW_PRESS)
 	{
-		cameraAgent->reset();
+		glfwSetCursorPos(window->glWindowHandler, window->width / 2, window->height / 2);
+		cameraAgent->reset();		
 	}
 
 	if (key == GLFW_KEY_A && action == GLFW_PRESS)
@@ -155,8 +156,7 @@ void Demo::OnMouseScroll(double xoffset, double yoffset)
 
 void Demo::OnWindowSizeChange(int width, int height)
 {
-	window->width = width;
-	window->height = height;
+
 }
 
 void Demo::OnWindowClose()
@@ -169,6 +169,7 @@ void Demo::OnPositionCursorChange(double xposd, double yposd)
 	float32 xpos = static_cast<float32>(xposd);
 	float32 ypos = static_cast<float32>(yposd);
 
+	//tracelog(format("Mouse Pos [%2.2f,%2.2f]", xpos, ypos));
 
 	float32 xOffset = xpos - lastRotation[0];
 	float32 yOffset = lastRotation[1] - ypos;	
@@ -177,6 +178,12 @@ void Demo::OnPositionCursorChange(double xposd, double yposd)
 	lastRotation[1] = ypos;
 
 	inputRotation.Set(xOffset, -yOffset, 0);
+
+	Coord2i mousePos;
+	mousePos[0] = static_cast<int32>(xposd);
+	mousePos[1] = static_cast<int32>(yposd);
+
+	pickingCtx->setSelectionByMousePosition(mousePos);
 }
 
 
@@ -210,8 +217,15 @@ void Demo::addObjectFromFile(std::string filepath)
 	mesh.create((oglElements::DrawElementTextured*)obj->pRender);
 
 	sceneNode->addChild(obj->pSceneNode);
-	obj->add2scene();
+	obj->add2SceneWithLightShader();
 	models.push_back(obj);
+
+	sceneobjs::Model* AABB = new sceneobjs::Model(rex::Cube::getModel());
+	ColorFromUID(obj->id, AABB->color);
+	AABB->name = "AABB";
+	AABB->add2SceneWithFlatShader();
+	AABB->add2PickingLayer();
+	obj->pSceneNode->addChild(AABB->pSceneNode);
 
 	tracelog(format("Model [%s] loaded with id [%i]", obj->name.c_str(), obj->id));
 		
@@ -219,6 +233,7 @@ void Demo::addObjectFromFile(std::string filepath)
 
 void Demo::onModelSelected(uint32 id)
 {
+	tracelog(format("onModelSelected [%i]", id));
 	currentModelSelected = 0;
 	for (auto model : models) {
 		if (model->id == id) {
@@ -230,21 +245,29 @@ void Demo::onModelSelected(uint32 id)
 
 void Demo::handleInput()
 {
-
-}
-
-float32 rotationActive = 1.0f;
-
-void Demo::loop(float32 elapse)
-{
-
-	win::eMouseButton mouseButton= win::getMousePressedButton(window);
+	static float32 rotationActive = 1.0f;
+	win::eMouseButton mouseButton = win::getMousePressedButton(window);
 
 	if (mouseButton == win::eMouseButton::Right)
 	{
 		rotationActive = func::IsEqual(rotationActive, 0.0) ? 1.0f : 0.0f;
 	}
+
+	if (mouseButton == win::eMouseButton::Left)
+	{
+		pickingCtx->evaluate();
+	}
+
 	inputRotation *= rotationActive;
+
+
+}
+
+
+
+void Demo::loop(float32 elapse)
+{
+	handleInput();
 
 	cameraAgent->setProjection(window->width, window->height, CAMERA_FOVX, CAMERA_ZNEAR, CAMERA_ZFAR);
 	cameraAgent->move(inputMovement, elapse);

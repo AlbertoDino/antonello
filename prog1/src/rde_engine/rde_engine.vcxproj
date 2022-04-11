@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="builtresources\builtmodels.h" />
     <ClInclude Include="builtresources\builtshaders.h" />
     <ClInclude Include="builtresources\color.h" />
     <ClInclude Include="builtresources\local.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="header\api.h" />
     <ClInclude Include="render\local.h" />
     <ClInclude Include="render\oglcontext.h" />
+    <ClInclude Include="render\pixelreadcontext.h" />
     <ClInclude Include="render\uicontext.h" />
     <ClInclude Include="render\ui_renderutils.h" />
     <ClInclude Include="render\wincallback.h" />
@@ -159,6 +161,7 @@
     <ClInclude Include="sceneobjects\local.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="lib.h" />
+    <ClInclude Include="sceneobjects\rmodel.h" />
     <ClInclude Include="sceneobjects\uilightproperties.h" />
     <ClInclude Include="sceneobjects\uimodelproperties.h" />
     <ClInclude Include="win\input.h" />
@@ -178,16 +181,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="builtresources\builtmodels.cpp" />
     <ClCompile Include="builtresources\builtshaders.cpp" />
     <ClCompile Include="application.cpp" />
     <ClCompile Include="builtresources\color.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="render\oglcontext.cpp" />
+    <ClCompile Include="render\pixelreadcontext.cpp" />
     <ClCompile Include="render\uicontext.cpp" />
     <ClCompile Include="render\wincallback.cpp" />
     <ClCompile Include="sceneobjects\model.cpp" />
     <ClCompile Include="sceneobjects\grid.cpp" />
     <ClCompile Include="sceneobjects\light.cpp" />
+    <ClCompile Include="sceneobjects\rmodel.cpp" />
     <ClCompile Include="sceneobjects\uilightproperties.cpp" />
     <ClCompile Include="sceneobjects\uimodelproperties.cpp" />
     <ClCompile Include="win\input.cpp" />

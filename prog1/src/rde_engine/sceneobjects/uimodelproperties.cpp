@@ -17,13 +17,16 @@ namespace sceneobjs {
 		currentFile = "< ... >";
 		fileDialog.SetTitle("Open mesh");
 		fileDialog.SetFileFilters({ ".obj",".fbx" });
-
-
 	}
 
 	void UiModelProperties::setModelList(const std::vector<Model* >& modelList)
 	{
 		models = modelList;
+	}
+
+	void UiModelProperties::setModelSelected(Model* model)
+	{
+		modelSelected = model;
 	}
 
 	void UiModelProperties::render()

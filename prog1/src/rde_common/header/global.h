@@ -27,7 +27,6 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/transform.hpp>
 
-
 // Debug Flag
 #ifdef _DEBUG
 #define DEBUG

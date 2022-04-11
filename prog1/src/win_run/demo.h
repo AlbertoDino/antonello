@@ -46,4 +46,5 @@ private:
 	sceneobjs::Model* currentModelSelected;
 	
 	render::UIScene ui;
+	render::PixelReadContext* pickingCtx;
 };

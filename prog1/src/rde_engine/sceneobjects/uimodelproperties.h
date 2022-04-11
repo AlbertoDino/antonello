@@ -15,6 +15,7 @@ namespace sceneobjs {
 		UiModelProperties();
 
 		void setModelList(const std::vector<Model *>& modelList);
+		void setModelSelected(Model* model);
 
 		void render();
 		void set_mesh_load_callback(const std::function<void(const std::string&)>& callback);

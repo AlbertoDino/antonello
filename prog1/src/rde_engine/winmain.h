@@ -52,9 +52,8 @@ INLINE_ void Win_Run(int nShowCmd)
 
 		float32 elapse = gApp->timer.getDiffElapsedSeconds();
 
-		gApp->preRender();
 		game->loop(elapse);
-		gApp->postRender();
+		gApp->render();
 
 		gApp->calculateStats(elapse);
 	}

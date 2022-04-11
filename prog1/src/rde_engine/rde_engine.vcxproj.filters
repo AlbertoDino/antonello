@@ -93,6 +93,15 @@
     <ClInclude Include="sceneobjects\globalobjects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="render\pixelreadcontext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneobjects\rmodel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="builtresources\builtmodels.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winmain.cpp">
@@ -141,6 +150,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sceneobjects\uilightproperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="render\pixelreadcontext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneobjects\rmodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="builtresources\builtmodels.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

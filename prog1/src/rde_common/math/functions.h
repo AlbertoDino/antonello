@@ -10,6 +10,8 @@ namespace func {
 	extern bool8 IsEqual(float32 val1, float32 val2, float32 fEpsilon);
 	extern float32 Color255To1(float32 x); 
 	extern float32 Color1To255(float32 x);
+	extern uint32 CreateIdFromPointer(void* p);
+	extern void ColorFromUID(uint32 id, Vector4f& color);
 
 	// Vector3f
 	extern void	 Zero(Vector3f& v);
