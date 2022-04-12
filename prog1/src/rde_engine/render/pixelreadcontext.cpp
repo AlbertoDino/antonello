@@ -47,7 +47,7 @@ namespace render {
 		shader.useShader();
 	}
 
-	void PixelReadContext::add2Context(oglElements::SceneShaderObject* sceneShaderObject)
+	void PixelReadContext::add2Context(oglElements::SceneObject* sceneShaderObject)
 	{
 		shaderObjects.push_back(sceneShaderObject);
 	}

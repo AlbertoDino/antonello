@@ -57,7 +57,7 @@ namespace sceneobjs {
 				if (modelListIndex == models.size())
 					modelListIndex = -1;
 			};
-
+			
 			ImGui::Text("Model selected:");
 			ImGui::SameLine(0, 5.0f);
 			ImGui::Text(currentModelSelectedName.c_str());

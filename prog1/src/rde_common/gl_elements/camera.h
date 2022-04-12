@@ -1,7 +1,7 @@
 #pragma once
 #include "..\math\mathcommon.h"
 #include "frustum.h"
-#include "sceneunitnode.h"
+#include "scenenode.h"
 
 using namespace func;
 
@@ -12,7 +12,7 @@ namespace oglElements {
 		Camera3rd,
 	};
 
-	class CameraScene : public SceneUnitNode {
+	class CameraScene : public SceneNode {
 	public:
 		CameraScene();
 		~CameraScene();

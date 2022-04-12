@@ -34,7 +34,7 @@ private:
 
 	CVector3f inputMovement, inputRotation, lastRotation;
 
-	std::unique_ptr<oglElements::SceneUnitNode> sceneNode;
+	std::unique_ptr<oglElements::SceneNode> sceneNode;
 	std::unique_ptr<sceneobjs::Grid> grid1;
 	std::unique_ptr<sceneobjs::Light> light;
 	std::unique_ptr<oglElements::Camera> cameraAgent;

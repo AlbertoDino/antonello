@@ -1,6 +1,5 @@
 #include <rdecommon.h>
 #include "shader.h"
-#include "sceneshaderobject.h"
 #include "irenderingctx.h"
 #include "shadercontext.h"
 
@@ -21,7 +20,7 @@ namespace oglElements {
 		shader.useShader();
 	}
 
-	void ShaderContext::add2Context(SceneShaderObject* sceneShaderObject)
+	void ShaderContext::add2Context(SceneObject* sceneShaderObject)
 	{
 		shaderObjects.push_back(sceneShaderObject);
 	}

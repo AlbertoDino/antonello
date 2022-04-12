@@ -156,7 +156,7 @@
     <ClInclude Include="math\matrix.h" />
     <ClInclude Include="gl_elements\perspective.h" />
     <ClInclude Include="math\quaternion.h" />
-    <ClInclude Include="gl_elements\sceneshaderobject.h" />
+    <ClInclude Include="gl_elements\sceneobject.h" />
     <ClInclude Include="gl_elements\face.h" />
     <ClInclude Include="gl_elements\framebuffer.h" />
     <ClInclude Include="gl_elements\gltypes.h" />
@@ -172,7 +172,7 @@
     <ClInclude Include="header\types.h" />
     <ClInclude Include="gl_elements\winobj.h" />
     <ClInclude Include="gl_elements\shader.h" />
-    <ClInclude Include="gl_elements\sceneunitnode.h" />
+    <ClInclude Include="gl_elements\scenenode.h" />
     <ClInclude Include="math\functions.h" />
     <ClInclude Include="math\mathcommon.h" />
     <ClInclude Include="math\vector.h" />
@@ -188,7 +188,7 @@
     <ClCompile Include="math\matrix.cpp" />
     <ClCompile Include="gl_elements\perspective.cpp" />
     <ClCompile Include="math\quaternion.cpp" />
-    <ClCompile Include="gl_elements\sceneshaderobject.cpp" />
+    <ClCompile Include="gl_elements\sceneobject.cpp" />
     <ClCompile Include="gl_elements\face.cpp" />
     <ClCompile Include="gl_elements\framebuffer.cpp" />
     <ClCompile Include="gl_elements\gltypes.cpp" />
@@ -199,7 +199,7 @@
     <ClCompile Include="gl_elements\vertexindexbuffer.cpp" />
     <ClCompile Include="gl_elements\winobj.cpp" />
     <ClCompile Include="gl_elements\shader.cpp" />
-    <ClCompile Include="gl_elements\sceneunitnode.cpp" />
+    <ClCompile Include="gl_elements\scenenode.cpp" />
     <ClCompile Include="math\functions.cpp" />
     <ClCompile Include="math\vector.cpp" />
   </ItemGroup>

@@ -11,7 +11,7 @@
 #include "winobj.h"
 #include "frustum.h"
 #include "perspective.h"
-#include "sceneunitnode.h"
+#include "scenenode.h"
 #include "drawobjects.h"
 #include "irenderingctx.h"
 #include "shadercontext.h"

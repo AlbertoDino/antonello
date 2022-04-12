@@ -10,7 +10,7 @@ Demo::Demo() :
 	currentModelSelected(0)
 {
 	cameraAgent = std::make_unique<oglElements::Camera>();
-	sceneNode	= std::make_unique<oglElements::SceneUnitNode>();
+	sceneNode	= std::make_unique<oglElements::SceneNode>();
 	grid1		= std::make_unique<sceneobjs::Grid>();
 	light		= std::make_unique<sceneobjs::Light>();
 

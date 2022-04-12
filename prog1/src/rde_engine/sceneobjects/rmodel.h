@@ -2,7 +2,7 @@
 
 namespace sceneobjs {
 
-	class RModel : public oglElements::SceneShaderObject {
+	class RModel : public oglElements::SceneObject {
 	public:
 
 		RModel(oglElements::DrawArrayObject* drawModel);

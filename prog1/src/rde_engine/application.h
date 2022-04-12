@@ -20,15 +20,15 @@ public:
 
 	void calculateStats(float32 elapse);
 
-	static void TransformSceneTree(oglElements::SceneUnitNode* node);
+	static void TransformSceneTree(oglElements::SceneNode* node);
 
-	oglElements::SceneUnitNode& getRoot();
+	oglElements::SceneNode& getRoot();
 	render::PixelReadContext*	getPixelReadCtx();
 
 private:
 	std::unique_ptr<render::OglContext>			renderCtx;
 	std::unique_ptr<render::PixelReadContext>	pixelReadCtx;
-	oglElements::SceneUnitNode					sceneRoot;
+	oglElements::SceneNode					sceneRoot;
 
 	void loadRenderingContexts();
 	void loadTextures();

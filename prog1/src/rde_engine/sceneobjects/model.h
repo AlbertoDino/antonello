@@ -2,7 +2,7 @@
 
 namespace sceneobjs {
 
-	class Model : public oglElements::SceneShaderObject {
+	class Model : public oglElements::SceneObject {
 	public:
 
 		Model();

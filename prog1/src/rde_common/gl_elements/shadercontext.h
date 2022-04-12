@@ -1,5 +1,5 @@
 #pragma once
-#include "sceneshaderobject.h"
+#include "sceneobject.h"
 
 
 namespace oglElements {
@@ -11,7 +11,7 @@ namespace oglElements {
 		~ShaderContext();
 
 		void useShader() const;
-		void add2Context(SceneShaderObject* sceneShaderObject);		
+		void add2Context(SceneObject* sceneShaderObject);		
 
 		virtual void init(oglElements::WinObj* window);
 		virtual void render() const;
@@ -20,7 +20,7 @@ namespace oglElements {
 		oglElements::ShaderUniforms shader;
 	private:
 		
-		std::vector<SceneShaderObject*> shaderObjects;
+		std::vector<SceneObject*> shaderObjects;
 	};
 
 

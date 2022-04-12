@@ -2,7 +2,7 @@
 
 namespace sceneobjs {
 
-	class Light : public oglElements::SceneShaderObject {
+	class Light : public oglElements::SceneObject {
 		public:
 
 		Light();

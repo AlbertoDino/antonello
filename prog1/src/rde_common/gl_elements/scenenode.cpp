@@ -1,17 +1,17 @@
 #include <rdecommon.h>
 #include "..\math\mathcommon.h"
-#include "sceneunitnode.h"
+#include "scenenode.h"
 
 namespace oglElements {
 
-	SceneUnitNode::SceneUnitNode()
+	SceneNode::SceneNode()
 		: pParent {0}, pNextNode{ 0 }, pPrevnode {0}
 		, pFirstChild{ 0 }, pLastChild{ 0 }
 		, childCount (0)
 	{
 	}
 
-	SceneUnitNode::~SceneUnitNode()
+	SceneNode::~SceneNode()
 	{
 		if (pNextNode)
 			delete pNextNode;
@@ -24,12 +24,12 @@ namespace oglElements {
 	}
 
 
-	int32 SceneUnitNode::count() const
+	int32 SceneNode::count() const
 	{
 		return childCount;
 	}
 
-	void SceneUnitNode::addChild(SceneUnitNode* node) {
+	void SceneNode::addChild(SceneNode* node) {
 		if (!node) return;
 
 		if (!pFirstChild)
@@ -43,7 +43,7 @@ namespace oglElements {
 		childCount++;
 	}
 
-	void SceneUnitNode::setDebugName(std::string name) {
+	void SceneNode::setDebugName(std::string name) {
 		__debugName = name;
 	}
 }

@@ -74,7 +74,7 @@ void Application::calculateStats(float32 elapse)
 
 }
 
-void Application::TransformSceneTree(oglElements::SceneUnitNode* node)
+void Application::TransformSceneTree(oglElements::SceneNode* node)
 {
 	node->worldprojection = node->pParent->worldprojection * (node->projection);
 	node->worldview = node->pParent->worldview * (node->view);
@@ -89,7 +89,7 @@ void Application::TransformSceneTree(oglElements::SceneUnitNode* node)
 	}
 }
 
-oglElements::SceneUnitNode& Application::getRoot()
+oglElements::SceneNode& Application::getRoot()
 {
 	return sceneRoot;
 }

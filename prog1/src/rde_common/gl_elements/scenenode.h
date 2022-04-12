@@ -3,14 +3,12 @@
 
 namespace oglElements {
 
-	class SceneUnitNode
+	class SceneNode
 	{
 	public:
 
-		SceneUnitNode();
-		~SceneUnitNode();
-
-		
+		SceneNode();
+		~SceneNode();		
 		
 		func::CMatrix4f32 view;
 		func::CMatrix4f32 projection;
@@ -20,12 +18,12 @@ namespace oglElements {
 		func::CMatrix4f32 worldmvp;
 
 		int32 count() const;
-		void addChild(SceneUnitNode* node);
+		void addChild(SceneNode* node);
 		void setDebugName(std::string name);
 
-		SceneUnitNode* pParent;
-		SceneUnitNode *pNextNode, *pPrevnode; 
-		SceneUnitNode *pFirstChild, *pLastChild;  
+		SceneNode* pParent;
+		SceneNode *pNextNode, *pPrevnode; 
+		SceneNode *pFirstChild, *pLastChild;  
 
 		
 	private:

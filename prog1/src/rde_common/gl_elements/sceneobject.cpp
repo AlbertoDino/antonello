@@ -1,16 +1,15 @@
 #include <rdecommon.h>
 #include "renderingelement.h"
-#include "sceneunitnode.h"
-#include "sceneshaderobject.h"
+#include "sceneobject.h"
 
 namespace oglElements {
 
-	SceneShaderObject::SceneShaderObject() :
-		pSceneNode(new SceneUnitNode()), pRender(0), pNext(0), pLast(0)
+	SceneObject::SceneObject() :
+		pSceneNode(new SceneNode()), pRender(0), pNext(0), pLast(0)
 	{
 	}
 
-	SceneShaderObject::~SceneShaderObject()
+	SceneObject::~SceneObject()
 	{
 		if (pSceneNode)
 			delete pSceneNode;
@@ -21,7 +20,7 @@ namespace oglElements {
 		pRender = 0;
 	}
 
-	void SceneShaderObject::render() const
+	void SceneObject::render() const
 	{
 		shaderValues.updateUniforms();
 		if (pRender) {

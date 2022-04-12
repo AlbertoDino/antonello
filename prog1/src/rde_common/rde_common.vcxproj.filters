@@ -57,13 +57,13 @@
     <ClInclude Include="gl_elements\arraymesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gl_elements\sceneunitnode.h">
+    <ClInclude Include="gl_elements\scenenode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gl_elements\shaderuniforms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gl_elements\sceneshaderobject.h">
+    <ClInclude Include="gl_elements\sceneobject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gl_elements\gltypes.h">
@@ -140,13 +140,13 @@
     <ClCompile Include="gl_elements\arraymesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gl_elements\sceneunitnode.cpp">
+    <ClCompile Include="gl_elements\scenenode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gl_elements\shaderuniforms.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gl_elements\sceneshaderobject.cpp">
+    <ClCompile Include="gl_elements\sceneobject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gl_elements\gltypes.cpp">
