@@ -7,8 +7,8 @@ layout (location = 2) in vec2 vUV;
 uniform mat4 mvpMatrix;
 uniform mat4 viewMatrix;
 
-out vec3 Normal0;
 out vec3 VertexPos0;
+out vec3 Normal0;
 out vec2 TexCoord0;    
 
 void main()

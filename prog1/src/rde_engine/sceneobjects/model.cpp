@@ -61,10 +61,10 @@ namespace sceneobjs {
 
 	void Model::add2SceneWithLightShader()
 	{
-		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::Light_temp_2);
+		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::ShaderLight);
 
 		if (!rendering)
-			throwError("Cannot find Light_temp_2 layout.");
+			throwError("Cannot find ShaderLight layout.");
 
 		shaderValues = rendering->shader;
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_M4f, "mvpMatrix", &pSceneNode->worldmvp.data);

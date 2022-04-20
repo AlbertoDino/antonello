@@ -4,6 +4,22 @@
 namespace oglElements {
 
 
+    void gl_to::create()
+    {
+        glGenTextures(1, &uId);
+    }
+
+    void gl_to::bind(uint32 _target)
+    {
+        target = _target;
+        glBindTexture(_target, uId);
+    }
+
+    void gl_to::unbind()
+    {
+        glBindTexture(target, 0);
+    }
+
     void gl_fbo::create(eFboTarget target)
     {
         target = target;
@@ -97,4 +113,6 @@ namespace oglElements {
     {
         glBindBuffer(_target, 0);
     }
+
+
 }

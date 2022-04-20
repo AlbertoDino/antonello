@@ -10,4 +10,15 @@ namespace rex {
 			static oglElements::DrawArrayObject* cube;
 	};
 
+
+	class Rectangle {
+	public:
+		static oglElements::DrawArrayObjectWithTexture* getModel();
+		static void createRectangle(oglElements::DrawArrayObjectWithTexture* draw);
+	private:
+		static oglElements::DrawArrayObjectWithTexture* rectangle;
+
+		
+	};
+
 }

@@ -90,7 +90,7 @@
     <ClInclude Include="math\matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\mathcommon.h">
+    <ClInclude Include="math\local.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="header\externals.h">
@@ -109,6 +109,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gl_elements\texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gl_elements\draw2danimation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gl_elements\drawsprite2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -183,6 +189,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gl_elements\texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gl_elements\draw2danimation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gl_elements\drawsprite2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

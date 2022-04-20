@@ -125,31 +125,31 @@ void Application::loadRenderingContexts()
 	tracelog(format("ShaderContext: FlatShader [%i] added.", flShader.programId));
 
 	//---------------------------------------------------
-	rex::LightShader lgShader;
-	if (lgShader.init())
-	{
-		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::LightShaderCtx);
-		layout->shader.init(lgShader.programId);
-		renderingLayouts.push_back(layout);
-		tracelog(format("ShaderContext: LightShader [%i] added.", lgShader.programId));
-	}
-	else {
-		tracelog("Error loading LightShader");
-	}
-	//---------------------------------------------------
 	rex::Light_temp_2 lgTemp2;
 	if (lgTemp2.init())
 	{
 		// Add Rendering Layout
-		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::Light_temp_2);
+		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::ShaderLight);
 		layout->shader.init(lgTemp2.programId);
 		renderingLayouts.push_back(layout);
-		tracelog(format("shader: Light_temp_2 [%i] added.", lgTemp2.programId));
+		tracelog(format("shader: ShaderLight [%i] added.", lgTemp2.programId));
 	}
 	else {
-		tracelog("Error loading Light_temp_2");
+		tracelog("Error loading ShaderLight");
 	}
-
+	//---------------------------------------------------
+	rex::FlatShaderWithTexture flTextureShader;
+	if (flTextureShader.init())
+	{
+		// Add Rendering Layout
+		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::ShaderFlatTextureCtx);
+		layout->shader.init(flTextureShader.programId);
+		renderingLayouts.push_back(layout);
+		tracelog(format("shader: FlatShaderWithTexture [%i] added.", flTextureShader.programId));
+	}
+	else {
+		tracelog("Error loading ShaderLight");
+	}
 
 	renderingLayouts.push_back(new render::UIContext(api::eRenderingContext::UICxt));
 

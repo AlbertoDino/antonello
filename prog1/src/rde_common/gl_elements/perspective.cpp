@@ -1,5 +1,5 @@
 #include <rdecommon.h>
-#include "..\math\mathcommon.h"
+#include "..\math\local.h"
 #include "perspective.h"
 
 using namespace func;

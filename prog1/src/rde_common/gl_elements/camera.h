@@ -1,5 +1,5 @@
 #pragma once
-#include "..\math\mathcommon.h"
+#include "..\math\local.h"
 #include "frustum.h"
 #include "scenenode.h"
 

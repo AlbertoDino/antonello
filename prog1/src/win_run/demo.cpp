@@ -82,6 +82,9 @@ void Demo::init(oglElements::WinObj* gWininstance)
 	pickingCtx = api::getPixelReadContext();
 	pickingCtx->setOnSelected([this](uint32 id) { onModelSelected(id); uiModelProperties->setModelSelected(currentModelSelected); });
 
+	sprite = std::make_unique<sceneobjs::Sprite2D>();
+	sprite->add2scene();
+	sceneNode->addChild(sprite->pSceneNode);
 }
 
 bool8 Demo::isRunning() const
@@ -278,6 +281,8 @@ void Demo::loop(float32 elapse)
 		obj->updateViewMatrix();
 	}
 	
+	sprite->updateFrame(elapse);
+
 	light->update(cameraAgent->getPosition());
 
 	updateUIScene();

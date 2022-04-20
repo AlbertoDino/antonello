@@ -29,23 +29,46 @@ namespace rex {
 		return programId != 0;
 	}
 
-
-	//LightShader
-
-	bool8 LightShader::init()
-	{
-		oglElements::Shader shader;
-		shader.loadFromFile("assets/shaders/vs.shader", "assets/shaders/fs_pbr.shader");
-		programId = shader.get_program_id();
-		return programId != 0;
-	}
-
-	//Light_temp_2
+	//ShaderLight
 
 	bool8 Light_temp_2::init()
 	{
 		oglElements::Shader shader;
 		shader.loadFromFile("assets/shaders/lighting.vs", "assets/shaders/lighting.fs");
+		programId = shader.get_program_id();
+		return programId != 0;
+	}
+
+	// FlatShaderWithTexture
+
+
+	static const char* szFlatShaderTextureVP =
+		"#version 330\n"
+		"in vec4 vVertex;"
+		"in  vec2 vTexCoord0;"
+		"uniform mat4 mvpMatrix;"
+		"smooth out vec2 vTex;"
+		"void main(void) "
+		"{ vTex = vTexCoord0;"
+		" gl_Position = mvpMatrix * vVertex; "
+		"}";
+
+	static const char* szFlatShaderTextureFP =
+		"#version 330\n"
+		"out vec4 vFragColor;"
+		"uniform sampler2D sampler;"
+		"uniform vec4 vColor;"
+		"smooth in vec2 vTex;"
+		"void main(void) "
+		"{ "
+		"	vFragColor = texture(sampler, vTex); "
+		"	/* vFragColor+=vColor; */"
+		"}";
+
+	bool8 FlatShaderWithTexture::init()
+	{
+		oglElements::Shader shader;
+		shader.load(szFlatShaderTextureVP, szFlatShaderTextureFP);
 		programId = shader.get_program_id();
 		return programId != 0;
 	}

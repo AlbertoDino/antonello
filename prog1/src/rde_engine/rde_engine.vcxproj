@@ -162,6 +162,7 @@
     <ClInclude Include="console.h" />
     <ClInclude Include="lib.h" />
     <ClInclude Include="sceneobjects\rmodel.h" />
+    <ClInclude Include="sceneobjects\sprite2d.h" />
     <ClInclude Include="sceneobjects\uilightproperties.h" />
     <ClInclude Include="sceneobjects\uimodelproperties.h" />
     <ClInclude Include="win\input.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="sceneobjects\grid.cpp" />
     <ClCompile Include="sceneobjects\light.cpp" />
     <ClCompile Include="sceneobjects\rmodel.cpp" />
+    <ClCompile Include="sceneobjects\sprite2d.cpp" />
     <ClCompile Include="sceneobjects\uilightproperties.cpp" />
     <ClCompile Include="sceneobjects\uimodelproperties.cpp" />
     <ClCompile Include="win\input.cpp" />

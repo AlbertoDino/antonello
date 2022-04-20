@@ -43,6 +43,7 @@ private:
 	std::vector<sceneobjs::Model*> models;
 
 	bool8 running;
+	std::unique_ptr<sceneobjs::Sprite2D> sprite;
 	sceneobjs::Model* currentModelSelected;
 	
 	render::UIScene ui;

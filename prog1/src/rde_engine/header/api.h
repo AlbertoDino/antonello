@@ -10,8 +10,8 @@ namespace api {
 		None = 0,
 		UICxt,
 		ShaderFlatCtx,
-		LightShaderCtx,
-		Light_temp_2,
+		ShaderLight,
+		ShaderFlatTextureCtx
 	};
 
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "..\math\mathcommon.h"
+#include "..\math\local.h"
 
 namespace oglElements {
 

@@ -146,11 +146,13 @@
   <ItemGroup>
     <ClInclude Include="gl_elements\arraymesh.h" />
     <ClInclude Include="gl_elements\camera.h" />
+    <ClInclude Include="gl_elements\draw2danimation.h" />
     <ClInclude Include="gl_elements\drawobjects.h" />
     <ClInclude Include="gl_elements\frustum.h" />
     <ClInclude Include="gl_elements\irenderingctx.h" />
     <ClInclude Include="gl_elements\iuicomponent.h" />
     <ClInclude Include="gl_elements\renderingelement.h" />
+    <ClInclude Include="gl_elements\drawsprite2d.h" />
     <ClInclude Include="gl_elements\texture.h" />
     <ClInclude Include="header\externals.h" />
     <ClInclude Include="math\matrix.h" />
@@ -174,16 +176,18 @@
     <ClInclude Include="gl_elements\shader.h" />
     <ClInclude Include="gl_elements\scenenode.h" />
     <ClInclude Include="math\functions.h" />
-    <ClInclude Include="math\mathcommon.h" />
+    <ClInclude Include="math\local.h" />
     <ClInclude Include="math\vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gl_elements\arraymesh.cpp" />
     <ClCompile Include="gl_elements\camera.cpp" />
+    <ClCompile Include="gl_elements\draw2danimation.cpp" />
     <ClCompile Include="gl_elements\drawobjects.cpp" />
     <ClCompile Include="gl_elements\frustum.cpp" />
     <ClCompile Include="gl_elements\irenderingctx.cpp" />
     <ClCompile Include="gl_elements\renderingelement.cpp" />
+    <ClCompile Include="gl_elements\drawsprite2d.cpp" />
     <ClCompile Include="gl_elements\texture.cpp" />
     <ClCompile Include="math\matrix.cpp" />
     <ClCompile Include="gl_elements\perspective.cpp" />

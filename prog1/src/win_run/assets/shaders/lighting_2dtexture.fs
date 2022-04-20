@@ -3,8 +3,7 @@
 in vec3 VertexPos0;
 in vec3 Normal0;
 in vec2 TexCoord0;   
-   
-
+  
 
 // light parameters
 struct DirectionalLight

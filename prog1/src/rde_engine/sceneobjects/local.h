@@ -6,3 +6,4 @@
 #include "rmodel.h"
 #include "uimodelproperties.h"
 #include "uilightproperties.h"
+#include "sprite2d.h"

@@ -35,7 +35,7 @@ namespace sceneobjs {
 	{
 		direction.Normalize();
 			
-		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::Light_temp_2);
+		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::ShaderLight);
 		shaderValues = rendering->shader;
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "gDirectionalLight.Color", &color.data);
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "gDirectionalLight.Direction", &direction.data);

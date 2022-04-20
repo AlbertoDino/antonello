@@ -17,3 +17,4 @@
 #include "shadercontext.h"
 #include "iuicomponent.h"
 #include "texture.h"
+#include "drawsprite2d.h"

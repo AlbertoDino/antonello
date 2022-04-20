@@ -6,8 +6,9 @@
 
 namespace oglElements {
 
-	bool8 Texture::createByFilename(gl_to& texture, GLenum target, const std::string& filename)
+	const ImageDetail& Texture::createByFilename(gl_to& texture, GLenum target, const std::string& filename)
 	{
+		ImageDetail result;
 		stbi_set_flip_vertically_on_load(1);
 
 		int32 width = 0, height = 0, bpp = 0;
@@ -16,14 +17,11 @@ namespace oglElements {
 
 		if (!image_data) {
 			throwError(format("Cannot load texture %s", filename.c_str()));
-			return false;
+			return result;
 		}
 
-		glGenTextures(1, &texture.uId);
-
-		texture.target = target;
-
-		glBindTexture(target, texture.uId);
+		texture.create();
+		texture.bind(target);
 
 		if (target == GL_TEXTURE_2D) {
 			switch (bpp) {
@@ -41,17 +39,53 @@ namespace oglElements {
 
 			default:
 				throwError(format("bpp texture [%i] not supported", bpp));
-				return false;
+				return result;
 			}
 		}
 
+		glGenerateMipmap(GL_TEXTURE_2D);
 		glTexParameterf(target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameterf(target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameterf(target, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameterf(target, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-		glBindTexture(target, 0);
+		texture.unbind();
 		stbi_image_free(image_data);
+
+		result.loadSuccessfully = true;
+		result.width = width;
+		result.height = height;
+
+		return result;
+	}
+
+	bool8 Texture::createArrayByFilenames(gl_to& texture, int32 width, int32 height, const std::vector<std::string>& filenames)
+	{
+		texture.create();
+		texture.bind(GL_TEXTURE_2D_ARRAY);
+
+		glTexStorage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA, width, height, filenames.size());
+
+		stbi_set_flip_vertically_on_load(1);
+
+		int32 arrayIndex = 0;
+		for (auto filename : std::as_const(filenames)) 
+		{
+			int32 w = 0, h = 0, bpp = 0;
+
+			unsigned char* image_data = stbi_load(filename.c_str(), &w, &h, &bpp, 0);
+
+			glTextureSubImage3D(
+				GL_TEXTURE_2D_ARRAY, 0, 0, 0, arrayIndex++, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+								
+			stbi_image_free(image_data);
+		}
 		return true;
+	}
+
+	ImageDetail::ImageDetail() : loadSuccessfully (false)
+		, width(0), height(0)
+	{
+
 	}
 }
