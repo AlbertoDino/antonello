@@ -161,6 +161,14 @@ CVector3f
 		return *this;
 	}
 
+	CVector3f& CVector3f::operator=	(float32 value) {
+		data[0] = value;
+		data[1] = value;
+		data[2] = value;
+		return *this;
+	}
+
+
 	bool8 CVector3f::operator==(const CVector3f& _v)
 	{
 		return IsEqual(data[0], _v[0]) && IsEqual(data[1], _v[1]) && IsEqual(data[2], _v[2]);

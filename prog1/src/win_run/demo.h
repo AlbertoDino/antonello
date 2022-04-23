@@ -40,12 +40,14 @@ private:
 	std::unique_ptr<oglElements::Camera> cameraAgent;
 	std::unique_ptr<sceneobjs::UiModelProperties> uiModelProperties;
 	std::unique_ptr<sceneobjs::UILightProperties> uiLightProperties;
+	std::unique_ptr<sceneobjs::UiCameraProperties> uiCameraProperties;
 	std::vector<sceneobjs::Model*> models;
 
 	bool8 running;
 	std::unique_ptr<sceneobjs::Sprite2D> sprite;
 	sceneobjs::Model* currentModelSelected;
 	
+	render::UITextList uiText;
 	render::UIScene ui;
 	render::PixelReadContext* pickingCtx;
 };

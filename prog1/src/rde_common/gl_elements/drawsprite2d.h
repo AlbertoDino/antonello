@@ -11,10 +11,11 @@ namespace oglElements {
 			DrawSprite2D();
 			~DrawSprite2D();
 
-			void setTexture(const std::string& filename);
+			void setTextureByFilename(const std::string& filename);
 
 			void addAnimation(const std::string& filename, AnimationType aniType);
 
+			// Animations have to be created first via addAnimation function
 			void playAnimation(AnimationType aniType);
 
 			void updateAnimationFrame(float32 speed, float32 delta);

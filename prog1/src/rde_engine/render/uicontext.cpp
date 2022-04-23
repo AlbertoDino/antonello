@@ -44,12 +44,6 @@ namespace render {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		//This has to be refactor
-		ImGui::Begin(uiScene->dialogName.c_str());
-		for (auto const& text : std::as_const(uiScene->textList)) {
-			ImGui::Text(text.c_str());
-		}
-		ImGui::End();
 
 		for (auto const& uiComp : std::as_const(uiScene->uiComponents)) {
 			uiComp->render();

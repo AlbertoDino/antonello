@@ -187,17 +187,12 @@ namespace rex {
 
 		rectangle = new oglElements::DrawArrayObjectWithTexture();
 
-		createRectangle(rectangle);
-	}
-
-	void Rectangle::createRectangle(oglElements::DrawArrayObjectWithTexture* draw)
-	{
-		draw->vertexObject.drawMode = GL_TRIANGLES;
-		draw->vertexObject.count = 6;
+		rectangle->vertexObject.drawMode = GL_TRIANGLES;
+		rectangle->vertexObject.count = 6;
 
 		float32 fRadius = 1.0f;
 
-		float32 vVerts[] = { 
+		float32 vVerts[] = {
 			fRadius, 0, 0,
 			fRadius, fRadius, 0,
 			0, fRadius, 0,
@@ -205,7 +200,7 @@ namespace rex {
 			0, 0, 0,
 			fRadius,0, 0 };
 
-		float32 vNormals[] = { 
+		float32 vNormals[] = {
 			0.0f, 0.0f, fRadius,
 			0.0f, 0.0f, fRadius,
 			0.0f, 0.0f, fRadius,
@@ -230,16 +225,16 @@ namespace rex {
 			0.0f, 0.0f,
 			1.0f, 0.0f };
 
-		glGenVertexArrays(1, &draw->vertexObject.VAO);
-		glGenBuffers(1, &draw->vertexObject.VBO);
+		glGenVertexArrays(1, &rectangle->vertexObject.VAO);
+		glGenBuffers(1, &rectangle->vertexObject.VBO);
 		//glGenBuffers(1, &draw->vertexObject.CBO);
-		glGenBuffers(1, &draw->vertexObject.UVO);
+		glGenBuffers(1, &rectangle->vertexObject.UVO);
 
 
-		glBindVertexArray(draw->vertexObject.VAO);
+		glBindVertexArray(rectangle->vertexObject.VAO);
 
 		// for vertex buffer ..
-		glBindBuffer(GL_ARRAY_BUFFER, draw->vertexObject.VBO);
+		glBindBuffer(GL_ARRAY_BUFFER, rectangle->vertexObject.VBO);
 		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vector3f), &vVerts[0], GL_DYNAMIC_DRAW);
 
 		glEnableVertexAttribArray(0);
@@ -247,7 +242,7 @@ namespace rex {
 
 
 		// for uv buffer ..
-		glBindBuffer(GL_ARRAY_BUFFER, draw->vertexObject.UVO);
+		glBindBuffer(GL_ARRAY_BUFFER, rectangle->vertexObject.UVO);
 		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vector2f), &vTexts[0], GL_DYNAMIC_DRAW);
 
 		glEnableVertexAttribArray(1);
@@ -255,6 +250,9 @@ namespace rex {
 
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		return rectangle;
 	}
+
 }
 

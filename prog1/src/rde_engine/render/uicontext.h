@@ -3,10 +3,14 @@
 
 namespace render
 {
+
+	class UITextList {
+	public:
+		std::vector<std::string> list;
+	};
+
 	class UIScene {
 	public:
-		std::string dialogName;
-		std::vector<std::string> textList;
 		std::vector<oglElements::IUIComponent*> uiComponents;
 	};
 

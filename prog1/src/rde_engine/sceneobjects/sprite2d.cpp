@@ -5,37 +5,47 @@
 
 namespace sceneobjs {
 
-    Sprite2D::Sprite2D()
+    Sprite2D::Sprite2D():
+        speed (0.1)
     {
+        size = 1;
         pRender = new oglElements::DrawSprite2D();
-        rex::Rectangle::createRectangle((oglElements::DrawArrayObjectWithTexture *)pRender);
-
-        oglElements::DrawSprite2D* draw = (oglElements::DrawSprite2D*)pRender;
-
-        draw->setTexture("assets/textures/sprite/spritesheet.png");
-        draw->addAnimation("assets/textures/sprite/Run.txt", oglElements::AnimationType::Run);
-        draw->playAnimation(oglElements::AnimationType::Run);
-        currentAnimation = oglElements::AnimationType::Run;
+        *((oglElements::DrawArrayObjectWithTexture*) pRender) = *rex::Rectangle::getModel();
     }
 
-    void Sprite2D::updateFrame(float32 elaps)
+
+    void Sprite2D::updateSpriteFrame(float32 elaps)
     {
-        ((oglElements::DrawSprite2D*)pRender)->updateAnimationFrame(0.1, elaps);
+        CMatrix4f32 scale, translate;
+
+        scale.Scale(size.data);
+        translate.Translate(position.data);
+
+        pSceneNode->view = scale * translate;
+
+        ((oglElements::DrawSprite2D*)pRender)->updateAnimationFrame(speed, elaps);
     }
 
     void Sprite2D::add2scene()
     {
-        oglElements::DrawSprite2D* draw = (oglElements::DrawSprite2D*)pRender;
+
         oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::ShaderFlatTextureCtx);
         
         if (!rendering)
             throwError("Cannot find shaderFlat layout.");
+
+        oglElements::DrawSprite2D* draw = (oglElements::DrawSprite2D*)pRender;
 
         shaderValues = rendering->shader;
         shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_M4f, "mvpMatrix", &pSceneNode->worldmvp.data);
         shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1i, "sampler", &draw->textureObject.unit);
 
         rendering->add2Context(this);
+    }
+
+    oglElements::DrawSprite2D* Sprite2D::getSpriteRendering()
+    {
+        return (oglElements::DrawSprite2D*)pRender;
     }
 
 }

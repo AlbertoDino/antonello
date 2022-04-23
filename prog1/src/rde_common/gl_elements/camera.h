@@ -24,8 +24,6 @@ namespace oglElements {
 		~Camera();
 
 		void	setOrigin(const CVector3f& vector);
-		void	setSpeed(float32 _speed);
-		void	setSpeedRotation(float32 _speedRot);
 		void	setOffset(const CVector3f& v);
 		void    rotateCamera(const CVector3f& vector, float32 elapsedTimeSec);
 		float32	move(const CVector3f& mov,float32 elapsedTimeSec);
@@ -40,11 +38,12 @@ namespace oglElements {
 		const CVector3f& getDirection() const;
 		const CVector3f& getRotation() const;		
 		const CVector3f& getPosition() const;
+
+		float32 speed, rotationSpeed;
 	private:
 
 		void	updateFrustum();
 
-		float32 speed, rotationSpeed;
 		CVector3f position;
 		CVector3f offset;
 		CVector3f direction;

@@ -81,28 +81,6 @@ namespace oglElements {
 		frameToRender[3] = 1;
 		std::vector<glm::vec2> uv;
 
-		/*
-		uv = {
-			glm::vec2(frameToRender[0],frameToRender[1]),
-			glm::vec2(frameToRender[0], frameToRender[1] + frameToRender[3]),
-			glm::vec2(frameToRender[0] + frameToRender[2], frameToRender[1]),
-
-			glm::vec2(frameToRender[0] + frameToRender[2], frameToRender[1]),
-			glm::vec2(frameToRender[0], frameToRender[1] + frameToRender[3]),
-			glm::vec2(frameToRender[0] + frameToRender[2], frameToRender[1] + frameToRender[3])
-		};
-		
-		float32 vVerts[] = { 
-			fRadius, 0, 0,
-			fRadius, fRadius, 0,
-			0, fRadius, 0,
-
-			0, fRadius, 0,
-			0, 0, 0,
-			fRadius,0, 0 };
-		*/
-
-
 		uv = {
 			glm::vec2(frameToRender[0] + frameToRender[2], frameToRender[1]),
 			glm::vec2(frameToRender[0] + frameToRender[2], frameToRender[1] + frameToRender[3]),

@@ -40,8 +40,6 @@ namespace rex {
 	}
 
 	// FlatShaderWithTexture
-
-
 	static const char* szFlatShaderTextureVP =
 		"#version 330\n"
 		"in vec4 vVertex;"

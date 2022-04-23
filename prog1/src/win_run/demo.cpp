@@ -5,16 +5,16 @@
 
 using namespace func;
 
-Demo::Demo() : 
+Demo::Demo() :
 	running{ true },
 	currentModelSelected(0)
 {
 	cameraAgent = std::make_unique<oglElements::Camera>();
-	sceneNode	= std::make_unique<oglElements::SceneNode>();
-	grid1		= std::make_unique<sceneobjs::Grid>();
-	light		= std::make_unique<sceneobjs::Light>();
+	sceneNode = std::make_unique<oglElements::SceneNode>();
+	grid1 = std::make_unique<sceneobjs::Grid>();
+	light = std::make_unique<sceneobjs::Light>();
 
-	lastRotation.Set(0);	
+	lastRotation.Set(0);
 }
 
 Demo::~Demo()
@@ -25,33 +25,34 @@ Demo::~Demo()
 void Demo::init(oglElements::WinObj* gWininstance)
 {
 	window = gWininstance;
-	
+
 	render::UIContext* uiCtx = (render::UIContext*)api::getRenderingContext(api::eRenderingContext::UICxt);
-	ui.dialogName = "stats";
-	ui.textList.push_back("<place_holder>");
-	ui.textList.push_back("<place_holder>");
-	ui.textList.push_back("<place_holder>");
-	ui.textList.push_back("<place_holder>");
-	ui.textList.push_back("press v : reset camera");
-	ui.textList.push_back("press A : turn campera 90 dg");
-	ui.textList.push_back("press D : turn campera -90 dg");
-	
+	uiText.list.push_back("<place_holder>");
+	uiText.list.push_back("<place_holder>");
+	uiText.list.push_back("<place_holder>");
+	uiText.list.push_back("<place_holder>");
+	uiText.list.push_back("press v : reset camera");
+	uiText.list.push_back("press F1 : turn campera 90 dg");
+	uiText.list.push_back("press F2 : turn campera -90 dg");
+
 	uiModelProperties = std::make_unique<sceneobjs::UiModelProperties>();
 	uiModelProperties->set_mesh_load_callback([this](std::string filepath) { addObjectFromFile(filepath); });
 	uiModelProperties->set_model_selected_callback([this](uint32 id) { onModelSelected(id); });
-	ui.uiComponents.push_back(uiModelProperties.get());	
+	ui.uiComponents.push_back(uiModelProperties.get());
 
 	uiLightProperties = std::make_unique<sceneobjs::UILightProperties>();
 	uiLightProperties->setLight(light.get());
 	ui.uiComponents.push_back(uiLightProperties.get());
 
+	uiCameraProperties = std::make_unique<sceneobjs::UiCameraProperties>();
+	uiCameraProperties->setTextList(&uiText);
+	uiCameraProperties->setCamera(cameraAgent.get());
+	ui.uiComponents.push_back(uiCameraProperties.get());
 	uiCtx->render(&ui);
 
 	oglElements::CameraScene* cameraNode = cameraAgent->getCameraScene();
 	cameraNode->setDebugName("camera");
 	cameraAgent->setOrigin(CVector3f(0, 0, 0));
-	cameraAgent->setSpeed(150);
-	cameraAgent->setSpeedRotation(20);
 
 	// Create Grid
 	oglElements::ArrayMesh gridCreate;
@@ -71,9 +72,9 @@ void Demo::init(oglElements::WinObj* gWininstance)
 	light->color.Set(colors::White[0], colors::White[1], colors::White[2]);
 	light->direction.Set(-150, 80, 3);
 	light->add2scene();
-	
+
 	gApp->getRoot().addChild(cameraNode);
-	
+
 	sceneNode->setDebugName("sceneNode");
 	cameraNode->addChild(sceneNode.get());
 	sceneNode->addChild(grid1->pSceneNode);
@@ -83,6 +84,15 @@ void Demo::init(oglElements::WinObj* gWininstance)
 	pickingCtx->setOnSelected([this](uint32 id) { onModelSelected(id); uiModelProperties->setModelSelected(currentModelSelected); });
 
 	sprite = std::make_unique<sceneobjs::Sprite2D>();
+
+	auto spriteRnd = sprite->getSpriteRendering();
+	spriteRnd->setTextureByFilename("assets/textures/sprite/spritesheet.png");
+	spriteRnd->addAnimation("assets/textures/sprite/Run.txt", oglElements::AnimationType::Run);
+	spriteRnd->addAnimation("assets/textures/sprite/Idle.txt", oglElements::AnimationType::Idle);
+	spriteRnd->addAnimation("assets/textures/sprite/Jump.txt", oglElements::AnimationType::Jumps);
+
+	spriteRnd->playAnimation(oglElements::AnimationType::Idle);
+
 	sprite->add2scene();
 	sceneNode->addChild(sprite->pSceneNode);
 }
@@ -92,6 +102,9 @@ bool8 Demo::isRunning() const
 	return running;
 }
 
+/*
+The action is one of GLFW_PRESS, GLFW_REPEAT or GLFW_RELEASE
+*/
 void Demo::OnKey(int key, int scancode, int action, int mods)
 {
 	CVector3f moveforward;
@@ -105,26 +118,26 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 
 	// Keyboard
 	bool8 isActive;
-	isActive = (key == GLFW_KEY_UP && (action == GLFW_PRESS || action == GLFW_REPEAT));
+	isActive = (key == GLFW_KEY_W /* && (action == GLFW_PRESS || action == GLFW_REPEAT)*/);
 	moveforward.Set(
 		vDirection[0] * isActive,
 		vDirection[1] * isActive,
 		vDirection[2] * isActive);
 
-	isActive = (key == GLFW_KEY_DOWN && (action == GLFW_PRESS || action == GLFW_REPEAT));
+	isActive = (key == GLFW_KEY_S /* && (action == GLFW_PRESS || action == GLFW_REPEAT) */);
 	movebackwards.Set(
 		-vDirection[0] * isActive,
 		-vDirection[1] * isActive,
 		-vDirection[2] * isActive);
 
-	isActive = (key == GLFW_KEY_LEFT && (action == GLFW_PRESS || action == GLFW_REPEAT));
+	isActive = (key == GLFW_KEY_A /* && (action == GLFW_PRESS || action == GLFW_REPEAT) */);
 	moveLeft.Cross(World::World_Y_Axis, vDirection);
 	moveLeft.Set(
 		moveLeft[0] * isActive,
 		moveLeft[1] * isActive,
 		moveLeft[2] * isActive);
 
-	isActive = (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS || action == GLFW_REPEAT));
+	isActive = (key == GLFW_KEY_D /* && (action == GLFW_PRESS || action == GLFW_REPEAT) */);
 	moveRight.Cross(World::World_Y_Axis, vDirection);
 	moveRight.Set(
 		-moveRight[0] * isActive,
@@ -139,17 +152,53 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 	if (key == GLFW_KEY_V && action == GLFW_PRESS)
 	{
 		glfwSetCursorPos(window->glWindowHandler, window->width / 2, window->height / 2);
-		cameraAgent->reset();		
+		cameraAgent->reset();
 	}
 
-	if (key == GLFW_KEY_A && action == GLFW_PRESS)
+	if (key == GLFW_KEY_F1 && action == GLFW_PRESS)
 	{
 		cameraAgent->turn90();
 	}
 
-	if (key == GLFW_KEY_D && action == GLFW_PRESS)
+	if (key == GLFW_KEY_F2 && action == GLFW_PRESS)
 	{
 		cameraAgent->turnless90();
+	}
+
+	if (key == GLFW_KEY_SPACE)
+	{
+		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Jumps);
+	}
+
+	if (key == GLFW_KEY_LEFT_SHIFT)
+	{
+		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Run);
+	}
+
+	if (key == GLFW_KEY_X)
+	{
+		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Idle);
+	}
+
+
+	if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS || action == GLFW_REPEAT))
+	{
+		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Run);
+		sprite->position[0] += 0.09;
+	}
+
+	if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE) {
+		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Idle);
+	}
+
+	if (key == GLFW_KEY_LEFT && (action == GLFW_PRESS || action == GLFW_REPEAT))
+	{
+		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Run);
+		sprite->position[0] -= 0.09;
+	}
+
+	if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE) {
+		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Idle);
 	}
 }
 
@@ -175,7 +224,7 @@ void Demo::OnPositionCursorChange(double xposd, double yposd)
 	//tracelog(format("Mouse Pos [%2.2f,%2.2f]", xpos, ypos));
 
 	float32 xOffset = xpos - lastRotation[0];
-	float32 yOffset = lastRotation[1] - ypos;	
+	float32 yOffset = lastRotation[1] - ypos;
 
 	lastRotation[0] = xpos;
 	lastRotation[1] = ypos;
@@ -196,10 +245,10 @@ void Demo::updateUIScene()
 	auto const dir = cameraAgent->getDirection();
 	auto const rot = cameraAgent->getRotation();
 
-	ui.textList.at(0) = format("Fps %2i ", gApp->stats.fps);
-	ui.textList.at(1) = format("Camera Pos [%2.2f,%2.2f,%2.2f]", pos[0], pos[1], pos[2]);
-	ui.textList.at(2) = format("Camera Dir [%2.2f,%2.2f,%2.2f]", dir[0], dir[1], dir[2]);
-	ui.textList.at(3) = format("Camera Rot [%2.2f,%2.2f,%2.2f]", rot[0], rot[1], rot[2]);
+	uiText.list.at(0) = format("Fps %2i ", gApp->stats.fps);
+	uiText.list.at(1) = format("Camera Pos [%2.2f,%2.2f,%2.2f]", pos[0], pos[1], pos[2]);
+	uiText.list.at(2) = format("Camera Dir [%2.2f,%2.2f,%2.2f]", dir[0], dir[1], dir[2]);
+	uiText.list.at(3) = format("Camera Rot [%2.2f,%2.2f,%2.2f]", rot[0], rot[1], rot[2]);
 
 	uiModelProperties->setModelList(models);
 
@@ -231,7 +280,7 @@ void Demo::addObjectFromFile(std::string filepath)
 	obj->pSceneNode->addChild(AABB->pSceneNode);
 
 	tracelog(format("Model [%s] loaded with id [%i]", obj->name.c_str(), obj->id));
-		
+
 }
 
 void Demo::onModelSelected(uint32 id)
@@ -241,7 +290,7 @@ void Demo::onModelSelected(uint32 id)
 	for (auto model : models) {
 		if (model->id == id) {
 			currentModelSelected = model;
-			tracelog(format("Model [%s] [%i] has been selected", currentModelSelected->name.c_str(),currentModelSelected->id));
+			tracelog(format("Model [%s] [%i] has been selected", currentModelSelected->name.c_str(), currentModelSelected->id));
 		}
 	}
 }
@@ -280,8 +329,8 @@ void Demo::loop(float32 elapse)
 	for (auto* obj : models) {
 		obj->updateViewMatrix();
 	}
-	
-	sprite->updateFrame(elapse);
+
+	sprite->updateSpriteFrame(elapse);
 
 	light->update(cameraAgent->getPosition());
 

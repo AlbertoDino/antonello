@@ -7,12 +7,15 @@ namespace sceneobjs {
 	public:
 		Sprite2D();
 
-		void updateFrame(float32 elaps);
+		void updateSpriteFrame(float32 elaps);
 
 		void add2scene();
 
+		oglElements::DrawSprite2D* getSpriteRendering();
 
-		oglElements::AnimationType currentAnimation;
+		float32 speed;
+		CVector3f position;
+		CVector3f size;
 	};
 
 }

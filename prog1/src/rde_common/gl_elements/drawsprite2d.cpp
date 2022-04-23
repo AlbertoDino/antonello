@@ -17,7 +17,7 @@ namespace oglElements {
 	{
 	}
 
-	void DrawSprite2D::setTexture(const std::string& filename)
+	void DrawSprite2D::setTextureByFilename(const std::string& filename)
 	{	
 		Texture tex;
 		const ImageDetail & det = tex.createByFilename(textureObject, GL_TEXTURE_2D, filename);
@@ -33,6 +33,7 @@ namespace oglElements {
 
 		animations.push_back(anim);
 	}
+
 
 	void DrawSprite2D::playAnimation(AnimationType aniType)
 	{

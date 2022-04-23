@@ -105,7 +105,7 @@ namespace oglElements {
 		unif.__debugName = uniformName;
 	
 		if (unif.location < 0) {
-			tracelog(format("Uniform [%s] not valid", uniformName));
+			tracelog(format("shader [%i] Uniform [%s] not valid", programId,uniformName));
 			return;
 		}
 

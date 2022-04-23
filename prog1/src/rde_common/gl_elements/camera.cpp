@@ -23,8 +23,8 @@ namespace oglElements {
 	//============================================================
 
 	Camera::Camera() : cameraNode(0)
-		, speed(10.0f)
-		, rotationSpeed(10.0f)
+		, speed(150.0f)
+		, rotationSpeed(20.0f)
 	{
 		position.Set(0);
 		offset.Set(0);
@@ -46,16 +46,6 @@ namespace oglElements {
 	void Camera::setOrigin(const CVector3f& vector)
 	{
 		position = vector;
-	}
-
-	void Camera::setSpeed(float32 _speed)
-	{
-		speed = _speed;
-	}
-
-	void Camera::setSpeedRotation(float32 _speedRot)
-	{
-		rotationSpeed = _speedRot;
 	}
 
 	void Camera::setOffset(const CVector3f& v)

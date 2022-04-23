@@ -43,6 +43,7 @@ namespace func {
 		void		Clear();
 
 		CVector3f& operator=	(const CVector3f& a);
+		CVector3f& operator=	(float32 value);
 
 		bool8		operator==	(const CVector3f& _v);
 		float32&    operator[]	(const int32 _i);
