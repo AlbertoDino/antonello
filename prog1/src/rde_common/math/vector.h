@@ -16,6 +16,7 @@ namespace func {
 
 		CVector2f&	operator=	(const CVector2f& a);
 		float32		operator[]	(const int32 _i) const;
+		float32&	operator[]	(const int32 _i);
 	};
 
 	class CVector3f
@@ -42,6 +43,7 @@ namespace func {
 		void		Rotate(const CVector3f& u, const CVector3f& v, float32 angle);
 		void		Clear();
 
+		CVector3f& operator=	(const Vector3f& a);
 		CVector3f& operator=	(const CVector3f& a);
 		CVector3f& operator=	(float32 value);
 
@@ -70,6 +72,7 @@ namespace func {
 		CVector4f(const float32 _x, const float32 _y, const float32 _z, const float32 _w);
 		explicit CVector4f(const Vector4f& _v);
 
+		void	Set(float32 v);
 		void	Set(const float32 _x, const float32 _y, const float32 _z, const float32 _w);
 		void	Normalize();
 		void	Multiply(const CMatrix4f32& matrix, const CVector4f& v);

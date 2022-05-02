@@ -119,13 +119,13 @@ void Application::loadRenderingContexts()
 	//---------------------------------------------------
 
 	// Add Rendering Layout
-	oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::ShaderFlatCtx);
+	oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::ShaderFlat);
 	layout->shader.init(flShader.programId);
 	renderingLayouts.push_back(layout);
 	tracelog(format("ShaderContext: FlatShader [%i] added.", flShader.programId));
 
 	//---------------------------------------------------
-	rex::Light_temp_2 lgTemp2;
+	rex::Light lgTemp2;
 	if (lgTemp2.init())
 	{
 		// Add Rendering Layout
@@ -142,7 +142,7 @@ void Application::loadRenderingContexts()
 	if (flTextureShader.init())
 	{
 		// Add Rendering Layout
-		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::ShaderFlatTextureCtx);
+		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::ShaderFlatTexture);
 		layout->shader.init(flTextureShader.programId);
 		renderingLayouts.push_back(layout);
 		tracelog(format("shader: FlatShaderWithTexture [%i] added.", flTextureShader.programId));
@@ -150,7 +150,21 @@ void Application::loadRenderingContexts()
 	else {
 		tracelog("Error loading ShaderLight");
 	}
-
+	//---------------------------------------------------
+	rex::NormalTextureLight shNormalTextureLight;
+	if (shNormalTextureLight.init())
+	{
+		// Add Rendering Layout
+		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::ShaderNormalTextureLight);
+		layout->shader.init(shNormalTextureLight.programId);
+		renderingLayouts.push_back(layout);
+		tracelog(format("shader: NormalTextureLight [%i] added.", shNormalTextureLight.programId));
+	}
+	else
+	{
+		tracelog("Error loading NormalTextureLight");
+	}
+	//---------------------------------------------------
 	renderingLayouts.push_back(new render::UIContext(api::eRenderingContext::UICxt));
 
 }
@@ -158,9 +172,17 @@ void Application::loadRenderingContexts()
 void Application::loadTextures()
 {
 	oglElements::Texture texture;
-
 	oglElements::gl_to textObj;
-	texture.createByFilename(textObj, GL_TEXTURE_2D, "assets/textures/default.jpg");
+
+	texture.loadImageByFilename("assets/textures/default.jpg");
+	texture.create(&textObj,GL_TEXTURE_2D,0);
+	texture.bind();
+	texture.setFiltering(GL_LINEAR, GL_LINEAR);
+	texture.setParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
+	texture.setParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
+	texture.generateMipmap();
+	texture.save();
+	texture.unbind();
 
 	textures.push_back(textObj);
 }

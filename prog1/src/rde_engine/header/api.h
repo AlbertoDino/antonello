@@ -9,9 +9,10 @@ namespace api {
 	enum eRenderingContext : int32 {
 		None = 0,
 		UICxt,
-		ShaderFlatCtx,
+		ShaderFlat,
 		ShaderLight,
-		ShaderFlatTextureCtx
+		ShaderFlatTexture,
+		ShaderNormalTextureLight
 	};
 
 

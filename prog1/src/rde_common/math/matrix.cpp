@@ -4,6 +4,25 @@
 
 namespace func {
 
+	CMatrix3f32::CMatrix3f32() {
+		identity();
+	}
+
+	CMatrix3f32& CMatrix3f32::operator=(const CMatrix3f32& m)
+	{
+		memcpy(data, m.data, sizeof(Matrix3f32));
+		return *this;
+	}
+
+	void CMatrix3f32::identity()
+	{
+		static Matrix3f32	identity = { 1.0f, 0.0f, 0.0f, 
+				0.0f, 1.0f, 0.0f, 
+				0.0f, 0.0f, 1.0f
+				 };
+		memcpy(data, identity, sizeof(Matrix3f32));
+	}
+
 	CMatrix4f32::CMatrix4f32()
 	{
 		Identity();
@@ -223,5 +242,15 @@ namespace func {
 
 	}
 #undef A
+
+	const CMatrix3f32& CMatrix4f32::getNormalMatrix() {
+		// Extract a rotation matrix from a 4x4 matrix
+		// Extracts the rotation matrix (3x3) from a 4x4 matrix
+		static CMatrix3f32 dst;
+		memcpy(dst.data, data, sizeof(float) * 3); // X column
+		memcpy(dst.data + 3, data + 4, sizeof(float) * 3); // Y column
+		memcpy(dst.data + 6, data + 8, sizeof(float) * 3); // Z column
+		return dst;
+	}
 
 }

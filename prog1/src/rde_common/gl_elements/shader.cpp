@@ -22,6 +22,7 @@ namespace oglElements {
 			GLchar* strInfoLog = new GLchar[length + 1];
 			glGetShaderInfoLog(shader_id, length, &length, strInfoLog);
 
+			tracelog("Shader compile status ERROR");
 			fprintf(stderr, "Compile error in shader: %s\n", strInfoLog);
 			delete[] strInfoLog;
 		}

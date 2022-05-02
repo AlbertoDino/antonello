@@ -49,14 +49,13 @@ namespace oglElements {
 
 	void DrawElementTextured::render() const
 	{
-		glActiveTexture(GL_TEXTURE0 + textureObject.unit);
-		glBindTexture(textureObject.target, textureObject.uId);
+
+		textureObject.activeBind();
 
 		glBindVertexArray(vertexObject.VAO);
 		glDrawElements(vertexObject.drawMode, vertexObject.count, GL_UNSIGNED_INT, nullptr);
 		glBindVertexArray(0);
 
-		glBindTexture(textureObject.target, 0);
-		glActiveTexture(0);
+		textureObject.unbind();
 	}
 }

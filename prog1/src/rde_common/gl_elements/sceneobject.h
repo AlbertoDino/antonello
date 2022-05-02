@@ -14,13 +14,15 @@ namespace oglElements {
 		~SceneObject();
 
 		ShaderUniforms		shaderValues; // shader update
-		SceneNode			*pSceneNode;  // position/projection matrixes
-		RenderingElement	*pRender;     // drawing calls
 		
+		RenderingElement	*refRender;   // drawing calls
+
+		SceneNode* getSceneNode();
+
 		void render() const;
 
-		SceneObject	*pNext, *pLast;
-
+	protected:
+		SceneNode* pSceneNode;  // position/projection matrixes
 	};
 
 }

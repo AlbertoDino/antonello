@@ -31,7 +31,7 @@ namespace rex {
 
 	//ShaderLight
 
-	bool8 Light_temp_2::init()
+	bool8 Light::init()
 	{
 		oglElements::Shader shader;
 		shader.loadFromFile("assets/shaders/lighting.vs", "assets/shaders/lighting.fs");
@@ -43,7 +43,7 @@ namespace rex {
 	static const char* szFlatShaderTextureVP =
 		"#version 330\n"
 		"in vec4 vVertex;"
-		"in  vec2 vTexCoord0;"
+		"in vec2 vTexCoord0;"
 		"uniform mat4 mvpMatrix;"
 		"smooth out vec2 vTex;"
 		"void main(void) "
@@ -67,6 +67,16 @@ namespace rex {
 	{
 		oglElements::Shader shader;
 		shader.load(szFlatShaderTextureVP, szFlatShaderTextureFP);
+		programId = shader.get_program_id();
+		return programId != 0;
+	}
+
+	//NormalTextureLight
+
+	bool8 NormalTextureLight::init()
+	{
+		oglElements::Shader shader;
+		shader.loadFromFile("assets/shaders/NormalMapping.vs", "assets/shaders/NormalMapping.fs");
 		programId = shader.get_program_id();
 		return programId != 0;
 	}

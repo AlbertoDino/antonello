@@ -3,6 +3,16 @@
 
 namespace func {
 
+	class CMatrix3f32 {
+	public:
+		Matrix3f32 data;
+
+		CMatrix3f32();
+
+		CMatrix3f32& operator=(const CMatrix3f32& m);
+
+		void identity();
+	};
 
 	class CMatrix4f32 {
 	public:
@@ -30,6 +40,8 @@ namespace func {
 		void Rotate(float32 angleRadiant, float32 x, float32 y, float32 z);
 		void Scale(const Vector3f& v);
 		void LookAt(const Vector3f& eye, const Vector3f& center, const Vector3f& up);
+
+		const CMatrix3f32& getNormalMatrix();
 	};
 
 }

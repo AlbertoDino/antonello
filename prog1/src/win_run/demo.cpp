@@ -26,6 +26,81 @@ void Demo::init(oglElements::WinObj* gWininstance)
 {
 	window = gWininstance;
 
+	
+
+	oglElements::CameraScene* cameraNode = cameraAgent->getCameraScene();
+	cameraNode->setDebugName("camera");
+	cameraAgent->setOrigin(CVector3f(0, 0, 0));
+
+	// Create Grid
+	oglElements::ArrayMesh gridCreate;
+	float32 lenght = 20.0f;
+	float32 height = 0.55f;
+	for (float32 x = -lenght; x <= lenght; x += 0.5) {
+		gridCreate.vertex3f(x, -height, lenght);
+		gridCreate.vertex3f(x, -height, -lenght);
+		gridCreate.vertex3f(lenght, -height, x);
+		gridCreate.vertex3f(-lenght, -height, x);
+	}
+
+	gridCreate.create(&((oglElements::DrawArrayObject*)grid1->refRender)->vertexObject);
+	vSet(grid1->color, colors::Green);
+	grid1->add2scene();
+
+	light->color.Set(colors::White[0], colors::White[1], colors::White[2]);
+	light->direction.Set(-150, 80, 3);
+	light->add2scene();
+
+	gApp->getRoot().addChild(cameraNode);
+
+	sceneNode->setDebugName("sceneNode");
+	cameraNode->addChild(sceneNode.get());
+	sceneNode->addChild(grid1->getSceneNode());
+	sceneNode->addChild(light->getSceneNode());
+
+	pickingCtx = api::getPixelReadContext();
+	pickingCtx->setOnSelected([this](uint32 id) { onModelSelected(id); uiModelProperties->setModelSelected(currentModelSelected); });
+
+	sprite = std::make_unique<sceneobjs::Sprite2D>();
+
+	auto spriteRnd = sprite->getSpriteRendering();
+	spriteRnd->setTextureByFilename("assets/textures/sprite/spritesheet.png");
+	spriteRnd->addAnimation("assets/textures/sprite/Run.txt", oglElements::AnimationType::Run);
+	spriteRnd->addAnimation("assets/textures/sprite/Idle.txt", oglElements::AnimationType::Idle);
+	spriteRnd->addAnimation("assets/textures/sprite/Jump.txt", oglElements::AnimationType::Jumps);
+
+	spriteRnd->playAnimation(oglElements::AnimationType::Idle);
+
+	sprite->add2scene();
+	sceneNode->addChild(sprite->getSceneNode());
+
+
+	oglElements::DrawElementTextured* sphererender = new oglElements::DrawElementTextured();
+	sphererender->vertexObject = rex::Sphere::getModel(1.0f,36,18);
+	sphererender->textureObject = api::getDefaultTexture();
+	sphere = std::make_unique<sceneobjs::GenModel>(sphererender);
+	sphere->position = { 10,10,10 };
+	sphere->add2scene(api::eRenderingContext::ShaderFlatTexture);
+	sceneNode->addChild(sphere->getSceneNode());
+
+	//-----------
+
+	lightPosition = std::make_unique<sceneobjs::LightPosition>();
+	lightPosition->add2scene();
+
+	sphereNormal = std::make_unique<sceneobjs::NormalModel>();
+	sphereNormal->position = { 0,0,-10 };
+	sphereNormal->setModel(rex::ePreBuiltModel::sphere);
+	sphereNormal->setTextureByFilename      ("assets/textures/IceMoon.tga");
+	sphereNormal->setNormalTextureByFilename("assets/textures/IceMoonBump.tga");
+	sphereNormal->add2scene();
+
+	sceneNode->addChild(sphereNormal->getSceneNode());
+
+	sphererender->textureObject = sphereNormal->getRendering()->textureNormal;
+
+	//#####################
+	// ui
 	render::UIContext* uiCtx = (render::UIContext*)api::getRenderingContext(api::eRenderingContext::UICxt);
 	uiText.list.push_back("<place_holder>");
 	uiText.list.push_back("<place_holder>");
@@ -48,53 +123,14 @@ void Demo::init(oglElements::WinObj* gWininstance)
 	uiCameraProperties->setTextList(&uiText);
 	uiCameraProperties->setCamera(cameraAgent.get());
 	ui.uiComponents.push_back(uiCameraProperties.get());
+
+	uiLightPosProperties = std::make_unique<sceneobjs::UILightPositionProperties>();
+	uiLightPosProperties->setLight(lightPosition.get());
+	ui.uiComponents.push_back(uiLightPosProperties.get());
 	uiCtx->render(&ui);
+	//#####################
 
-	oglElements::CameraScene* cameraNode = cameraAgent->getCameraScene();
-	cameraNode->setDebugName("camera");
-	cameraAgent->setOrigin(CVector3f(0, 0, 0));
-
-	// Create Grid
-	oglElements::ArrayMesh gridCreate;
-	float32 lenght = 20.0f;
-	float32 height = 0.55f;
-	for (float32 x = -lenght; x <= lenght; x += 0.5) {
-		gridCreate.vertex3f(x, -height, lenght);
-		gridCreate.vertex3f(x, -height, -lenght);
-		gridCreate.vertex3f(lenght, -height, x);
-		gridCreate.vertex3f(-lenght, -height, x);
-	}
-
-	gridCreate.create((oglElements::DrawArrayObject*)grid1->pRender);
-	vSet(grid1->color, colors::Green);
-	grid1->add2scene();
-
-	light->color.Set(colors::White[0], colors::White[1], colors::White[2]);
-	light->direction.Set(-150, 80, 3);
-	light->add2scene();
-
-	gApp->getRoot().addChild(cameraNode);
-
-	sceneNode->setDebugName("sceneNode");
-	cameraNode->addChild(sceneNode.get());
-	sceneNode->addChild(grid1->pSceneNode);
-	sceneNode->addChild(light->pSceneNode);
-
-	pickingCtx = api::getPixelReadContext();
-	pickingCtx->setOnSelected([this](uint32 id) { onModelSelected(id); uiModelProperties->setModelSelected(currentModelSelected); });
-
-	sprite = std::make_unique<sceneobjs::Sprite2D>();
-
-	auto spriteRnd = sprite->getSpriteRendering();
-	spriteRnd->setTextureByFilename("assets/textures/sprite/spritesheet.png");
-	spriteRnd->addAnimation("assets/textures/sprite/Run.txt", oglElements::AnimationType::Run);
-	spriteRnd->addAnimation("assets/textures/sprite/Idle.txt", oglElements::AnimationType::Idle);
-	spriteRnd->addAnimation("assets/textures/sprite/Jump.txt", oglElements::AnimationType::Jumps);
-
-	spriteRnd->playAnimation(oglElements::AnimationType::Idle);
-
-	sprite->add2scene();
-	sceneNode->addChild(sprite->pSceneNode);
+	cameraAgent->reset();
 }
 
 bool8 Demo::isRunning() const
@@ -266,18 +302,20 @@ void Demo::addObjectFromFile(std::string filepath)
 	vSet(obj->color, colors::Red);
 	obj->name = filepath.substr(filepath.find_last_of("/\\") + 1);
 	obj->position.Set(10 * models.size(), 2, 5 * models.size());
-	mesh.create((oglElements::DrawElementTextured*)obj->pRender);
+	mesh.create((oglElements::DrawElementTextured*)obj->refRender);
 
-	sceneNode->addChild(obj->pSceneNode);
+	sceneNode->addChild(obj->getSceneNode());
 	obj->add2SceneWithLightShader();
 	models.push_back(obj);
 
-	sceneobjs::Model* AABB = new sceneobjs::Model(rex::Cube::getModel());
+	oglElements::DrawArrayObject* draw = new oglElements::DrawArrayObject();
+	draw->vertexObject = rex::Cube::getModel();
+	sceneobjs::Model* AABB = new sceneobjs::Model(draw);
 	ColorFromUID(obj->id, AABB->color);
 	AABB->name = "AABB";
 	AABB->add2SceneWithFlatShader();
 	AABB->add2PickingLayer();
-	obj->pSceneNode->addChild(AABB->pSceneNode);
+	obj->getSceneNode()->addChild(AABB->getSceneNode());
 
 	tracelog(format("Model [%s] loaded with id [%i]", obj->name.c_str(), obj->id));
 
@@ -311,10 +349,7 @@ void Demo::handleInput()
 	}
 
 	inputRotation *= rotationActive;
-
-
 }
-
 
 
 void Demo::loop(float32 elapse)
@@ -331,14 +366,19 @@ void Demo::loop(float32 elapse)
 	}
 
 	sprite->updateSpriteFrame(elapse);
+	sphere->updateViewMatrix();
 
 	light->update(cameraAgent->getPosition());
+	lightPosition->update(cameraAgent->getPosition());
+
+	sphereNormal->updateViewMatrix();
 
 	updateUIScene();
 
-
 	inputMovement.Set(0);
 	inputRotation.Set(0);
+
+	oglElements::checkForOpenglErrors();
 }
 
 

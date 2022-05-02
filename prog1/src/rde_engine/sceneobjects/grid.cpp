@@ -8,7 +8,7 @@ namespace sceneobjs {
 	Grid::Grid()
 	{
 		func::vSet(color, 1.0f, 0.0f, 1.0f, 1.0f);
-		pRender = new oglElements::DrawArrayObject();
+		refRender = new oglElements::DrawArrayObject();
 		pSceneNode->setDebugName("Grid");
 	}
 
@@ -18,7 +18,7 @@ namespace sceneobjs {
 
 	void Grid::add2scene()
 	{
-		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::ShaderFlatCtx);
+		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::ShaderFlat);
 		
 		if (!rendering)
 			throwError("Cannot find shaderFlat layout.");

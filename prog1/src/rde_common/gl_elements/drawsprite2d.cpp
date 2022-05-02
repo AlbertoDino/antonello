@@ -20,7 +20,17 @@ namespace oglElements {
 	void DrawSprite2D::setTextureByFilename(const std::string& filename)
 	{	
 		Texture tex;
-		const ImageDetail & det = tex.createByFilename(textureObject, GL_TEXTURE_2D, filename);
+
+		const ImageDetail& det = tex.loadImageByFilename(filename);
+		tex.create(&textureObject, GL_TEXTURE_2D, 0);
+		tex.bind();
+		tex.setFiltering(GL_LINEAR, GL_LINEAR);
+		tex.setParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
+		tex.setParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
+		tex.generateMipmap();
+		tex.save();
+		tex.unbind();
+
 		texture_width = det.width;
 		texture_height = det.height;
 	}

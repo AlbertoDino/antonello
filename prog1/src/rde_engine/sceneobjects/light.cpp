@@ -26,8 +26,6 @@ namespace sceneobjs {
 	void Light::add2scene()
 	{
 		auto rendering = set_shader_temp2();
-
-
 		rendering->add2Context(this);
 	}
 

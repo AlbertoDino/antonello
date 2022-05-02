@@ -13,7 +13,7 @@ namespace oglElements {
 	public:
 		Shader() = default;
 
-		// Load a vertex and a fragment shader from file
+		// Load a add and a fragment shader from file
 		bool loadFromFile(const std::string& vertexshader_file, const std::string& fragmentshader_file);
 		bool load(const std::string& vertexshade, const std::string& fragmentshade);
 		// Use the program

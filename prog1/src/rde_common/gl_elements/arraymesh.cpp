@@ -26,6 +26,8 @@ namespace oglElements {
 		v.Pos = { x, y, z };
 		v.Normal = { 1, 1, 1 };
 		Vertices.push_back(v);
+
+
 	}
 
 	void ArrayMesh::vertex(const func::CVector3f& v, const func::CVector3f& n,const func::CVector2f& t)
@@ -37,9 +39,9 @@ namespace oglElements {
 		Vertices.push_back(vv);
 	}
 
-	void ArrayMesh::create(DrawArrayObject* pElement, GLenum drawmode)
+	void ArrayMesh::create(gl_vertexObject* pElement, GLenum drawmode)
 	{
-		vertexBuffer.create_buffers(&pElement->vertexObject, drawmode, Vertices);
+		vertexBuffer.create_buffers(pElement, drawmode, Vertices);
 	}
 
 

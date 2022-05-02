@@ -44,6 +44,11 @@ CVector2f
 		return data[_i];
 	}
 
+	float32& CVector2f::operator[](const int32 _i)
+	{
+		return data[_i];
+	}
+
 /*
 ========================================================================
 CVector3f
@@ -151,6 +156,14 @@ CVector3f
 	void	CVector3f::Clear()
 	{
 		memset(data, 0, sizeof(Vector3f));
+	}
+
+	CVector3f& CVector3f::operator=	(const Vector3f& a)
+	{
+		data[0] = a[0];
+		data[1] = a[1];
+		data[2] = a[2];
+		return *this;
 	}
 
 	CVector3f& CVector3f::operator=(const CVector3f& a)
@@ -274,6 +287,14 @@ CVector4f
 	CVector4f::CVector4f(const Vector4f& _v)
 	{
 		memcpy(data, _v, sizeof(Vector4f));
+	}
+
+	void CVector4f::Set(float32 v)
+	{
+		data[0] = v;
+		data[1] = v;
+		data[2] = v;
+		data[3] = v;
 	}
 
 	void CVector4f::Set(const float32 _x, const float32 _y, const float32 _z, const float32 _w)

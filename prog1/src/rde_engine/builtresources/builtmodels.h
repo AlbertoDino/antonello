@@ -2,22 +2,34 @@
 
 namespace rex {
 
+	enum ePreBuiltModel : int32 {
+		cube,
+		sphere
+	};
+
 	class Cube {
 	public:
-		static oglElements::DrawArrayObject* getModel();
+		static const oglElements::gl_vertexObject& getModel();
 
 		private:
-			static oglElements::DrawArrayObject* cube;
+			static oglElements::gl_vertexObject cube;
 	};
 
 
 	class Rectangle {
 	public:
-		static oglElements::DrawArrayObjectWithTexture* getModel();
+		const static oglElements::gl_vertexObject& getModel();
 	private:
-		static oglElements::DrawArrayObjectWithTexture* rectangle;
-
+		static oglElements::gl_vertexObject rectangle;
 		
+	};
+
+
+	class Sphere {
+	public:
+		static const oglElements::gl_vertexObject& getModel(float32 fRadius, int32 iSlices, int32 iStacks);
+	private:
+		static oglElements::gl_vertexObject sphere;
 	};
 
 }

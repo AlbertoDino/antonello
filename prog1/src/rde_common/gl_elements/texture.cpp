@@ -6,85 +6,93 @@
 
 namespace oglElements {
 
-	const ImageDetail& Texture::createByFilename(gl_to& texture, GLenum target, const std::string& filename)
+	Texture::Texture() : imageData(0),texture(0)
 	{
-		ImageDetail result;
 		stbi_set_flip_vertically_on_load(1);
+	}
 
-		int32 width = 0, height = 0, bpp = 0;
-		
-		unsigned char* image_data = stbi_load(filename.c_str(), &width, &height, &bpp, 0);
+	Texture::~Texture()
+	{
+		texture = 0;
+		if (imageData)
+		{
+			stbi_image_free(imageData);
+			imageData = 0;
+		}
+	}
 
-		if (!image_data) {
+	const ImageDetail& Texture::loadImageByFilename(const std::string& filename)
+	{
+		imageDetails = ImageDetail{};
+		imageData = stbi_load(filename.c_str(), &imageDetails.width, &imageDetails.height, &imageDetails.bpp, 0);
+
+		if (!imageData) {
 			throwError(format("Cannot load texture %s", filename.c_str()));
-			return result;
+			return imageDetails;
 		}
 
-		texture.create();
-		texture.bind(target);
+		imageDetails.loadSuccessfully = true;
+		return imageDetails;
+	}
 
-		if (target == GL_TEXTURE_2D) {
-			switch (bpp) {
+	void Texture::create(gl_to* textObject, GLenum target, int32 unit)
+	{
+		texture = textObject;
+		texture->target = target;
+		texture->unit = unit;
+		glGenTextures(1, &texture->uId);
+	}
+
+	void Texture::bind()
+	{		
+		texture->activeBind();
+	}
+
+	void Texture::save()
+	{
+		if (texture->target == GL_TEXTURE_2D) {
+			switch (imageDetails.bpp) {
 			case 1:
-				glTexImage2D(target, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, image_data);
+				glTexImage2D(texture->target, 0, GL_RED, imageDetails.width, imageDetails.height, 0, GL_RED, GL_UNSIGNED_BYTE, imageData);
 				break;
 
 			case 3:
-				glTexImage2D(target, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image_data);
+				glTexImage2D(texture->target, 0, GL_RGB, imageDetails.width, imageDetails.height, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
 				break;
 
 			case 4:
-				glTexImage2D(target, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+				glTexImage2D(texture->target, 0, GL_RGBA, imageDetails.width, imageDetails.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
 				break;
 
 			default:
-				throwError(format("bpp texture [%i] not supported", bpp));
-				return result;
+				throwError(format("bpp texture [%i] not supported", imageDetails.bpp));
 			}
 		}
-
-		glGenerateMipmap(GL_TEXTURE_2D);
-		glTexParameterf(target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameterf(target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameterf(target, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameterf(target, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-		texture.unbind();
-		stbi_image_free(image_data);
-
-		result.loadSuccessfully = true;
-		result.width = width;
-		result.height = height;
-
-		return result;
 	}
 
-	bool8 Texture::createArrayByFilenames(gl_to& texture, int32 width, int32 height, const std::vector<std::string>& filenames)
+	void Texture::setFiltering(int32 magnification, int32 minification)
 	{
-		texture.create();
-		texture.bind(GL_TEXTURE_2D_ARRAY);
+		glTexParameteri(texture->target, GL_TEXTURE_MAG_FILTER, magnification);
+		glTexParameteri(texture->target, GL_TEXTURE_MIN_FILTER, minification);
+	}
 
-		glTexStorage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA, width, height, filenames.size());
+	void Texture::setParameter(uint32 parameter, uint32 wrapMode)
+	{
+		glTexParameteri(texture->target, parameter, wrapMode);
+	}
 
-		stbi_set_flip_vertically_on_load(1);
+	void Texture::generateMipmap()
+	{
+		glGenerateMipmap(texture->target);
+	}
 
-		int32 arrayIndex = 0;
-		for (auto filename : std::as_const(filenames)) 
-		{
-			int32 w = 0, h = 0, bpp = 0;
-
-			unsigned char* image_data = stbi_load(filename.c_str(), &w, &h, &bpp, 0);
-
-			glTextureSubImage3D(
-				GL_TEXTURE_2D_ARRAY, 0, 0, 0, arrayIndex++, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
-								
-			stbi_image_free(image_data);
-		}
-		return true;
+	void Texture::unbind()
+	{
+		texture->unbind();
 	}
 
 	ImageDetail::ImageDetail() : loadSuccessfully (false)
-		, width(0), height(0)
+		, width(0), height(0), bpp(0)
 	{
 
 	}

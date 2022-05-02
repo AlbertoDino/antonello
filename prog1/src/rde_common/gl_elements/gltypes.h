@@ -33,7 +33,8 @@ namespace oglElements {
 
 		void create();
 		void bind(uint32 target);
-		void unbind();
+		void activeBind() const;
+		void unbind() const;
 	};
 
 	// Buffer Object
@@ -122,4 +123,92 @@ namespace oglElements {
 		void attachRenderBuffer(gl_rbo& rbo);
 	};
 
+
+	inline bool8 checkForOpenglErrors(bool8 debugError = true)
+	{
+		bool8 foundError = true;
+		GLenum errorcode = glGetError();
+		switch (errorcode)
+		{
+		case GL_NO_ERROR:
+			foundError = false;
+			break;
+		case GL_INVALID_ENUM:
+			if (debugError) assert(true ? "Opengl Error: GL_INVALID_ENUM" : "Opengl Error: GL_INVALID_ENUM");
+			break;
+		case GL_INVALID_VALUE:
+			if (debugError)  assert(true ? "Opengl Error: GL_INVALID_VALUE" : "Opengl Error: GL_INVALID_VALUE");
+			break;
+		case GL_INVALID_OPERATION:
+			if (debugError)  assert(true ? "Opengl Error: GL_INVALID_OPERATION" : "Opengl Error: GL_INVALID_OPERATION");
+			break;
+		case GL_STACK_OVERFLOW:
+			if (debugError)  assert(true ? "Opengl Error: GL_STACK_OVERFLOW" : "Opengl Error: GL_STACK_OVERFLOW");
+			break;
+		case GL_STACK_UNDERFLOW:
+			if (debugError) assert(true ? "Opengl Error: GL_STACK_UNDERFLOW" : "Opengl Error: GL_STACK_UNDERFLOW");
+			break;
+		case GL_OUT_OF_MEMORY:
+			if (debugError)  assert(true ? "Opengl Error: GL_OUT_OF_MEMORY" : "Opengl Error: GL_OUT_OF_MEMORY");
+			break;
+		case GL_TABLE_TOO_LARGE:
+			if (debugError)  assert(true ? "Opengl Error: GL_TABLE_TOO_LARGE" : "Opengl Error: GL_TABLE_TOO_LARGE");
+			break;
+		default:
+			if (debugError)  assert(true ? "Opengl Error" : "Opengl Error");
+			break;
+		}
+
+		uint32 fboStatus = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER);
+
+		if (fboStatus != GL_FRAMEBUFFER_COMPLETE)
+		{
+			foundError = true;
+			if (debugError)  assert(true ? "Draw FB Error: The framebuffer is not complete" : "The framebuffer is not complete");
+			switch (fboStatus)
+			{
+			case GL_FRAMEBUFFER_UNDEFINED:
+				// Oops, no window exists?
+				if (debugError)  assert(true ? "Draw FB Error: GL_FRAMEBUFFER_UNDEFINED" : "GL_FRAMEBUFFER_UNDEFINED");
+				break;
+			case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+				// Check the status of each attachment
+				if (debugError)  assert(true ? "Draw FB Error: GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT" : "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT");
+				break;
+			case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+				// Attach at least one buffer to the FBO
+				if (debugError)  assert(true ? "Draw FB Error: GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT" : "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT");
+				break;
+			case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+				// Check that all attachments enabled via
+				// glDrawBuffers exist in FBO""
+				if (debugError)  assert(true ? "Draw FB Error: GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER" : "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER");
+				break;
+			case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+				// Check that the buffer specified via
+				// glReadBuffer exists in FBO
+				if (debugError)  assert(true ? "Draw FB Error: GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER" : "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER");
+				break;
+			case GL_FRAMEBUFFER_UNSUPPORTED:
+				// Reconsider formats used for attached buffers
+				if (debugError)  assert(true ? "Draw FB Error: GL_FRAMEBUFFER_UNSUPPORTED" : "GL_FRAMEBUFFER_UNSUPPORTED");
+				break;
+			case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
+				// Make sure the number of samples for each 
+				// attachment is the same 
+				if (debugError)  assert(true ? "Draw FB Error: GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE" : "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE");
+				break;
+			case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:
+				// Make sure the number of layers for each 
+				// attachment is the same 
+				if (debugError)  assert(true ? "Draw FB Error: GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS" : "GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS");
+				break;
+			}
+		}
+		int i = 0;
+		if (foundError) {
+			i++;
+		}
+		return foundError;
+	}
 }

@@ -10,7 +10,7 @@ namespace sceneobjs {
 
 
 
-	UILightProperties::UILightProperties():
+	UILightProperties::UILightProperties() :
 		light(0)
 	{
 	}

@@ -96,7 +96,7 @@
     <ClInclude Include="render\pixelreadcontext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sceneobjects\rmodel.h">
+    <ClInclude Include="sceneobjects\genmodel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="builtresources\builtmodels.h">
@@ -106,6 +106,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sceneobjects\uicameraproperties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneobjects\normalmodel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneobjects\lightposition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneobjects\uilightpositionproperties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -161,7 +170,7 @@
     <ClCompile Include="render\pixelreadcontext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sceneobjects\rmodel.cpp">
+    <ClCompile Include="sceneobjects\genmodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="builtresources\builtmodels.cpp">
@@ -171,6 +180,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sceneobjects\uicameraproperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneobjects\normalmodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneobjects\lightposition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneobjects\uilightpositionproperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

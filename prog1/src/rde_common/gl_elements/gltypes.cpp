@@ -15,8 +15,15 @@ namespace oglElements {
         glBindTexture(_target, uId);
     }
 
-    void gl_to::unbind()
+    void gl_to::activeBind() const
     {
+        glActiveTexture(GL_TEXTURE0+unit);
+        glBindTexture(target, uId);
+    }
+
+    void gl_to::unbind() const
+    {
+        glActiveTexture(GL_TEXTURE0+0);
         glBindTexture(target, 0);
     }
 

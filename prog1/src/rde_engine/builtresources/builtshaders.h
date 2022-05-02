@@ -8,7 +8,7 @@ namespace rex {
 		uint32 programId;
 	};
 
-	class Light_temp_2 {
+	class Light {
 	public:
 		bool8 init();
 		uint32 programId;
@@ -19,6 +19,12 @@ namespace rex {
 		bool8 init();
 		uint32 programId;
 
+	};
+
+	class NormalTextureLight {
+	public:
+		bool8 init();
+		uint32 programId;
 	};
 
 }

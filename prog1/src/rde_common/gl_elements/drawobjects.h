@@ -35,6 +35,7 @@ namespace oglElements {
 		gl_vertexObject vertexObject;
 		gl_to		    textureObject;
 
+		DrawElementTextured() = default;
 		DrawElementTextured(const gl_to& texture);
 
 		void render() const override;

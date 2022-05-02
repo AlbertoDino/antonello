@@ -311,7 +311,7 @@ static void ImGui_ImplOpenGL3_SetupRenderState(ImDrawData* draw_data, int fb_wid
     glBindVertexArray(vertex_array_object);
 #endif
 
-    // Bind vertex/index buffers and setup attributes for ImDrawVert
+    // Bind add/index buffers and setup attributes for ImDrawVert
     glBindBuffer(GL_ARRAY_BUFFER, g_VboHandle);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_ElementsHandle);
     glEnableVertexAttribArray(g_AttribLocationVtxPos);
@@ -383,7 +383,7 @@ void    ImGui_ImplOpenGL3_RenderDrawData(ImDrawData* draw_data)
     {
         const ImDrawList* cmd_list = draw_data->CmdLists[n];
 
-        // Upload vertex/index buffers
+        // Upload add/index buffers
         glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)cmd_list->VtxBuffer.Size * (int)sizeof(ImDrawVert), (const GLvoid*)cmd_list->VtxBuffer.Data, GL_STREAM_DRAW);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)cmd_list->IdxBuffer.Size * (int)sizeof(ImDrawIdx), (const GLvoid*)cmd_list->IdxBuffer.Data, GL_STREAM_DRAW);
 
@@ -681,7 +681,7 @@ bool    ImGui_ImplOpenGL3_CreateDeviceObjects()
     g_VertHandle = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(g_VertHandle, 2, vertex_shader_with_version, NULL);
     glCompileShader(g_VertHandle);
-    CheckShader(g_VertHandle, "vertex shader");
+    CheckShader(g_VertHandle, "add shader");
 
     const GLchar* fragment_shader_with_version[2] = { g_GlslVersionString, fragment_shader };
     g_FragHandle = glCreateShader(GL_FRAGMENT_SHADER);

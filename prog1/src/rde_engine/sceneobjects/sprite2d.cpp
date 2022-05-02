@@ -9,8 +9,8 @@ namespace sceneobjs {
         speed (0.1)
     {
         size = 1;
-        pRender = new oglElements::DrawSprite2D();
-        *((oglElements::DrawArrayObjectWithTexture*) pRender) = *rex::Rectangle::getModel();
+        refRender = new oglElements::DrawSprite2D();        
+        ((oglElements::DrawArrayObjectWithTexture*) refRender)->vertexObject = rex::Rectangle::getModel();
     }
 
 
@@ -23,18 +23,18 @@ namespace sceneobjs {
 
         pSceneNode->view = scale * translate;
 
-        ((oglElements::DrawSprite2D*)pRender)->updateAnimationFrame(speed, elaps);
+        ((oglElements::DrawSprite2D*)refRender)->updateAnimationFrame(speed, elaps);
     }
 
     void Sprite2D::add2scene()
     {
 
-        oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::ShaderFlatTextureCtx);
+        oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::ShaderFlatTexture);
         
         if (!rendering)
             throwError("Cannot find shaderFlat layout.");
 
-        oglElements::DrawSprite2D* draw = (oglElements::DrawSprite2D*)pRender;
+        oglElements::DrawSprite2D* draw = (oglElements::DrawSprite2D*)refRender;
 
         shaderValues = rendering->shader;
         shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_M4f, "mvpMatrix", &pSceneNode->worldmvp.data);
@@ -45,7 +45,7 @@ namespace sceneobjs {
 
     oglElements::DrawSprite2D* Sprite2D::getSpriteRendering()
     {
-        return (oglElements::DrawSprite2D*)pRender;
+        return (oglElements::DrawSprite2D*)refRender;
     }
 
 }

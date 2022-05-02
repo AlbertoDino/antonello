@@ -22,7 +22,7 @@ INLINE_ void Win_Init(HINSTANCE hInstance, LPSTR lpCmdLine)
 	console.height = 500;
 
 	gConsole = new win::Console(console);
-	gConsole->init(hInstance);
+	gConsole-> init(hInstance);
 
 	tracelog("console created");
 
@@ -38,6 +38,7 @@ INLINE_ void Win_Run(int nShowCmd)
 	gApp->gWinHandler.height = 1024;
 	gApp->gWinHandler.title = "Demo";
 	gApp->gWinHandler.user_pointer = game;
+
 	gApp->init();
 
 	game->init(&gApp->gWinHandler);

@@ -5,16 +5,22 @@
 #include "model.h"
 
 namespace sceneobjs {
+	/*
+	This has to be refactor:
 
+	1- in one constructor the refRender is created within the class
+	2- in a second construct is passed from outside
+	3- what is model vs genmodel vs normalmodel ?
+	*/
 	Model::Model() 
 	{
-		pRender = new oglElements::DrawElementTextured(api::getDefaultTexture());
+		refRender = new oglElements::DrawElementTextured(api::getDefaultTexture());
 		init();
 	}
 
 	Model::Model(oglElements::RenderingElement* rndElem)
 	{
-		pRender = rndElem;
+		refRender = rndElem;
 		init();
 	}
 
@@ -47,7 +53,7 @@ namespace sceneobjs {
 
 	void Model::add2SceneWithFlatShader()
 	{
-		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::ShaderFlatCtx);
+		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::ShaderFlat);
 
 		if (!rendering)
 			throwError("Cannot find shaderFlat layout.");

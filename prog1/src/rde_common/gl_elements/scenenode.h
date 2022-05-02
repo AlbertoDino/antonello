@@ -12,7 +12,7 @@ namespace oglElements {
 		
 		func::CMatrix4f32 view;
 		func::CMatrix4f32 projection;
-		func::CMatrix4f32 normal;
+		func::CMatrix3f32 normal;
 		func::CMatrix4f32 worldview;
 		func::CMatrix4f32 worldprojection;
 		func::CMatrix4f32 worldmvp;

@@ -5,7 +5,7 @@
 namespace oglElements {
 
 	SceneObject::SceneObject() :
-		pSceneNode(new SceneNode()), pRender(0), pNext(0), pLast(0)
+		pSceneNode(new SceneNode()), refRender(0)
 	{
 	}
 
@@ -14,17 +14,18 @@ namespace oglElements {
 		if (pSceneNode)
 			delete pSceneNode;
 		pSceneNode = 0;
+	}
 
-		if (pRender)
-			delete pRender;
-		pRender = 0;
+	SceneNode* SceneObject::getSceneNode()
+	{
+		return pSceneNode;
 	}
 
 	void SceneObject::render() const
 	{
 		shaderValues.updateUniforms();
-		if (pRender) {
-			pRender->render();
+		if (refRender) {
+			refRender->render();
 		}
 	}
 }

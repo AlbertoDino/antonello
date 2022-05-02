@@ -8,6 +8,7 @@
 #include "face.h"
 #include "mesh.h"
 #include "arraymesh.h"
+#include "trianglemesh.h"
 #include "winobj.h"
 #include "frustum.h"
 #include "perspective.h"

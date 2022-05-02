@@ -5,13 +5,11 @@ using namespace oglElements;
 
 namespace rex {
 
-	oglElements::DrawArrayObject* Cube::cube = 0;
+	oglElements::gl_vertexObject Cube::cube;
 
-	oglElements::DrawArrayObject* Cube::getModel()
+	const oglElements::gl_vertexObject& Cube::getModel()
 	{
-		if (cube != 0) return cube;
-
-		cube = new oglElements::DrawArrayObject();
+		if (cube.VAO != 0) return cube;
 
 		ArrayMesh mesher;
 
@@ -174,21 +172,19 @@ namespace rex {
 			CVector2f{ fRadius, 0.0f });
 
 
-		mesher.create(cube, GL_TRIANGLES);
+		mesher.create(&cube, GL_TRIANGLES);
 
 		return cube;
 	}
 
-	oglElements::DrawArrayObjectWithTexture* Rectangle::rectangle = 0;
+	oglElements::gl_vertexObject Rectangle::rectangle;
 
-	oglElements::DrawArrayObjectWithTexture* Rectangle::getModel()
+	const oglElements::gl_vertexObject& Rectangle::getModel()
 	{
-		if (rectangle != 0) return rectangle;
+		if (rectangle.VAO != 0) return rectangle;
 
-		rectangle = new oglElements::DrawArrayObjectWithTexture();
-
-		rectangle->vertexObject.drawMode = GL_TRIANGLES;
-		rectangle->vertexObject.count = 6;
+		rectangle.drawMode = GL_TRIANGLES;
+		rectangle.count = 6;
 
 		float32 fRadius = 1.0f;
 
@@ -208,16 +204,6 @@ namespace rex {
 			0.0f, 0.0f, fRadius,
 			0.0f, 0.0f, fRadius };
 
-
-		glm::vec4 colors[6] = {
-			glm::vec4(1,1,1,1),
-			glm::vec4(1,1,1,1),
-			glm::vec4(1,1,1,1),
-			glm::vec4(1,1,1,1),
-			glm::vec4(1,1,1,1),
-			glm::vec4(1,1,1,1)
-		};
-
 		float32 vTexts[] = { 1.0f, 0.0f,
 			1.0f, 1.0f,
 			0.0f, 1.0f,
@@ -225,24 +211,23 @@ namespace rex {
 			0.0f, 0.0f,
 			1.0f, 0.0f };
 
-		glGenVertexArrays(1, &rectangle->vertexObject.VAO);
-		glGenBuffers(1, &rectangle->vertexObject.VBO);
+		glGenVertexArrays(1, &rectangle.VAO);
+		glGenBuffers(1, &rectangle.VBO);
 		//glGenBuffers(1, &draw->vertexObject.CBO);
-		glGenBuffers(1, &rectangle->vertexObject.UVO);
+		glGenBuffers(1, &rectangle.UVO);
 
 
-		glBindVertexArray(rectangle->vertexObject.VAO);
+		glBindVertexArray(rectangle.VAO);
 
-		// for vertex buffer ..
-		glBindBuffer(GL_ARRAY_BUFFER, rectangle->vertexObject.VBO);
+		// for add buffer ..
+		glBindBuffer(GL_ARRAY_BUFFER, rectangle.VBO);
 		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vector3f), &vVerts[0], GL_DYNAMIC_DRAW);
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, NULL);
 
-
 		// for uv buffer ..
-		glBindBuffer(GL_ARRAY_BUFFER, rectangle->vertexObject.UVO);
+		glBindBuffer(GL_ARRAY_BUFFER, rectangle.UVO);
 		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vector2f), &vTexts[0], GL_DYNAMIC_DRAW);
 
 		glEnableVertexAttribArray(1);
@@ -253,6 +238,93 @@ namespace rex {
 
 		return rectangle;
 	}
+
+	oglElements::gl_vertexObject Sphere::sphere;
+
+
+
+	const oglElements::gl_vertexObject& Sphere::getModel(float32 fRadius, int32 sectors, int32 stacks)
+	{
+		if (sphere.VAO != 0) return sphere;
+
+		const float PI = acos(-1);
+
+		float32 x, y, z, xy;							   // vertex position
+		float32 nx, ny, nz, lengthInv = 1.0f / fRadius;    // normal
+		float32 s, t;
+
+		float32 sectorStep = 2 * PI / sectors;
+		float32 stackStep = PI / stacks;
+		float32 sectorAngle, stackAngle;
+
+		oglElements::TriangleMesh mesh;
+		for (int i = 0; i <= stacks; ++i)
+		{
+			stackAngle = PI / 2 - i * stackStep;        // starting from pi/2 to -pi/2
+			xy = fRadius * cosf(stackAngle);             // r * cos(u)
+			z = fRadius * sinf(stackAngle);              // r * sin(u)
+
+			// add (sectorCount+1) vertices per stack
+			// the first and last vertices have same position and normal, but different tex coords
+			for (int j = 0; j <= sectors; ++j)
+			{
+				sectorAngle = j * sectorStep;           // starting from 0 to 2pi
+
+				// vertex position
+				x = xy * cosf(sectorAngle);             // r * cos(u) * cos(v)
+				y = xy * sinf(sectorAngle);             // r * cos(u) * sin(v)
+				glm::vec3 vertex = { x, y, z };
+
+				// normalized vertex normal
+				nx = x * lengthInv;
+				ny = y * lengthInv;
+				nz = z * lengthInv;
+				glm::vec3 normal = { nx, ny, nz };
+
+				// vertex tex coord between [0, 1]
+				s = (float)j / sectors;
+				t = (float)i / stacks;
+				glm::vec2 uv = { s, t };
+
+				mesh.addVertex(vertex, normal, uv);
+				
+			}
+		}
+
+		
+
+		// indices
+		//  k1--k1+1
+		//  |  / |
+		//  | /  |
+		//  k2--k2+1
+		unsigned int k1, k2;
+		for (int i = 0; i < stacks; ++i)
+		{
+			k1 = i * (sectors + 1);     // beginning of current stack
+			k2 = k1 + sectors + 1;      // beginning of next stack
+
+			for (int j = 0; j < sectors; ++j, ++k1, ++k2)
+			{
+				// 2 triangles per sector excluding 1st and last stacks
+				if (i != 0)
+				{
+					mesh.addIndex(k1, k2, k1 + 1);   // k1---k2---k1+1
+				}
+
+				if (i != (stacks - 1))
+				{
+					mesh.addIndex(k1 + 1, k2, k2 + 1); // k1+1---k2---k2+1
+				}
+			}
+		}
+
+		mesh.computeTangents();
+		mesh.create(&sphere, GL_TRIANGLES);
+		return sphere;
+	
+	}
+
 
 }
 
