@@ -9,89 +9,89 @@ namespace colors
 
 	// http://www.farb-tabelle.de/en/table-of-color.htm
 	//### A
-	extern Vector4f AntiqueWhite3;
+	extern Color AntiqueWhite3;
 	//### B
-	extern Vector4f Black;
-	extern Vector4f Burlywood;
-	extern Vector4f Burlywood3;
+	extern Color Black;
+	extern Color Burlywood;
+	extern Color Burlywood3;
 	//### C
-	extern Vector4f Chartreuse2;  // green/yellow
-	extern Vector4f Chartreuse3;
-	extern Vector4f Cornsilk2;
-	extern Vector4f Cornsilk3;
+	extern Color Chartreuse2;  // green/yellow
+	extern Color Chartreuse3;
+	extern Color Cornsilk2;
+	extern Color Cornsilk3;
 	//### D
-	extern Vector4f DarkBlue;
-	extern Vector4f DarkGray;
-	extern Vector4f DeepPink;	//fucsia
-	extern Vector4f DarkSlateGray3;
-	extern Vector4f DodgerBlue2;
-	extern Vector4f DodgerBlue3;
-	extern Vector4f DimGrey;
-	extern Vector4f DarkSlateGray;
+	extern Color DarkBlue;
+	extern Color DarkGray;
+	extern Color DeepPink;	//fucsia
+	extern Color DarkSlateGray3;
+	extern Color DodgerBlue2;
+	extern Color DodgerBlue3;
+	extern Color DimGrey;
+	extern Color DarkSlateGray;
 
 	///### F
-	extern Vector4f Firebrick3;
+	extern Color Firebrick3;
 
 	//### W
-	extern Vector4f White;
+	extern Color White;
 
 	//### G
-	extern Vector4f GoldenRod;
-	extern Vector4f Grey47;
-	extern Vector4f Grey60;
-	extern Vector4f Green;
+	extern Color GoldenRod;
+	extern Color Grey47;
+	extern Color Grey60;
+	extern Color Green;
 
 	//### M
-	extern Vector4f MediumPurple3;
-	extern Vector4f MediumPurple4;
+	extern Color MediumPurple3;
+	extern Color MediumPurple4;
 
 	//### N
-	extern Vector4f Navy;
+	extern Color Navy;
 
 	//### H
-	extern Vector4f Honeydew4;
-	extern Vector4f Honeydew3;
-	extern Vector4f HotPink;
+	extern Color Honeydew4;
+	extern Color Honeydew3;
+	extern Color HotPink;
 
 	//#### I
-	extern Vector4f Ivory3;
-	extern Vector4f Ivory4;
+	extern Color Ivory3;
+	extern Color Ivory4;
 
 	//#### Y
-	extern Vector4f Yellow;
+	extern Color Yellow;
 
 	//### L
-	extern Vector4f LightCyan1;
-	extern Vector4f LightBlue4;
-	extern Vector4f LightSkyBlue2;
-	extern Vector4f LightSkyBlue3;
-	extern Vector4f LightSkyBlue4;
-	extern Vector4f LightSteelBlue4;
-	extern Vector4f LavenderBlush2;
-	extern Vector4f LavenderBlush3;
-	extern Vector4f LavenderBlush4;
+	extern Color LightCyan1;
+	extern Color LightBlue4;
+	extern Color LightSkyBlue2;
+	extern Color LightSkyBlue3;
+	extern Color LightSkyBlue4;
+	extern Color LightSteelBlue4;
+	extern Color LavenderBlush2;
+	extern Color LavenderBlush3;
+	extern Color LavenderBlush4;
 	//### O
-	extern Vector4f OrangeRed;
-	extern Vector4f Orange;
+	extern Color OrangeRed;
+	extern Color Orange;
 
 	//### R
-	extern Vector4f Red;
-	extern Vector4f RoyalBlue3;
-	extern Vector4f RoyalBlue4;
+	extern Color Red;
+	extern Color RoyalBlue3;
+	extern Color RoyalBlue4;
 
 	//### S
-	extern Vector4f SeaGreen1;
-	extern Vector4f SeaGreen4;
-	extern Vector4f Seashell3;
-	extern Vector4f Seashell4;
-	extern Vector4f SlateGray4;
-	extern Vector4f Snow4;
-	extern Vector4f SkyBlue;
-	extern Vector4f SpringGreen;
-	extern Vector4f SpringGreen4; //green/sea
-	extern Vector4f SteelBlue;
-	extern Vector4f SteelBlue3;
-	extern Vector4f SteelBlue4;
+	extern Color SeaGreen1;
+	extern Color SeaGreen4;
+	extern Color Seashell3;
+	extern Color Seashell4;
+	extern Color SlateGray4;
+	extern Color Snow4;
+	extern Color SkyBlue;
+	extern Color SpringGreen;
+	extern Color SpringGreen4; //green/sea
+	extern Color SteelBlue;
+	extern Color SteelBlue3;
+	extern Color SteelBlue4;
 
 	extern void InitColors();	
 }

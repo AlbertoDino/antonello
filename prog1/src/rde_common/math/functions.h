@@ -24,6 +24,7 @@ namespace func {
 	// Vector4f
 	extern void	 vSet(Vector4f &v, float32 x, float32 y, float32 z, float32 w);
 	extern void	 vSet(Vector4f& v, const Vector4f& b);
+	extern void  vCopy(Vector4f& dst, const Vector4f& src);
 
 	//Matrix3f32
 	extern void FromEulerHeadPitchRoll(Matrix3f32& m, float32 headDegrees, float32 pitchDegrees, float32 rollDegrees);

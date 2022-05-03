@@ -11,7 +11,7 @@ using namespace func;
 
 namespace oglElements {
 
-	CameraScene::CameraScene()
+	CameraScene::CameraScene() 
 	{
 
 	}
@@ -25,6 +25,9 @@ namespace oglElements {
 	Camera::Camera() : cameraNode(0)
 		, speed(150.0f)
 		, rotationSpeed(20.0f)
+		, fovx(CAMERA_FOVX)
+		, znear(CAMERA_ZNEAR)
+		, zfar(CAMERA_ZFAR)
 	{
 		position.Set(0);
 		offset.Set(0);
@@ -89,7 +92,7 @@ namespace oglElements {
 		updateFrustum();
 	}
 
-	void Camera::setProjection(int32 screenWidth, int32 screenHeight, float32 fovx, float32 znear, float32 zfar)
+	void Camera::setProjection(int32 screenWidth, int32 screenHeight)
 	{
 		static Perspective perspective;
 		perspective.setFrustum(fovx, float(screenWidth) / float(screenHeight), znear, zfar);

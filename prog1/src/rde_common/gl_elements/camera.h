@@ -28,7 +28,7 @@ namespace oglElements {
 		void    rotateCamera(const CVector3f& vector, float32 elapsedTimeSec);
 		float32	move(const CVector3f& mov,float32 elapsedTimeSec);
 		void	updateViewMatrix();
-		void	setProjection(int32 screenWidth, int32 screenHeight, float32 fovx, float32 znear, float32 zfar);
+		void	setProjection(int32 screenWidth, int32 screenHeight);
 		void	reset();
 		void	turn90();
 		void	turnless90();
@@ -40,6 +40,7 @@ namespace oglElements {
 		const CVector3f& getPosition() const;
 
 		float32 speed, rotationSpeed;
+		float32 fovx, znear, zfar;
 	private:
 
 		void	updateFrustum();

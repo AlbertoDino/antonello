@@ -9,7 +9,7 @@ public:
 	Demo();
 	~Demo();
 
-	void init(oglElements::WinObj* gWininstance);
+	void init();
 
 	bool8 isRunning() const;
 
@@ -55,6 +55,5 @@ private:
 	sceneobjs::Model* currentModelSelected;
 	
 	render::UITextList uiText;
-	render::UIScene ui;
 	render::PixelReadContext* pickingCtx;
 };

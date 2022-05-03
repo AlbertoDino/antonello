@@ -8,7 +8,6 @@
 namespace render {
 
 	UIContext::UIContext(int32 rndContextId)
-		: uiScene(0)
 	{
 		contextId = rndContextId;
 	}
@@ -16,7 +15,6 @@ namespace render {
 	UIContext::~UIContext()
 	{
 		end();
-		uiScene = 0;
 	}
 
 	void UIContext::init(oglElements::WinObj* window)
@@ -37,7 +35,7 @@ namespace render {
 
 	void UIContext::render() const
 	{
-		if (!uiScene) 
+		if (uiComponents.empty()) 
 			return;
 
 		ImGui_ImplOpenGL3_NewFrame();
@@ -45,7 +43,7 @@ namespace render {
 		ImGui::NewFrame();
 
 
-		for (auto const& uiComp : std::as_const(uiScene->uiComponents)) {
+		for (auto const& uiComp : std::as_const(uiComponents)) {
 			uiComp->render();
 		}
 
@@ -61,8 +59,4 @@ namespace render {
 		ImGui::DestroyContext();
 	}
 
-	void UIContext::render(UIScene* ui)
-	{
-		uiScene = ui;
-	}
 }

@@ -21,9 +21,30 @@
     <ClCompile Include="demo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game_prototype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game_prototype\sessions\gamel1s1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="demo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype\common\gamesession.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype\sessions\gamel1s1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype\common\local.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype\sessions\local.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

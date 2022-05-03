@@ -18,7 +18,10 @@ namespace render {
 
 		// Create the window and store this window as window pointer
 		// so that we can use it in callback functions
-		auto glWindow = glfwCreateWindow(Window->width, Window->height, Window->title.c_str(), nullptr, nullptr);
+
+		GLFWmonitor* fullscreenMonitor = window->isFullScreen ? glfwGetPrimaryMonitor() : nullptr;
+
+		auto glWindow = glfwCreateWindow(Window->width, Window->height, Window->title.c_str(), fullscreenMonitor, nullptr);
 		Window->glWindowHandler = glWindow;
 
 		glfwSetWindowUserPointer(glWindow, Window->user_pointer);
@@ -45,10 +48,11 @@ namespace render {
 
     void OglContext::pre_render()
     {
-		glViewport(0, 0, Window->width, Window->height);
-		glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+		glClearColor(Window->backgroundColor[0], Window->backgroundColor[1], Window->backgroundColor[2], Window->backgroundColor[3]);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
+
+		glViewport(Window->viewPort[0], Window->viewPort[1], Window->viewPort[2], Window->viewPort[3]);
+
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);

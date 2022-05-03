@@ -11,10 +11,17 @@ Demo::Demo() :
 {
 	cameraAgent = std::make_unique<oglElements::Camera>();
 	sceneNode = std::make_unique<oglElements::SceneNode>();
-	grid1 = std::make_unique<sceneobjs::Grid>();
-	light = std::make_unique<sceneobjs::Light>();
-
+	sceneNode->setDebugName("sceneNode");
+	
 	lastRotation.Set(0);
+
+	gApp->gWinHandler.width = 1600;
+	gApp->gWinHandler.height = 1024;
+	gApp->gWinHandler.viewPort[2] = 1600;
+	gApp->gWinHandler.viewPort[3] = 1024;
+	gApp->gWinHandler.isFullScreen = false;
+	gApp->gWinHandler.title = "Demo";
+	gApp->gWinHandler.user_pointer = this;
 }
 
 Demo::~Demo()
@@ -22,59 +29,33 @@ Demo::~Demo()
 
 }
 
-void Demo::init(oglElements::WinObj* gWininstance)
-{
-	window = gWininstance;
 
-	
+void Demo::init()
+{
+	window = &(gApp->gWinHandler);
 
 	oglElements::CameraScene* cameraNode = cameraAgent->getCameraScene();
 	cameraNode->setDebugName("camera");
 	cameraAgent->setOrigin(CVector3f(0, 0, 0));
 
-	// Create Grid
-	oglElements::ArrayMesh gridCreate;
-	float32 lenght = 20.0f;
-	float32 height = 0.55f;
-	for (float32 x = -lenght; x <= lenght; x += 0.5) {
-		gridCreate.vertex3f(x, -height, lenght);
-		gridCreate.vertex3f(x, -height, -lenght);
-		gridCreate.vertex3f(lenght, -height, x);
-		gridCreate.vertex3f(-lenght, -height, x);
-	}
+	gApp->getRoot().addChild(cameraNode);	
+	cameraNode->addChild(sceneNode.get());
 
-	gridCreate.create(&((oglElements::DrawArrayObject*)grid1->refRender)->vertexObject);
-	vSet(grid1->color, colors::Green);
+	//-----------
+	grid1 = std::make_unique<sceneobjs::Grid>();
 	grid1->add2scene();
-
+	sceneNode->addChild(grid1->getSceneNode());
+	//-----------
+	light = std::make_unique<sceneobjs::Light>();
 	light->color.Set(colors::White[0], colors::White[1], colors::White[2]);
 	light->direction.Set(-150, 80, 3);
 	light->add2scene();
-
-	gApp->getRoot().addChild(cameraNode);
-
-	sceneNode->setDebugName("sceneNode");
-	cameraNode->addChild(sceneNode.get());
-	sceneNode->addChild(grid1->getSceneNode());
 	sceneNode->addChild(light->getSceneNode());
-
+	//-----------
 	pickingCtx = api::getPixelReadContext();
 	pickingCtx->setOnSelected([this](uint32 id) { onModelSelected(id); uiModelProperties->setModelSelected(currentModelSelected); });
 
-	sprite = std::make_unique<sceneobjs::Sprite2D>();
-
-	auto spriteRnd = sprite->getSpriteRendering();
-	spriteRnd->setTextureByFilename("assets/textures/sprite/spritesheet.png");
-	spriteRnd->addAnimation("assets/textures/sprite/Run.txt", oglElements::AnimationType::Run);
-	spriteRnd->addAnimation("assets/textures/sprite/Idle.txt", oglElements::AnimationType::Idle);
-	spriteRnd->addAnimation("assets/textures/sprite/Jump.txt", oglElements::AnimationType::Jumps);
-
-	spriteRnd->playAnimation(oglElements::AnimationType::Idle);
-
-	sprite->add2scene();
-	sceneNode->addChild(sprite->getSceneNode());
-
-
+	//-----------
 	oglElements::DrawElementTextured* sphererender = new oglElements::DrawElementTextured();
 	sphererender->vertexObject = rex::Sphere::getModel(1.0f,36,18);
 	sphererender->textureObject = api::getDefaultTexture();
@@ -97,14 +78,26 @@ void Demo::init(oglElements::WinObj* gWininstance)
 
 	sceneNode->addChild(sphereNormal->getSceneNode());
 
+	//-----------
+
 	sphererender->textureObject = sphereNormal->getRendering()->textureNormal;
+
+	sprite = std::make_unique<sceneobjs::Sprite2D>();
+
+	auto spriteRnd = sprite->getSpriteRendering();
+	spriteRnd->setTextureByFilename("assets/textures/sprite/spritesheet.png");
+	spriteRnd->addAnimation("assets/textures/sprite/Run.txt", oglElements::AnimationType::Run);
+	spriteRnd->addAnimation("assets/textures/sprite/Idle.txt", oglElements::AnimationType::Idle);
+	spriteRnd->addAnimation("assets/textures/sprite/Jump.txt", oglElements::AnimationType::Jumps);
+
+	spriteRnd->playAnimation(oglElements::AnimationType::Idle);
+
+	sprite->add2scene();
+	sceneNode->addChild(sprite->getSceneNode());
 
 	//#####################
 	// ui
 	render::UIContext* uiCtx = (render::UIContext*)api::getRenderingContext(api::eRenderingContext::UICxt);
-	uiText.list.push_back("<place_holder>");
-	uiText.list.push_back("<place_holder>");
-	uiText.list.push_back("<place_holder>");
 	uiText.list.push_back("<place_holder>");
 	uiText.list.push_back("press v : reset camera");
 	uiText.list.push_back("press F1 : turn campera 90 dg");
@@ -113,21 +106,20 @@ void Demo::init(oglElements::WinObj* gWininstance)
 	uiModelProperties = std::make_unique<sceneobjs::UiModelProperties>();
 	uiModelProperties->set_mesh_load_callback([this](std::string filepath) { addObjectFromFile(filepath); });
 	uiModelProperties->set_model_selected_callback([this](uint32 id) { onModelSelected(id); });
-	ui.uiComponents.push_back(uiModelProperties.get());
+	uiCtx->uiComponents.push_back(uiModelProperties.get());
 
 	uiLightProperties = std::make_unique<sceneobjs::UILightProperties>();
 	uiLightProperties->setLight(light.get());
-	ui.uiComponents.push_back(uiLightProperties.get());
+	uiCtx->uiComponents.push_back(uiLightProperties.get());
 
 	uiCameraProperties = std::make_unique<sceneobjs::UiCameraProperties>();
 	uiCameraProperties->setTextList(&uiText);
 	uiCameraProperties->setCamera(cameraAgent.get());
-	ui.uiComponents.push_back(uiCameraProperties.get());
+	uiCtx->uiComponents.push_back(uiCameraProperties.get());
 
 	uiLightPosProperties = std::make_unique<sceneobjs::UILightPositionProperties>();
 	uiLightPosProperties->setLight(lightPosition.get());
-	ui.uiComponents.push_back(uiLightPosProperties.get());
-	uiCtx->render(&ui);
+	uiCtx->uiComponents.push_back(uiLightPosProperties.get());
 	//#####################
 
 	cameraAgent->reset();
@@ -244,7 +236,8 @@ void Demo::OnMouseScroll(double xoffset, double yoffset)
 
 void Demo::OnWindowSizeChange(int width, int height)
 {
-
+	gApp->gWinHandler.viewPort[2] = width;
+	gApp->gWinHandler.viewPort[3] = height;
 }
 
 void Demo::OnWindowClose()
@@ -277,17 +270,9 @@ void Demo::OnPositionCursorChange(double xposd, double yposd)
 
 void Demo::updateUIScene()
 {
-	auto const pos = cameraAgent->getPosition();
-	auto const dir = cameraAgent->getDirection();
-	auto const rot = cameraAgent->getRotation();
-
 	uiText.list.at(0) = format("Fps %2i ", gApp->stats.fps);
-	uiText.list.at(1) = format("Camera Pos [%2.2f,%2.2f,%2.2f]", pos[0], pos[1], pos[2]);
-	uiText.list.at(2) = format("Camera Dir [%2.2f,%2.2f,%2.2f]", dir[0], dir[1], dir[2]);
-	uiText.list.at(3) = format("Camera Rot [%2.2f,%2.2f,%2.2f]", rot[0], rot[1], rot[2]);
 
 	uiModelProperties->setModelList(models);
-
 }
 
 void Demo::addObjectFromFile(std::string filepath)
@@ -356,7 +341,7 @@ void Demo::loop(float32 elapse)
 {
 	handleInput();
 
-	cameraAgent->setProjection(window->width, window->height, CAMERA_FOVX, CAMERA_ZNEAR, CAMERA_ZFAR);
+	cameraAgent->setProjection(window->width, window->height);
 	cameraAgent->move(inputMovement, elapse);
 	cameraAgent->rotateCamera(inputRotation, elapse);
 	cameraAgent->updateViewMatrix();

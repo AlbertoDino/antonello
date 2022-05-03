@@ -6,10 +6,21 @@
 namespace sceneobjs {
 
 	Grid::Grid()
-	{
-		func::vSet(color, 1.0f, 0.0f, 1.0f, 1.0f);
+	{		
 		refRender = new oglElements::DrawArrayObject();
 		pSceneNode->setDebugName("Grid");
+
+		oglElements::ArrayMesh gridCreate;
+		float32 lenght = 20.0f;
+		float32 height = 0.55f;
+		for (float32 x = -lenght; x <= lenght; x += 0.5) {
+			gridCreate.vertex3f(x, -height, lenght);
+			gridCreate.vertex3f(x, -height, -lenght);
+			gridCreate.vertex3f(lenght, -height, x);
+			gridCreate.vertex3f(-lenght, -height, x);
+		}
+		gridCreate.create(&((oglElements::DrawArrayObject*)refRender)->vertexObject);
+		vSet(color, colors::Green);
 	}
 
 	Grid::~Grid()

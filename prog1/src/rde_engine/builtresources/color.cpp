@@ -5,90 +5,90 @@ namespace colors
 {
 
 	//### A
-	 Vector4f AntiqueWhite3;
+	 Color AntiqueWhite3;
 	//### B
-	 Vector4f Black;
-	 Vector4f Burlywood;
-	 Vector4f Burlywood3;
+	 Color Black;
+	 Color Burlywood;
+	 Color Burlywood3;
 	//### C
-	 Vector4f Chartreuse2;  // green/yellow
-	 Vector4f Chartreuse3;
-	 Vector4f Cornsilk2;
-	 Vector4f Cornsilk3;
+	 Color Chartreuse2;  // green/yellow
+	 Color Chartreuse3;
+	 Color Cornsilk2;
+	 Color Cornsilk3;
 	//### D
-	 Vector4f DarkBlue;
-	 Vector4f DarkGray;
-	 Vector4f DeepPink;	//fucsia
-	 Vector4f DarkSlateGray3;
-	 Vector4f DodgerBlue2;
-	 Vector4f DodgerBlue3;
-	 Vector4f DimGrey;
-	 Vector4f DarkSlateGray;
+	 Color DarkBlue;
+	 Color DarkGray;
+	 Color DeepPink;	//fucsia
+	 Color DarkSlateGray3;
+	 Color DodgerBlue2;
+	 Color DodgerBlue3;
+	 Color DimGrey;
+	 Color DarkSlateGray;
 
 	///### F
-	 Vector4f Firebrick3;
+	 Color Firebrick3;
 
 	//### W
-	 Vector4f White;
+	 Color White;
 
 	//### G
-	 Vector4f GoldenRod;
-	 Vector4f Grey47;
-	 Vector4f Grey60;
-	 Vector4f Green;
+	 Color GoldenRod;
+	 Color Grey47;
+	 Color Grey60;
+	 Color Green;
 
 	//### M
-	 Vector4f MediumPurple3;
-	 Vector4f MediumPurple4;
+	 Color MediumPurple3;
+	 Color MediumPurple4;
 
 	//### N
-	 Vector4f Navy;
+	 Color Navy;
 
 	//### H
-	 Vector4f Honeydew4;
-	 Vector4f Honeydew3;
-	 Vector4f HotPink;
+	 Color Honeydew4;
+	 Color Honeydew3;
+	 Color HotPink;
 
 	//#### I
-	 Vector4f Ivory3;
-	 Vector4f Ivory4;
+	 Color Ivory3;
+	 Color Ivory4;
 	//#### Y
-	 Vector4f Yellow;
+	 Color Yellow;
 
 	//### L
-	 Vector4f LightCyan1;
-	 Vector4f LightBlue4;
-	 Vector4f LightSkyBlue2;
-	 Vector4f LightSkyBlue3;
-	 Vector4f LightSkyBlue4;
-	 Vector4f LightSteelBlue4;
-	 Vector4f LavenderBlush2;
-	 Vector4f LavenderBlush3;
-	 Vector4f LavenderBlush4;
+	 Color LightCyan1;
+	 Color LightBlue4;
+	 Color LightSkyBlue2;
+	 Color LightSkyBlue3;
+	 Color LightSkyBlue4;
+	 Color LightSteelBlue4;
+	 Color LavenderBlush2;
+	 Color LavenderBlush3;
+	 Color LavenderBlush4;
 	//### O
-	 Vector4f OrangeRed;
-	 Vector4f Orange;
+	 Color OrangeRed;
+	 Color Orange;
 
 	//### R
-	 Vector4f Red;
-	 Vector4f RoyalBlue3;
-	 Vector4f RoyalBlue4;
+	 Color Red;
+	 Color RoyalBlue3;
+	 Color RoyalBlue4;
 
 	//### S
-	 Vector4f SeaGreen1;
-	 Vector4f SeaGreen4;
-	 Vector4f Seashell3;
-	 Vector4f Seashell4;
-	 Vector4f SlateGray4;
-	 Vector4f Snow4;
-	 Vector4f SkyBlue;
-	 Vector4f SpringGreen;
-	 Vector4f SpringGreen4; //green/sea
-	 Vector4f SteelBlue;
-	 Vector4f SteelBlue3;
-	 Vector4f SteelBlue4;
+	 Color SeaGreen1;
+	 Color SeaGreen4;
+	 Color Seashell3;
+	 Color Seashell4;
+	 Color SlateGray4;
+	 Color Snow4;
+	 Color SkyBlue;
+	 Color SpringGreen;
+	 Color SpringGreen4; //green/sea
+	 Color SteelBlue;
+	 Color SteelBlue3;
+	 Color SteelBlue4;
 
-	 void SetColor(Vector4f& color, float32 r, float32 g, float32 b) {
+	 void SetColor(Color& color, float32 r, float32 g, float32 b) {
 		 vSet(color, Color255To1(r), Color255To1(g), Color255To1(b), COLOR_ALPHA);
 	 }
 

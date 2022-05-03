@@ -197,6 +197,11 @@ namespace func {
 		v[0] = b[0]; v[1] = b[1]; v[2] = b[2]; v[3] = b[3];
 	}
 
+	void  vCopy(Vector4f& dst, const Vector4f& src)
+	{
+		memcpy(dst, src, sizeof(Vector4f));
+	}
+
 #define A33(row,col)  m[(col*3)+row]
 
 	void FromEulerHeadPitchRoll(Matrix3f32& m, float32 headDegrees, float32 pitchDegrees, float32 rollDegrees)

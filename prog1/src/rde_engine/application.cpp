@@ -138,19 +138,6 @@ void Application::loadRenderingContexts()
 		tracelog("Error loading ShaderLight");
 	}
 	//---------------------------------------------------
-	rex::FlatShaderWithTexture flTextureShader;
-	if (flTextureShader.init())
-	{
-		// Add Rendering Layout
-		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::ShaderFlatTexture);
-		layout->shader.init(flTextureShader.programId);
-		renderingLayouts.push_back(layout);
-		tracelog(format("shader: FlatShaderWithTexture [%i] added.", flTextureShader.programId));
-	}
-	else {
-		tracelog("Error loading ShaderLight");
-	}
-	//---------------------------------------------------
 	rex::NormalTextureLight shNormalTextureLight;
 	if (shNormalTextureLight.init())
 	{
@@ -163,6 +150,19 @@ void Application::loadRenderingContexts()
 	else
 	{
 		tracelog("Error loading NormalTextureLight");
+	}
+	//---------------------------------------------------
+	rex::FlatShaderWithTexture flTextureShader;
+	if (flTextureShader.init())
+	{
+		// Add Rendering Layout
+		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::ShaderFlatTexture);
+		layout->shader.init(flTextureShader.programId);
+		renderingLayouts.push_back(layout);
+		tracelog(format("shader: FlatShaderWithTexture [%i] added.", flTextureShader.programId));
+	}
+	else {
+		tracelog("Error loading ShaderLight");
 	}
 	//---------------------------------------------------
 	renderingLayouts.push_back(new render::UIContext(api::eRenderingContext::UICxt));
