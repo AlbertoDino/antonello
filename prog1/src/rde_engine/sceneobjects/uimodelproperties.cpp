@@ -42,14 +42,14 @@ namespace sceneobjs {
 			ImGui::Text(currentFile.c_str());
 
 
-			std::string currentModelSelectedName = modelSelected == 0 ? "None" : modelSelected->name;
+			std::string currentModelSelectedName = modelSelected == 0 ? "None" : modelSelected->data->name;
 			ImGui::Text("Models ");
 			ImGui::SameLine(0, 5.0f);			
-			if (ImGui::Button((modelListIndex == -1 ? "None" : models.at(modelListIndex)->name).c_str()))
+			if (ImGui::Button((modelListIndex == -1 ? "None" : models.at(modelListIndex)->data->name).c_str()))
 			{
 				modelSelected = 0;
 				if (modelListIndex >= 0 && modelSelectedCallback) {
-					modelSelectedCallback(models.at(modelListIndex)->id);
+					modelSelectedCallback(models.at(modelListIndex)->data->id);
 					modelSelected = models.at(modelListIndex);
 				}
 

@@ -2,7 +2,7 @@
 
 namespace sceneobjs {
 
-	class Model : public oglElements::SceneObject {
+	class Model : public oglElements::GameObject {
 	public:
 
 		Model();
@@ -15,17 +15,11 @@ namespace sceneobjs {
 		void add2SceneWithFlatShader();
 		void add2SceneWithLightShader();
 
-		void updateViewMatrix();
-
-		func::CVector3f position;
 		Vector4f		color;
 		float32			specularPower;
 		float32			specularIntensity;
-		std::string		name;
-		uint32			id;
 		int32			textureUnit;
 	private:
-		func::Quaternion orientation;
 		void init();
 	};
 }

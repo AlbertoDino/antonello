@@ -3,7 +3,7 @@
 
 namespace sceneobjs {
 
-	class Grid : public oglElements::SceneObject {
+	class Grid : public oglElements::GameObject {
 	public:
 		Grid();
 		~Grid();

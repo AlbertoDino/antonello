@@ -12,7 +12,7 @@ namespace sceneobjs {
 		virtual void render() const;
 	};
 
-	class NormalModel : public oglElements::SceneObject {
+	class NormalModel : public oglElements::GameObject {
 	public:
 
 		NormalModel();				
@@ -22,15 +22,12 @@ namespace sceneobjs {
 		void setNormalTextureByFilename(const std::string& filename);
 
 		void add2scene();
-		void updateViewMatrix();
+
 		NormalModelRendering* getRendering();
 
-		func::CVector3f position;
 		func::CVector3f scale;
 		func::CVector4f color;
-		std::string		name;
-		uint32			id;		
-		func::Quaternion orientation;
+
 	private:
 		int32 textureUnit;
 		int32 textureNormalUnit;

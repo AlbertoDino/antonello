@@ -169,6 +169,7 @@
     <ClInclude Include="sceneobjects\uilightpositionproperties.h" />
     <ClInclude Include="sceneobjects\uilightproperties.h" />
     <ClInclude Include="sceneobjects\uimodelproperties.h" />
+    <ClInclude Include="sceneobjects\uispriteproperties.h" />
     <ClInclude Include="win\input.h" />
     <ClInclude Include="win\local.h" />
     <ClInclude Include="win\gamestats.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="sceneobjects\uilightpositionproperties.cpp" />
     <ClCompile Include="sceneobjects\uilightproperties.cpp" />
     <ClCompile Include="sceneobjects\uimodelproperties.cpp" />
+    <ClCompile Include="sceneobjects\uispriteproperties.cpp" />
     <ClCompile Include="win\input.cpp" />
     <ClCompile Include="win\stopwatch.cpp" />
     <ClCompile Include="win\window.cpp" />

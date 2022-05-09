@@ -25,7 +25,7 @@ namespace oglElements {
 
 		void	setOrigin(const CVector3f& vector);
 		void	setOffset(const CVector3f& v);
-		void    rotateCamera(const CVector3f& vector, float32 elapsedTimeSec);
+		void    rotate(const CVector3f& vector, float32 elapsedTimeSec);
 		float32	move(const CVector3f& mov,float32 elapsedTimeSec);
 		void	updateViewMatrix();
 		void	setProjection(int32 screenWidth, int32 screenHeight);

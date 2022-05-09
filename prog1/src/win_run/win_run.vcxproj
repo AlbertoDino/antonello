@@ -146,16 +146,21 @@
   <ItemGroup>
     <ClCompile Include="demo.cpp" />
     <ClCompile Include="game_prototype.cpp" />
+    <ClCompile Include="game_prototype\common\gameapi.cpp" />
     <ClCompile Include="game_prototype\sessions\gamel1s1.cpp" />
+    <ClCompile Include="game_prototype\ui\uiantonelloexploremenu.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="demo.h" />
     <ClInclude Include="game_prototype.h" />
+    <ClInclude Include="game_prototype\common\gameapi.h" />
     <ClInclude Include="game_prototype\common\gamesession.h" />
     <ClInclude Include="game_prototype\common\local.h" />
     <ClInclude Include="game_prototype\sessions\gamel1s1.h" />
     <ClInclude Include="game_prototype\sessions\local.h" />
+    <ClInclude Include="game_prototype\ui\local.h" />
+    <ClInclude Include="game_prototype\ui\uiantonelloexploremenu.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\3rdparty\3rdParty.vcxproj">

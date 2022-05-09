@@ -5,25 +5,92 @@
 
 namespace sceneobjs {
 
-    Sprite2D::Sprite2D():
-        speed (0.1)
+    DrawSprite2D::DrawSprite2D()
     {
-        size = 1;
-        refRender = new oglElements::DrawSprite2D();        
-        ((oglElements::DrawArrayObjectWithTexture*) refRender)->vertexObject = rex::Rectangle::getModel();
+    }
+
+    DrawSprite2D::~DrawSprite2D()
+    {
+    }
+
+    void DrawSprite2D::setTextureByFilename(const std::string& filename)
+    {
+        oglElements::Texture tex;
+
+        const oglElements::ImageDetail& det = tex.loadImageByFilename(filename);
+        tex.create(&textureObject, GL_TEXTURE_2D, 0);
+        tex.bind();
+        tex.setFiltering(GL_LINEAR, GL_LINEAR);
+        tex.setParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
+        tex.setParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
+        tex.generateMipmap();
+        tex.save();
+        tex.unbind();
+
+        texture_width = det.width;
+        texture_height = det.height;
+    }
+
+    void DrawSprite2D::addAnimation(const std::string& filename, oglElements::AnimationType aniType)
+    {
+        auto anim = new oglElements::Draw2DAnimation();
+
+        anim->loadAnimationfromFile(filename, aniType);
+
+        animations.push_back(anim);
+    }
+
+
+    void DrawSprite2D::playAnimation(oglElements::AnimationType aniType)
+    {
+        currentAnimation = 0;
+        for (auto anim : animations) {
+            if (anim->getAnimationType() == aniType) {
+                currentAnimation = anim;
+                return;
+            }
+        }
+    }
+
+    void DrawSprite2D::updateAnimationFrame(float32 speed, float32 delta)
+    {
+        if (currentAnimation)
+            currentAnimation->updateFrameUniform(texture_width, texture_height, vertexObject, speed, delta);
+    }
+
+    void DrawSprite2D::render() const
+    {
+        glDisable(GL_CULL_FACE);
+        // glEnable(GL_BLEND);
+        // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        glActiveTexture(GL_TEXTURE0 + textureObject.unit);
+        glBindTexture(textureObject.target, textureObject.uId);
+
+        glBindVertexArray(vertexObject.VAO);
+        glDrawArrays(vertexObject.drawMode, 0, vertexObject.count);
+        glBindVertexArray(0);
+
+        glBindTexture(textureObject.target, 0);
+        glActiveTexture(0);
+
+        //glDisable(GL_BLEND);
+        glEnable(GL_CULL_FACE);
+    }
+
+    //-----------------------------------------------------------------
+
+    Sprite2D::Sprite2D()
+    {
+        refRender = render = new DrawSprite2D();
+        render->vertexObject = rex::Rectangle::getModel();
     }
 
 
     void Sprite2D::updateSpriteFrame(float32 elaps)
     {
-        CMatrix4f32 scale, translate;
-
-        scale.Scale(size.data);
-        translate.Translate(position.data);
-
-        pSceneNode->view = scale * translate;
-
-        ((oglElements::DrawSprite2D*)refRender)->updateAnimationFrame(speed, elaps);
+        updateMatrixes();
+        render->updateAnimationFrame(data->speed, elaps);
     }
 
     void Sprite2D::add2scene()
@@ -34,18 +101,12 @@ namespace sceneobjs {
         if (!rendering)
             throwError("Cannot find shaderFlat layout.");
 
-        oglElements::DrawSprite2D* draw = (oglElements::DrawSprite2D*)refRender;
 
         shaderValues = rendering->shader;
         shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_M4f, "mvpMatrix", &pSceneNode->worldmvp.data);
-        shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1i, "sampler", &draw->textureObject.unit);
+        shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1i, "sampler", &render->textureObject.unit);
 
         rendering->add2Context(this);
-    }
-
-    oglElements::DrawSprite2D* Sprite2D::getSpriteRendering()
-    {
-        return (oglElements::DrawSprite2D*)refRender;
     }
 
 }

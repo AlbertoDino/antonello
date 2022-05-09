@@ -4,8 +4,6 @@
 
 namespace api {
 
-	EXTERN_ uint32 getModelId(void* model);
-
 	enum eRenderingContext : int32 {
 		None = 0,
 		UICxt,

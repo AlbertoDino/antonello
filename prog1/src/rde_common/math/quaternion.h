@@ -30,6 +30,7 @@ namespace func {
 		void		ToMatrix3x4(float32(*matrix)[4]) const;
 
 		void		RotateAsCamera(const CVector3f& rotation, float32 elpase, float32 epsilon);
+		void		Rotate(const CVector3f& rotation, float32 elapse);
 
 		//Some useful (normalized) quaternions 
 		//http://www.ogre3d.org/tikiwiki/Quaternion+and+Rotation+Primer

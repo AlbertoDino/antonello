@@ -29,9 +29,7 @@ namespace sceneobjs {
 	}
 
 	void Model::init() {
-		id = api::getModelId(this);
 		func::vSet(color, 1.0, 1.0, 1.0, 1.0);
-		position = func::CVector3f{ 0,0,0 };
 		specularPower = 16.0f;
 		specularIntensity = 1.0f;
 		textureUnit = 0;
@@ -83,13 +81,4 @@ namespace sceneobjs {
 		rendering->add2Context(this);
 	}
 
-	void Model::updateViewMatrix()
-	{
-		func::CMatrix4f32 scale, translate, view;
-		scale.Scale(CVector3f{ 1,1,1 }.data);
-		translate.Translate(position.data);
-
-		orientation.ToMatrix4(view);
-		pSceneNode->view = view * translate * scale;
-	}
 }

@@ -27,6 +27,12 @@
     <ClCompile Include="game_prototype\sessions\gamel1s1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game_prototype\ui\uiantonelloexploremenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game_prototype\common\gameapi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="demo.h">
@@ -45,6 +51,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game_prototype\sessions\local.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype\ui\local.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype\ui\uiantonelloexploremenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype\common\gameapi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

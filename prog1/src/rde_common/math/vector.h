@@ -27,6 +27,7 @@ namespace func {
 		CVector3f();
 		CVector3f(const CVector3f& _v);
 		CVector3f(bool8 init);
+
 		explicit	CVector3f(const Vector3f& _e);
 		explicit	CVector3f(const float32 _x);
 		explicit	CVector3f(const float32 _x, const float32 _y, const float32 _z);

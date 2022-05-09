@@ -56,7 +56,7 @@ namespace oglElements {
 		offset = v;
 	}
 
-	void Camera::rotateCamera(const CVector3f& vector, float32 elapsedTimeSec)
+	void Camera::rotate(const CVector3f& vector, float32 elapsedTimeSec)
 	{
 		quaternion.RotateAsCamera(vector, elapsedTimeSec*rotationSpeed, f_EPSILON);
 	}

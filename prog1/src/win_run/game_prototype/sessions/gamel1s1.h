@@ -10,12 +10,13 @@ public:
 private:
 
 	// Scene Objects
-	std::unique_ptr<sceneobjs::Grid> grid;
+	std::unique_ptr<sceneobjs::Grid>				dbGrid;
+	std::unique_ptr<sceneobjs::Sprite2D>			antonello;
 
 	// UI
-	std::unique_ptr<sceneobjs::UiCameraProperties> uiCameraProperties;
+	std::unique_ptr<sceneobjs::UiCameraProperties>	dbUiCameraProperties;
 
 	// Model
-	std::unique_ptr<oglElements::SceneNode> sceneRoot;
-	std::unique_ptr<oglElements::Camera> camera;
+	std::unique_ptr<oglElements::SceneNode>			sceneRoot;
+	std::unique_ptr<oglElements::Camera>			camera;
 };

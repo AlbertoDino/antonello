@@ -73,9 +73,6 @@ namespace render {
 
 namespace api {
 
-	uint32 getModelId(void* model) {
-		return func::CreateIdFromPointer(model);
-	}
 
 	oglElements::IRenderingCtx* getRenderingContext(api::eRenderingContext rndCtxId) {
 		for (auto& ctx : gApp->renderingLayouts) {

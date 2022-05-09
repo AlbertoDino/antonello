@@ -20,7 +20,7 @@ namespace render {
 		virtual void resize(oglElements::WinObj* window);
 
 		void useShader() const;
-		void add2Context(oglElements::SceneObject* sceneShaderObject);
+		void add2Context(oglElements::GameObject* sceneShaderObject);
 		void setOnSelected(const std::function<void(uint32)>& callback);
 		void setSelectionByMousePosition(const Coord2i& mousePosition);
 		
@@ -40,6 +40,6 @@ namespace render {
 		Rectl					pixelAreaToRead;
 		Vector4b				*pixelFrameBuffer;
 		oglElements::WinObj		*winObj;
-		std::vector<oglElements::SceneObject*> shaderObjects;
+		std::vector<oglElements::GameObject*> shaderObjects;
 	};
 }

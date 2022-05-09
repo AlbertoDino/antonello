@@ -60,7 +60,7 @@ void Demo::init()
 	sphererender->vertexObject = rex::Sphere::getModel(1.0f,36,18);
 	sphererender->textureObject = api::getDefaultTexture();
 	sphere = std::make_unique<sceneobjs::GenModel>(sphererender);
-	sphere->position = { 10,10,10 };
+	sphere->data->position = { 10,10,10 };
 	sphere->add2scene(api::eRenderingContext::ShaderFlatTexture);
 	sceneNode->addChild(sphere->getSceneNode());
 
@@ -70,7 +70,7 @@ void Demo::init()
 	lightPosition->add2scene();
 
 	sphereNormal = std::make_unique<sceneobjs::NormalModel>();
-	sphereNormal->position = { 0,0,-10 };
+	sphereNormal->data->position = { 0,0,-10 };
 	sphereNormal->setModel(rex::ePreBuiltModel::sphere);
 	sphereNormal->setTextureByFilename      ("assets/textures/IceMoon.tga");
 	sphereNormal->setNormalTextureByFilename("assets/textures/IceMoonBump.tga");
@@ -84,7 +84,7 @@ void Demo::init()
 
 	sprite = std::make_unique<sceneobjs::Sprite2D>();
 
-	auto spriteRnd = sprite->getSpriteRendering();
+	auto spriteRnd = sprite->render;
 	spriteRnd->setTextureByFilename("assets/textures/sprite/spritesheet.png");
 	spriteRnd->addAnimation("assets/textures/sprite/Run.txt", oglElements::AnimationType::Run);
 	spriteRnd->addAnimation("assets/textures/sprite/Idle.txt", oglElements::AnimationType::Idle);
@@ -120,6 +120,9 @@ void Demo::init()
 	uiLightPosProperties = std::make_unique<sceneobjs::UILightPositionProperties>();
 	uiLightPosProperties->setLight(lightPosition.get());
 	uiCtx->uiComponents.push_back(uiLightPosProperties.get());
+
+
+	uiCtx->uiComponents.push_back(new sceneobjs::UISpriteProperties(sprite.get()));
 	//#####################
 
 	cameraAgent->reset();
@@ -195,38 +198,75 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 
 	if (key == GLFW_KEY_SPACE)
 	{
-		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Jumps);
+		sprite->render->playAnimation(oglElements::AnimationType::Jumps);
 	}
 
 	if (key == GLFW_KEY_LEFT_SHIFT)
 	{
-		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Run);
+		sprite->render->playAnimation(oglElements::AnimationType::Run);
 	}
 
 	if (key == GLFW_KEY_X)
 	{
-		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Idle);
+		sprite->render->playAnimation(oglElements::AnimationType::Idle);
 	}
 
 
-	if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS || action == GLFW_REPEAT))
+	if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
 	{
-		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Run);
-		sprite->position[0] += 0.09;
+		tracelog("Sprite turning right");
+		sprite->data->orientation.Rotate(CVector3f{ 180,0,0 }, 1);		
+		sprite->updateMatrixes();
+		
+	}
+
+	if (key == GLFW_KEY_RIGHT && action == GLFW_REPEAT)
+	{
+		tracelog("Sprite running right");
+		CVector3f vDirection = sprite->data->direction;
+
+		oglElements::FreePhysic physic(sprite.get());
+
+		CVector3f moveRight;
+		moveRight.Cross(World::World_Y_Axis, vDirection );
+
+		physic.move(moveRight, 0.5);
+		sprite->updateMatrixes();
+
+		sprite->render->playAnimation(oglElements::AnimationType::Run);
 	}
 
 	if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE) {
-		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Idle);
+		sprite->render->playAnimation(oglElements::AnimationType::Idle);
 	}
 
-	if (key == GLFW_KEY_LEFT && (action == GLFW_PRESS || action == GLFW_REPEAT))
+	if (key == GLFW_KEY_LEFT && action == GLFW_PRESS )
 	{
-		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Run);
-		sprite->position[0] -= 0.09;
+		tracelog("Sprite turning left");
+		
+		sprite->data->orientation.Rotate(CVector3f{ -180,0,0 }, 1);
+
+		sprite->updateMatrixes();
+	}
+
+	if (key == GLFW_KEY_LEFT && action == GLFW_REPEAT)
+	{
+		tracelog("Sprite running left");
+		CVector3f vDirection = sprite->data->direction;
+
+		oglElements::FreePhysic physic(sprite.get());
+
+		CVector3f moveLeft;
+		moveLeft.Cross(World::World_Y_Axis, vDirection);
+
+		physic.move(moveLeft, 0.5);
+		sprite->updateMatrixes();
+
+		sprite->render->playAnimation(oglElements::AnimationType::Run);
 	}
 
 	if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE) {
-		sprite->getSpriteRendering()->playAnimation(oglElements::AnimationType::Idle);
+		sprite->render->playAnimation(oglElements::AnimationType::Idle);
 	}
 }
 
@@ -285,8 +325,8 @@ void Demo::addObjectFromFile(std::string filepath)
 
 	sceneobjs::Model* obj = new sceneobjs::Model();
 	vSet(obj->color, colors::Red);
-	obj->name = filepath.substr(filepath.find_last_of("/\\") + 1);
-	obj->position.Set(10 * models.size(), 2, 5 * models.size());
+	obj->data->name = filepath.substr(filepath.find_last_of("/\\") + 1);
+	obj->data->position.Set(10 * models.size(), 2, 5 * models.size());
 	mesh.create((oglElements::DrawElementTextured*)obj->refRender);
 
 	sceneNode->addChild(obj->getSceneNode());
@@ -296,13 +336,13 @@ void Demo::addObjectFromFile(std::string filepath)
 	oglElements::DrawArrayObject* draw = new oglElements::DrawArrayObject();
 	draw->vertexObject = rex::Cube::getModel();
 	sceneobjs::Model* AABB = new sceneobjs::Model(draw);
-	ColorFromUID(obj->id, AABB->color);
-	AABB->name = "AABB";
+	ColorFromUID(obj->data->id, AABB->color);
+	AABB->data->name = "AABB";
 	AABB->add2SceneWithFlatShader();
 	AABB->add2PickingLayer();
 	obj->getSceneNode()->addChild(AABB->getSceneNode());
 
-	tracelog(format("Model [%s] loaded with id [%i]", obj->name.c_str(), obj->id));
+	tracelog(format("Model [%s] loaded with id [%i]", obj->data->name.c_str(), obj->data->id));
 
 }
 
@@ -311,9 +351,9 @@ void Demo::onModelSelected(uint32 id)
 	tracelog(format("onModelSelected [%i]", id));
 	currentModelSelected = 0;
 	for (auto model : models) {
-		if (model->id == id) {
+		if (model->data->id == id) {
 			currentModelSelected = model;
-			tracelog(format("Model [%s] [%i] has been selected", currentModelSelected->name.c_str(), currentModelSelected->id));
+			tracelog(format("Model [%s] [%i] has been selected", currentModelSelected->data->name.c_str(), currentModelSelected->data->id));
 		}
 	}
 }
@@ -343,20 +383,20 @@ void Demo::loop(float32 elapse)
 
 	cameraAgent->setProjection(window->width, window->height);
 	cameraAgent->move(inputMovement, elapse);
-	cameraAgent->rotateCamera(inputRotation, elapse);
+	cameraAgent->rotate(inputRotation, elapse);
 	cameraAgent->updateViewMatrix();
 
 	for (auto* obj : models) {
-		obj->updateViewMatrix();
+		obj->updateMatrixes();
 	}
 
 	sprite->updateSpriteFrame(elapse);
-	sphere->updateViewMatrix();
+	sphere->updateMatrixes();
 
 	light->update(cameraAgent->getPosition());
 	lightPosition->update(cameraAgent->getPosition());
 
-	sphereNormal->updateViewMatrix();
+	sphereNormal->updateMatrixes();
 
 	updateUIScene();
 

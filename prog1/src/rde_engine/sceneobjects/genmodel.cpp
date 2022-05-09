@@ -6,11 +6,9 @@
 namespace sceneobjs {
 
 	GenModel::GenModel(oglElements::RenderingElement* rendering) :
-		position(func::CVector3f{ 0,0,0 }),
 		color(func::CVector4f{ 0,0,0,1 }),
 		textureUnit(1)
 	{
-		id = api::getModelId(this);
 		refRender = rendering;
 	}
 
@@ -31,15 +29,5 @@ namespace sceneobjs {
 
 
 		rendering->add2Context(this);
-	}
-
-	void GenModel::updateViewMatrix()
-	{
-		func::CMatrix4f32 scale, translate, view;
-		scale.Scale(CVector3f{ 1,1,1 }.data);
-		translate.Translate(position.data);
-
-		orientation.ToMatrix4(view);
-		pSceneNode->view = view * translate * scale;
 	}
 }

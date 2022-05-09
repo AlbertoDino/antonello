@@ -77,17 +77,6 @@ namespace sceneobjs {
 		ctx->add2Context(this);
 	}
 
-	void NormalModel::updateViewMatrix()
-	{
-		func::CMatrix4f32 scale, translate, view;
-		scale.Scale({ 1,1,1 });
-		translate.Translate(position.data);
-
-		orientation.ToMatrix4(view);
-
-		pSceneNode->view = view * translate * scale;
-	}
-
 	NormalModelRendering* NormalModel::getRendering()
 	{
 		return rendering;

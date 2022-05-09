@@ -2,7 +2,7 @@
 
 namespace sceneobjs {
 
-	class LightPosition : public oglElements::SceneObject {
+	class LightPosition : public oglElements::GameObject {
 	public:
 		LightPosition();
 

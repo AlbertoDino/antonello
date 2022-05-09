@@ -252,6 +252,43 @@ namespace func {
 		}
 	}
 
+	void Quaternion::Rotate(const CVector3f& rotation, float32 elapse)
+	{
+		float32	heading = rotation[0] * elapse;
+		float32	pitc = rotation[1] * elapse;
+		float32	roll = rotation[2] * elapse;
+
+		static float32 degree_limit = 90.0f;
+
+		accumPitchDegrees += pitc;
+
+		if (accumPitchDegrees > degree_limit) {
+			pitc = degree_limit - (accumPitchDegrees - pitc);
+			accumPitchDegrees = degree_limit;
+		}
+
+		if (accumPitchDegrees < -degree_limit) {
+			pitc = -degree_limit - (accumPitchDegrees - pitc);
+			accumPitchDegrees = -degree_limit;
+		}
+
+		Quaternion rot;
+
+		// Rotate camera about the world y axis.
+		// Note the order the quaternions are multiplied. That is important!
+		if (!IsEqual(heading, 0.0f, f_EPSILON)) {
+			rot.FromAxisAngle(World::World_Y_Axis, heading);
+			(*this) = rot * (*this);
+		}
+
+		// Rotate camera about its local x axis.
+		// Note the order the quaternions are multiplied. That is important!
+		if (!IsEqual(pitc, 0.0f, f_EPSILON)) {
+			rot.FromAxisAngle(World::World_X_Axis, pitc);
+			(*this) = rot * (*this);
+		}
+	}
+
 	void Quaternion::SetTurned_90_AxeX()
 	{
 		w = sqrt(0.5f);

@@ -20,7 +20,7 @@ namespace oglElements {
 		shader.useShader();
 	}
 
-	void ShaderContext::add2Context(SceneObject* sceneShaderObject)
+	void ShaderContext::add2Context(GameObject* sceneShaderObject)
 	{
 		shaderObjects.push_back(sceneShaderObject);
 	}

@@ -57,7 +57,7 @@ CVector3f
 
 	CVector3f::CVector3f()
 	{
-
+		Clear();
 	}
 
 	CVector3f::CVector3f(bool8 init)
@@ -65,12 +65,10 @@ CVector3f
 		Clear();
 	}
 
-	CVector3f::CVector3f(const CVector3f& _v)
+	CVector3f::CVector3f(const CVector3f& e)
 	{
-		memcpy(data, _v.data, sizeof(Vector3f));
+		memcpy(data, e.data, sizeof(Vector3f));
 	}
-
-
 
 	CVector3f::CVector3f(const Vector3f& _e)
 	{
