@@ -27,7 +27,7 @@ public:
 	void loop(float32 elapse);
 
 private:
-	void handleInput();
+	void handleInput(float32 elapse);
 	void updateUIScene();
 
 	oglElements::WinObj* window;
@@ -59,7 +59,7 @@ private:
 
 
 	std::unique_ptr<oglElements::TaskQueue> taskQueue;
-	win::TaskExecuter taskExecuter;
-	std::unique_ptr<win::LinearSurface> surface;
+	oglElements::TaskExecuter taskExecuter;
+	std::unique_ptr<oglElements::LinearSurface> surface;
 
 };

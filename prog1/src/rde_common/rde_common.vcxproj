@@ -154,8 +154,10 @@
     <ClInclude Include="gl_elements\irenderingctx.h" />
     <ClInclude Include="gl_elements\iuicomponent.h" />
     <ClInclude Include="gl_elements\linearmovent.h" />
+    <ClInclude Include="gl_elements\linearsurface.h" />
     <ClInclude Include="gl_elements\renderingelement.h" />
     <ClInclude Include="gl_elements\task.h" />
+    <ClInclude Include="gl_elements\taskexecuter.h" />
     <ClInclude Include="gl_elements\taskqueue.h" />
     <ClInclude Include="gl_elements\texture.h" />
     <ClInclude Include="gl_elements\trianglemesh.h" />
@@ -194,8 +196,10 @@
     <ClCompile Include="gl_elements\iinteractivesurface.cpp" />
     <ClCompile Include="gl_elements\irenderingctx.cpp" />
     <ClCompile Include="gl_elements\linearmovent.cpp" />
+    <ClCompile Include="gl_elements\linearsurface.cpp" />
     <ClCompile Include="gl_elements\renderingelement.cpp" />
     <ClCompile Include="gl_elements\task.cpp" />
+    <ClCompile Include="gl_elements\taskexecuter.cpp" />
     <ClCompile Include="gl_elements\taskqueue.cpp" />
     <ClCompile Include="gl_elements\texture.cpp" />
     <ClCompile Include="gl_elements\trianglemesh.cpp" />

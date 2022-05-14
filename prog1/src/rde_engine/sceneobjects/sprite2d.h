@@ -36,9 +36,15 @@ namespace sceneobjs {
 		void updateSpriteFrame(float32 elaps);
 		void add2scene();
 
-		bool8 isFacingRight();
-		bool8 isFacingLeft();
+		bool8 isFacingRightX();
+		bool8 isFacingLeftX();
 
+		void runRightX(float32 elapse);
+		void runLefttX(float32 elapse);
+		oglElements::Task* createJump();
+
+		CVector3f		vJump;
+		float32			jumpSpeed;
 		float32			animationSpeed;
 		DrawSprite2D	*render;
 

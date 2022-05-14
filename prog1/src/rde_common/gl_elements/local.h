@@ -21,6 +21,8 @@
 #include "draw2danimation.h"
 #include "linearmovent.h"
 #include "iinteractivesurface.h"
+#include "linearsurface.h"
 #include "freephysic.h"
 #include "task.h"
 #include "taskqueue.h"
+#include "taskexecuter.h"

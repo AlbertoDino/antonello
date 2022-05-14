@@ -7,8 +7,7 @@ namespace oglElements {
 
 	class Task {
 	public:
-			Task();
-			
+			Task();			
 			
 			int32			taskTypeId;
 			GameObject*		gameObj;			
@@ -27,6 +26,16 @@ namespace oglElements {
 			int32			id;
 			std::function<void(Task*)> onTaskCompletedCallback;
 
+	};
+
+	class TaskLinearJump : public Task {
+	public:
+
+		func::CVector3f currentJumpVector;
+
+		void updateView(float32 elapse, InteractionRequest* out_request);
+
+		void processResponse(const InteractionResponse* response);
 	};
 
 }
