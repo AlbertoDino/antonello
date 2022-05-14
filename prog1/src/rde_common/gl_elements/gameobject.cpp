@@ -9,9 +9,16 @@ namespace oglElements {
 		scale			({ 1,1,1 }),
 		position		({ 0,0,0 }),
 		positionOffset	({ 0,0,0 }),
-		speed			(0.1)
+		defaultSpeed			(0.1),
+		currentSpeed	(0.0)
 	{
 		id = func::CreateIdFromPointer(this);
+		name = "gameobj";
+	}
+
+	const func::CVector3f& GameObjectData::getPosition()
+	{
+		return position + positionOffset;
 	}
 
 	GameObject::GameObject() :
@@ -50,7 +57,7 @@ namespace oglElements {
 		func::CMatrix4f32					viewmatrix;
 		func::CMatrix4f32					trans,scaling, M;
 
-		func::CVector3f finalPosition = data->position + data->positionOffset;
+		auto finalPosition = data->getPosition();
 
 		//Rotation
 		//// Matrix has no translation information and is

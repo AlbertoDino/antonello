@@ -22,7 +22,7 @@ namespace oglElements {
 			int32 texture_width,
 			int32 texture_height, 
 			gl_vertexObject &rectangle,
-			float32 speed,
+			float32 defaultSpeed,
 			float32 deltatime);
 
 		AnimationType getAnimationType() const;

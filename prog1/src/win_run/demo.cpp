@@ -70,6 +70,7 @@ void Demo::init()
 	lightPosition->add2scene();
 
 	sphereNormal = std::make_unique<sceneobjs::NormalModel>();
+	sphereNormal->data->name = "NormalSphere";
 	sphereNormal->data->position = { 0,0,-10 };
 	sphereNormal->setModel(rex::ePreBuiltModel::sphere);
 	sphereNormal->setTextureByFilename      ("assets/textures/IceMoon.tga");
@@ -83,7 +84,7 @@ void Demo::init()
 	sphererender->textureObject = sphereNormal->getRendering()->textureNormal;
 
 	sprite = std::make_unique<sceneobjs::Sprite2D>();
-
+	sprite->data->defaultSpeed = 0.350;
 	auto spriteRnd = sprite->render;
 	spriteRnd->setTextureByFilename("assets/textures/sprite/spritesheet.png");
 	spriteRnd->addAnimation("assets/textures/sprite/Run.txt", oglElements::AnimationType::Run);
@@ -96,12 +97,22 @@ void Demo::init()
 	sceneNode->addChild(sprite->getSceneNode());
 
 	//#####################
+
+	taskQueue = std::make_unique<oglElements::TaskQueue>();
+	surface = std::make_unique<win::LinearSurface>();
+
+	taskExecuter.init(taskQueue.get());	
+	taskExecuter.setSurface(surface.get());
+
+
+	//#####################
 	// ui
 	render::UIContext* uiCtx = (render::UIContext*)api::getRenderingContext(api::eRenderingContext::UICxt);
 	uiText.list.push_back("<place_holder>");
 	uiText.list.push_back("press v : reset camera");
 	uiText.list.push_back("press F1 : turn campera 90 dg");
 	uiText.list.push_back("press F2 : turn campera -90 dg");
+	uiText.list.push_back("press J : for jump");
 
 	uiModelProperties = std::make_unique<sceneobjs::UiModelProperties>();
 	uiModelProperties->set_mesh_load_callback([this](std::string filepath) { addObjectFromFile(filepath); });
@@ -121,8 +132,10 @@ void Demo::init()
 	uiLightPosProperties->setLight(lightPosition.get());
 	uiCtx->uiComponents.push_back(uiLightPosProperties.get());
 
+	uiCtx->uiComponents.push_back(new sceneobjs::UIGameObjectProperties(sprite.get()));
 
-	uiCtx->uiComponents.push_back(new sceneobjs::UISpriteProperties(sprite.get()));
+	uiCtx->uiComponents.push_back(new sceneobjs::UIGameObjectProperties(sphereNormal.get()));
+
 	//#####################
 
 	cameraAgent->reset();
@@ -198,7 +211,22 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 
 	if (key == GLFW_KEY_SPACE)
 	{
+		win::TaskLinearJump* jump = new win::TaskLinearJump();
+		jump->gameObj = sprite.get();
+		
+		int32 direction2d = sprite->isFacingLeft() ? -1 : 1;
+
+		jump->currentJumpVector = CVector3f { 0.25f*(direction2d),1.5,0 } *sprite->data->defaultSpeed;
+		jump->onComplete(
+			[this](oglElements::Task* t) {
+				auto sprite = (sceneobjs::Sprite2D*)t->gameObj;
+				sprite->render->playAnimation(oglElements::AnimationType::Idle);
+			}
+		);
+		taskQueue->addTaskToQueue(jump);
+		tracelog(format("Task [%i] Jump added", jump->getId()));
 		sprite->render->playAnimation(oglElements::AnimationType::Jumps);
+
 	}
 
 	if (key == GLFW_KEY_LEFT_SHIFT)
@@ -211,11 +239,15 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 		sprite->render->playAnimation(oglElements::AnimationType::Idle);
 	}
 
-
+	// GLFW_KEY_RIGHT
 	if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
 	{
 		tracelog("Sprite turning right");
-		sprite->data->orientation.Rotate(CVector3f{ 180,0,0 }, 1);		
+
+		if (!sprite->isFacingRight()) {
+			sprite->data->orientation.Rotate(CVector3f{ 180,0,0 }, 1);
+		}
+
 		sprite->updateMatrixes();
 		
 	}
@@ -240,11 +272,16 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 		sprite->render->playAnimation(oglElements::AnimationType::Idle);
 	}
 
+
+	// GLFW_KEY_LEFT
+
 	if (key == GLFW_KEY_LEFT && action == GLFW_PRESS )
 	{
 		tracelog("Sprite turning left");
-		
-		sprite->data->orientation.Rotate(CVector3f{ -180,0,0 }, 1);
+
+		if (!sprite->isFacingLeft()) {
+			sprite->data->orientation.Rotate(CVector3f{ -180,0,0 }, 1);
+		}
 
 		sprite->updateMatrixes();
 	}
@@ -267,6 +304,16 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 
 	if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE) {
 		sprite->render->playAnimation(oglElements::AnimationType::Idle);
+	}
+
+	if (key == GLFW_KEY_J && action == GLFW_PRESS)
+	{
+		win::TaskLinearJump* jump = new win::TaskLinearJump();
+		jump->gameObj = sphereNormal.get();
+		jump->currentJumpVector = CVector3f{ 0,1,1 } * sphereNormal->data->defaultSpeed;
+
+		taskQueue->addTaskToQueue(jump);
+		tracelog(format("Task [%i] Jump added", jump->getId()));
 	}
 }
 
@@ -385,6 +432,9 @@ void Demo::loop(float32 elapse)
 	cameraAgent->move(inputMovement, elapse);
 	cameraAgent->rotate(inputRotation, elapse);
 	cameraAgent->updateViewMatrix();
+
+
+	taskExecuter.loop(elapse);
 
 	for (auto* obj : models) {
 		obj->updateMatrixes();

@@ -11,7 +11,7 @@ namespace oglElements {
 		float32 move(const CVector3f & origin
 			, const CVector3f & vDirectionMov
 			, CVector3f& finalPosition
-			, float32 speed
+			, float32 defaultSpeed
 			, float32 elapse);
 
 		void rotate(Quaternion& quaternion

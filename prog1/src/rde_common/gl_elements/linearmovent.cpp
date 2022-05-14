@@ -10,10 +10,10 @@ namespace oglElements {
 	float32 LinearMovement::move(const CVector3f& origin
 		, const CVector3f& vMovNormal
 		, CVector3f& finalPosition
-		, float32 speed
+		, float32 defaultSpeed
 		, float32 elapse)
 	{
-		float32 movLenght = speed * elapse;
+		float32 movLenght = defaultSpeed * elapse;
 
 		finalPosition[0] = origin[0] + vMovNormal[0] * movLenght;
 		finalPosition[1] = origin[1] + vMovNormal[1] * movLenght;

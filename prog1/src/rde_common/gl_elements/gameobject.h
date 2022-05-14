@@ -11,7 +11,8 @@ namespace oglElements {
 
 		GameObjectData();
 
-		float32				speed;
+		float32				currentSpeed; // current speed of the object
+		float32				defaultSpeed; // default speed of the object
 		func::CVector3f		scale;
 		func::CVector3f		position;
 		func::CVector3f		positionOffset;
@@ -20,6 +21,8 @@ namespace oglElements {
 		func::Quaternion	orientation;
 		std::string			name;
 		uint32				id;
+
+		const func::CVector3f& getPosition();
 	};
 
 	/*

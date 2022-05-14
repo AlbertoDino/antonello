@@ -16,13 +16,13 @@ namespace sceneobjs {
 		// Animations have to be created first via addAnimation function
 		void playAnimation(oglElements::AnimationType aniType);
 
-		void updateAnimationFrame(float32 speed, float32 delta);
+		void updateAnimationFrame(float32 animationSpeed, float32 delta);
 
 		virtual void render() const override;
 
 		oglElements::gl_vertexObject	vertexObject;
 		oglElements::gl_to				textureObject;
-	private:
+	private:	
 		int32 texture_width;
 		int32 texture_height;
 		oglElements::Draw2DAnimation* currentAnimation;
@@ -36,6 +36,10 @@ namespace sceneobjs {
 		void updateSpriteFrame(float32 elaps);
 		void add2scene();
 
+		bool8 isFacingRight();
+		bool8 isFacingLeft();
+
+		float32			animationSpeed;
 		DrawSprite2D	*render;
 
 	};

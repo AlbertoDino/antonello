@@ -52,17 +52,17 @@ namespace sceneobjs {
         }
     }
 
-    void DrawSprite2D::updateAnimationFrame(float32 speed, float32 delta)
+    void DrawSprite2D::updateAnimationFrame(float32 animationSpeed, float32 delta)
     {
         if (currentAnimation)
-            currentAnimation->updateFrameUniform(texture_width, texture_height, vertexObject, speed, delta);
+            currentAnimation->updateFrameUniform(texture_width, texture_height, vertexObject, animationSpeed, delta);
     }
 
     void DrawSprite2D::render() const
     {
         glDisable(GL_CULL_FACE);
-        // glEnable(GL_BLEND);
-        // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         glActiveTexture(GL_TEXTURE0 + textureObject.unit);
         glBindTexture(textureObject.target, textureObject.uId);
@@ -74,13 +74,14 @@ namespace sceneobjs {
         glBindTexture(textureObject.target, 0);
         glActiveTexture(0);
 
-        //glDisable(GL_BLEND);
+        glDisable(GL_BLEND);
         glEnable(GL_CULL_FACE);
     }
 
     //-----------------------------------------------------------------
 
-    Sprite2D::Sprite2D()
+    Sprite2D::Sprite2D() : 
+        animationSpeed(0.05)
     {
         refRender = render = new DrawSprite2D();
         render->vertexObject = rex::Rectangle::getModel();
@@ -90,7 +91,7 @@ namespace sceneobjs {
     void Sprite2D::updateSpriteFrame(float32 elaps)
     {
         updateMatrixes();
-        render->updateAnimationFrame(data->speed, elaps);
+        render->updateAnimationFrame(animationSpeed, elaps);
     }
 
     void Sprite2D::add2scene()
@@ -107,6 +108,16 @@ namespace sceneobjs {
         shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1i, "sampler", &render->textureObject.unit);
 
         rendering->add2Context(this);
+    }
+
+
+    bool8 Sprite2D::isFacingRight() {
+        return func::IsEqual(data->orientation.y, 0);
+    }
+
+    bool8 Sprite2D::isFacingLeft()
+    {
+        return func::IsEqual(data->orientation.y, 1);
     }
 
 }

@@ -23,7 +23,7 @@ namespace oglElements {
 	//============================================================
 
 	Camera::Camera() : cameraNode(0)
-		, speed(150.0f)
+		, defaultSpeed(150.0f)
 		, rotationSpeed(20.0f)
 		, fovx(CAMERA_FOVX)
 		, znear(CAMERA_ZNEAR)
@@ -63,7 +63,7 @@ namespace oglElements {
 
 	float32 Camera::move(const CVector3f& mov, float32 elapsedTimeSec)
 	{
-		float32 movLength = elapsedTimeSec * speed;
+		float32 movLength = elapsedTimeSec * defaultSpeed;
 		position[0] -= mov[0] * movLength;
 		position[1] -= mov[1] * movLength;
 		position[2] -= mov[2] * movLength;

@@ -39,7 +39,7 @@ namespace oglElements {
 		const CVector3f& getRotation() const;		
 		const CVector3f& getPosition() const;
 
-		float32 speed, rotationSpeed;
+		float32 defaultSpeed, rotationSpeed;
 		float32 fovx, znear, zfar;
 	private:
 

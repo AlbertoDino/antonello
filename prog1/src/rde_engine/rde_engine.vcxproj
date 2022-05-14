@@ -169,11 +169,13 @@
     <ClInclude Include="sceneobjects\uilightpositionproperties.h" />
     <ClInclude Include="sceneobjects\uilightproperties.h" />
     <ClInclude Include="sceneobjects\uimodelproperties.h" />
-    <ClInclude Include="sceneobjects\uispriteproperties.h" />
+    <ClInclude Include="sceneobjects\uigameobjectproperties.h" />
     <ClInclude Include="win\input.h" />
+    <ClInclude Include="win\linearsurface.h" />
     <ClInclude Include="win\local.h" />
     <ClInclude Include="win\gamestats.h" />
     <ClInclude Include="win\stopwatch.h" />
+    <ClInclude Include="win\taskexecuter.h" />
     <ClInclude Include="win\win32gui.h" />
     <ClInclude Include="win\window.h" />
     <ClInclude Include="winmain.h" />
@@ -207,9 +209,11 @@
     <ClCompile Include="sceneobjects\uilightpositionproperties.cpp" />
     <ClCompile Include="sceneobjects\uilightproperties.cpp" />
     <ClCompile Include="sceneobjects\uimodelproperties.cpp" />
-    <ClCompile Include="sceneobjects\uispriteproperties.cpp" />
+    <ClCompile Include="sceneobjects\uigameobjectproperties.cpp" />
     <ClCompile Include="win\input.cpp" />
+    <ClCompile Include="win\linearsurface.cpp" />
     <ClCompile Include="win\stopwatch.cpp" />
+    <ClCompile Include="win\taskexecuter.cpp" />
     <ClCompile Include="win\window.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>

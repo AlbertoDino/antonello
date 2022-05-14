@@ -11,4 +11,4 @@
 #include "sprite2d.h"
 #include "lightposition.h"
 #include "normalmodel.h"
-#include "uispriteproperties.h"
+#include "uigameobjectproperties.h"

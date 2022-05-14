@@ -117,7 +117,13 @@
     <ClInclude Include="sceneobjects\uilightpositionproperties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sceneobjects\uispriteproperties.h">
+    <ClInclude Include="sceneobjects\uigameobjectproperties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="win\taskexecuter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="win\linearsurface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -194,7 +200,13 @@
     <ClCompile Include="sceneobjects\uilightpositionproperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sceneobjects\uispriteproperties.cpp">
+    <ClCompile Include="sceneobjects\uigameobjectproperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="win\taskexecuter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="win\linearsurface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

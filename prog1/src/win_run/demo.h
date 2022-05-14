@@ -56,4 +56,10 @@ private:
 	
 	render::UITextList uiText;
 	render::PixelReadContext* pickingCtx;
+
+
+	std::unique_ptr<oglElements::TaskQueue> taskQueue;
+	win::TaskExecuter taskExecuter;
+	std::unique_ptr<win::LinearSurface> surface;
+
 };

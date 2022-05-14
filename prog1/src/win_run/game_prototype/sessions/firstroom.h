@@ -1,10 +1,10 @@
 #pragma once
 
-class GameL1S1 : public IGameSession {
+class GameFirstRoom : public IGameSession {
 public:
 
-	GameL1S1();
-	~GameL1S1();
+	GameFirstRoom();
+	~GameFirstRoom();
 
 	virtual void loop(float32 elapse);
 private:

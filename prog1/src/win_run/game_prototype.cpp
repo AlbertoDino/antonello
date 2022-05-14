@@ -33,7 +33,7 @@ GamePrototype::GamePrototype() : running(true), activeSession(0)
 
 void GamePrototype::init()
 {
-	activeSession = new GameL1S1();
+	activeSession = new GameFirstRoom();
 }
 
 void GamePrototype::loop(float32 elapse)

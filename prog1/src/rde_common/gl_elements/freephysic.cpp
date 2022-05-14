@@ -17,7 +17,7 @@ namespace oglElements {
 		LinearMovement lm;
 		CVector3f vNorm(vMovement);
 		vNorm.Normalize();
-		return lm.move(game->data->position, vNorm, game->data->position, game->data->speed, elapse);
+		return lm.move(game->data->position, vNorm, game->data->position, game->data->defaultSpeed, elapse);
 	}
 
 	void FreePhysic::rotate(float32 headingDgr, float32 pitchDgr, float32 rollDgr, float32 elapse)

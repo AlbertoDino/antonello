@@ -20,4 +20,7 @@
 #include "texture.h"
 #include "draw2danimation.h"
 #include "linearmovent.h"
+#include "iinteractivesurface.h"
 #include "freephysic.h"
+#include "task.h"
+#include "taskqueue.h"

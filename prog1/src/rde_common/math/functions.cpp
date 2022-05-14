@@ -100,11 +100,14 @@ namespace func {
 
 	bool8 IsEqual(float32 val1, float32 val2)
 	{
-		return (fabs(val1 - val2) < f_EPSILON);
+		return IsEqual(val1,val2,f_EPSILON);
 	}
 
 	bool8 IsEqual(float32 val1, float32 val2, float32 fEpsilon)
 	{
+		//if (val1 < 0 && val2>0) return false;
+		//if (val2 < 0 && val1>0) return false;
+
 		return (fabs(val1 - val2) < fEpsilon);
 	}
 

@@ -2,9 +2,9 @@
 #include <rde_engine/lib.h>
 #include "../common/local.h"
 #include "../ui/local.h"
-#include "gamel1s1.h"
+#include "firstroom.h"
 
-GameL1S1::GameL1S1()
+GameFirstRoom::GameFirstRoom()
 {	
 	sceneRoot = std::make_unique<oglElements::SceneNode>();
 
@@ -28,6 +28,7 @@ GameL1S1::GameL1S1()
 	spriteRnd->addAnimation("assets/textures/sprite/Idle.txt", oglElements::AnimationType::Idle);
 	spriteRnd->addAnimation("assets/textures/sprite/Jump.txt", oglElements::AnimationType::Jumps);
 	spriteRnd->playAnimation(oglElements::AnimationType::Idle);
+	antonello->data->name = "Antonello";
 	antonello->data->positionOffset = { 0,-2,-5 };
 	antonello->data->position = { 0,0,0 };
 	antonello->add2scene();
@@ -40,16 +41,26 @@ GameL1S1::GameL1S1()
 	dbUiCameraProperties->setCamera(camera.get());
 	uiCtx->uiComponents.push_back(dbUiCameraProperties.get());
 	uiCtx->uiComponents.push_back(new UIAntonelloExploreMenu());
-	uiCtx->uiComponents.push_back(new sceneobjs::UISpriteProperties(antonello.get()));
+	uiCtx->uiComponents.push_back(new sceneobjs::UIGameObjectProperties(antonello.get()));
 
 	
 }
 
-GameL1S1::~GameL1S1()
+GameFirstRoom::~GameFirstRoom()
 {
+	// delete all the scene objects
+	if (gApp->getRoot().pFirstChild)
+		delete gApp->getRoot().pFirstChild;
+
+	// delete all the UI
+	render::UIContext* uiCtx = (render::UIContext*)api::getRenderingContext(api::eRenderingContext::UICxt);
+
+	for (auto ui_ptr : uiCtx->uiComponents)
+		delete ui_ptr;
+	uiCtx->uiComponents.clear();
 }
 
-void GameL1S1::loop(float32 elapse)
+void GameFirstRoom::loop(float32 elapse)
 {
 	camera->setProjection(gApp->gWinHandler.viewPort[2], gApp->gWinHandler.viewPort[3]);
 	camera->updateViewMatrix();

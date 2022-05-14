@@ -123,6 +123,15 @@
     <ClInclude Include="gl_elements\freephysic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gl_elements\iinteractivesurface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gl_elements\task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gl_elements\taskqueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gl_elements\framebuffer.cpp">
@@ -207,6 +216,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gl_elements\freephysic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gl_elements\iinteractivesurface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gl_elements\task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gl_elements\taskqueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

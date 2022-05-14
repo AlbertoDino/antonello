@@ -42,7 +42,7 @@ namespace sceneobjs {
 		ImGui::Text(format("Camera Rot [%2.2f,%2.2f,%2.2f]", rot[0], rot[1], rot[2]).c_str());
 
 
-		ImGui::SliderFloat("speed", &camera->speed, 0, 500.0f);
+		ImGui::SliderFloat("speed", &camera->defaultSpeed, 0, 500.0f);
 		ImGui::SliderFloat("rotationSpeed", &camera->rotationSpeed, 0, 100.0f);
 		ImGui::SliderFloat("fovx", &camera->fovx, -90, 180.0f);
 		ImGui::SliderFloat("znear", &camera->znear, 0, 180.0f);
