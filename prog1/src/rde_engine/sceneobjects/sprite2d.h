@@ -33,8 +33,13 @@ namespace sceneobjs {
 	public:
 		Sprite2D();
 
+		void setConfigFile(const std::string& filename);
+		void loadSettingsFromFile();
+		void saveSettingsToFile();
+
 		void updateSpriteFrame(float32 elaps);
 		void add2scene();
+
 
 		bool8 isFacingRightX();
 		bool8 isFacingLeftX();
@@ -43,11 +48,15 @@ namespace sceneobjs {
 		void runLefttX(float32 elapse);
 		oglElements::Task* createJump();
 
-		CVector3f		vJump;
-		float32			jumpSpeed;
-		float32			animationSpeed;
+		CVector3f		vJump;				//jump vector
+		float32			jumpSpeed;			//jump speed
+		float32			animationSpeed;		//animation frame speed
+		std::string		configFile;			//configFile for properties	
 		DrawSprite2D	*render;
 
+
+		std::vector<oglElements::ConfigRecord> settingList;
+	
 	};
 
 }

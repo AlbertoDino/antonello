@@ -26,3 +26,4 @@
 #include "task.h"
 #include "taskqueue.h"
 #include "taskexecuter.h"
+#include "settingfile.h"

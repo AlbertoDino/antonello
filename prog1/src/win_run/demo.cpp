@@ -84,7 +84,8 @@ void Demo::init()
 	sphererender->textureObject = sphereNormal->getRendering()->textureNormal;
 
 	sprite = std::make_unique<sceneobjs::Sprite2D>();
-	sprite->data->defaultSpeed = 0.350;
+	sprite->setConfigFile("assets/settings/antonello.txt");	
+	sprite->loadSettingsFromFile();
 	auto spriteRnd = sprite->render;
 	spriteRnd->setTextureByFilename("assets/textures/sprite/spritesheet.png");
 	spriteRnd->addAnimation("assets/textures/sprite/Run.txt", oglElements::AnimationType::Run);
@@ -145,6 +146,96 @@ bool8 Demo::isRunning() const
 {
 	return running;
 }
+
+
+void Demo::OnMouseScroll(double xoffset, double yoffset)
+{
+}
+
+void Demo::OnWindowSizeChange(int width, int height)
+{
+	gApp->gWinHandler.viewPort[2] = width;
+	gApp->gWinHandler.viewPort[3] = height;
+}
+
+void Demo::OnWindowClose()
+{
+	running = false;
+}
+
+void Demo::OnPositionCursorChange(double xposd, double yposd)
+{
+	float32 xpos = static_cast<float32>(xposd);
+	float32 ypos = static_cast<float32>(yposd);
+
+	//tracelog(format("Mouse Pos [%2.2f,%2.2f]", xpos, ypos));
+
+	float32 xOffset = xpos - lastRotation[0];
+	float32 yOffset = lastRotation[1] - ypos;
+
+	lastRotation[0] = xpos;
+	lastRotation[1] = ypos;
+
+	inputRotation.Set(xOffset, -yOffset, 0);
+
+	Coord2i mousePos;
+	mousePos[0] = static_cast<int32>(xposd);
+	mousePos[1] = static_cast<int32>(yposd);
+
+	pickingCtx->setSelectionByMousePosition(mousePos);
+}
+
+
+void Demo::updateUIScene(float32 elapse)
+{
+	uiText.list.at(0) = format("Fps %2i - elapse %.4f ", gApp->stats.fps, elapse);
+
+	uiModelProperties->setModelList(models);
+}
+
+void Demo::addObjectFromFile(std::string filepath)
+{
+	oglElements::Mesh mesh;
+	if (!mesh.loadFromFile(filepath)) {
+		throwError("Cannot load mesh from file");
+		return;
+	}
+
+	sceneobjs::Model* obj = new sceneobjs::Model();
+	vSet(obj->color, colors::Red);
+	obj->data->name = filepath.substr(filepath.find_last_of("/\\") + 1);
+	obj->data->position.Set(10 * models.size(), 2, 5 * models.size());
+	mesh.create((oglElements::DrawElementTextured*)obj->refRender);
+
+	sceneNode->addChild(obj->getSceneNode());
+	obj->add2SceneWithLightShader();
+	models.push_back(obj);
+
+	oglElements::DrawArrayObject* draw = new oglElements::DrawArrayObject();
+	draw->vertexObject = rex::Cube::getModel();
+	sceneobjs::Model* AABB = new sceneobjs::Model(draw);
+	ColorFromUID(obj->data->id, AABB->color);
+	AABB->data->name = "AABB";
+	AABB->add2SceneWithFlatShader();
+	AABB->add2PickingLayer();
+	obj->getSceneNode()->addChild(AABB->getSceneNode());
+
+	tracelog(format("Model [%s] loaded with id [%i]", obj->data->name.c_str(), obj->data->id));
+
+}
+
+void Demo::onModelSelected(uint32 id)
+{
+	tracelog(format("onModelSelected [%i]", id));
+	currentModelSelected = 0;
+	for (auto model : models) {
+		if (model->data->id == id) {
+			currentModelSelected = model;
+			tracelog(format("Model [%s] [%i] has been selected", currentModelSelected->data->name.c_str(), currentModelSelected->data->id));
+		}
+	}
+}
+
 
 /*
 The action is one of GLFW_PRESS, GLFW_REPEAT or GLFW_RELEASE
@@ -248,94 +339,6 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 	}
 }
 
-void Demo::OnMouseScroll(double xoffset, double yoffset)
-{
-}
-
-void Demo::OnWindowSizeChange(int width, int height)
-{
-	gApp->gWinHandler.viewPort[2] = width;
-	gApp->gWinHandler.viewPort[3] = height;
-}
-
-void Demo::OnWindowClose()
-{
-	running = false;
-}
-
-void Demo::OnPositionCursorChange(double xposd, double yposd)
-{
-	float32 xpos = static_cast<float32>(xposd);
-	float32 ypos = static_cast<float32>(yposd);
-
-	//tracelog(format("Mouse Pos [%2.2f,%2.2f]", xpos, ypos));
-
-	float32 xOffset = xpos - lastRotation[0];
-	float32 yOffset = lastRotation[1] - ypos;
-
-	lastRotation[0] = xpos;
-	lastRotation[1] = ypos;
-
-	inputRotation.Set(xOffset, -yOffset, 0);
-
-	Coord2i mousePos;
-	mousePos[0] = static_cast<int32>(xposd);
-	mousePos[1] = static_cast<int32>(yposd);
-
-	pickingCtx->setSelectionByMousePosition(mousePos);
-}
-
-
-void Demo::updateUIScene()
-{
-	uiText.list.at(0) = format("Fps %2i ", gApp->stats.fps);
-
-	uiModelProperties->setModelList(models);
-}
-
-void Demo::addObjectFromFile(std::string filepath)
-{
-	oglElements::Mesh mesh;
-	if (!mesh.loadFromFile(filepath)) {
-		throwError("Cannot load mesh from file");
-		return;
-	}
-
-	sceneobjs::Model* obj = new sceneobjs::Model();
-	vSet(obj->color, colors::Red);
-	obj->data->name = filepath.substr(filepath.find_last_of("/\\") + 1);
-	obj->data->position.Set(10 * models.size(), 2, 5 * models.size());
-	mesh.create((oglElements::DrawElementTextured*)obj->refRender);
-
-	sceneNode->addChild(obj->getSceneNode());
-	obj->add2SceneWithLightShader();
-	models.push_back(obj);
-
-	oglElements::DrawArrayObject* draw = new oglElements::DrawArrayObject();
-	draw->vertexObject = rex::Cube::getModel();
-	sceneobjs::Model* AABB = new sceneobjs::Model(draw);
-	ColorFromUID(obj->data->id, AABB->color);
-	AABB->data->name = "AABB";
-	AABB->add2SceneWithFlatShader();
-	AABB->add2PickingLayer();
-	obj->getSceneNode()->addChild(AABB->getSceneNode());
-
-	tracelog(format("Model [%s] loaded with id [%i]", obj->data->name.c_str(), obj->data->id));
-
-}
-
-void Demo::onModelSelected(uint32 id)
-{
-	tracelog(format("onModelSelected [%i]", id));
-	currentModelSelected = 0;
-	for (auto model : models) {
-		if (model->data->id == id) {
-			currentModelSelected = model;
-			tracelog(format("Model [%s] [%i] has been selected", currentModelSelected->data->name.c_str(), currentModelSelected->data->id));
-		}
-	}
-}
-
 void Demo::handleInput(float32 elapse)
 {
 	static float32 rotationActive = 1.0f;
@@ -388,6 +391,8 @@ void Demo::loop(float32 elapse)
 	}
 
 	sprite->updateSpriteFrame(elapse);
+
+
 	sphere->updateMatrixes();
 
 	light->update(cameraAgent->getPosition());
@@ -395,7 +400,7 @@ void Demo::loop(float32 elapse)
 
 	sphereNormal->updateMatrixes();
 
-	updateUIScene();
+	updateUIScene(elapse);
 
 	inputMovement.Set(0);
 	inputRotation.Set(0);

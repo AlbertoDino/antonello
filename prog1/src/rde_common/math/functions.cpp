@@ -157,6 +157,11 @@ namespace func {
 		v[0] = 0; v[1] = 0; v[2] = 0;
 	}
 
+	void  vCopy(Vector3f& dst, const Vector3f& src)
+	{
+		memcpy(dst, src, sizeof(Vector3f));
+	}
+
 	void vCross(Vector3f& v, const Vector3f& p, const Vector3f& q)
 	{
 		v[0] = p[1] * q[2] - q[1] * p[2];

@@ -22,7 +22,7 @@ namespace sceneobjs {
     {
         if (!light) return;
 
-        ImGui::Begin("Position Properties");
+        ImGui::Begin("Light Position Properties");
         ImGui::ColorEdit3("ambient", light->ambientColor.data);
         ImGui::ColorEdit3("diffuse", light->diffuseColor.data);
         ImGui::SliderFloat3("position", light->lightPosition.data, -100, +100);

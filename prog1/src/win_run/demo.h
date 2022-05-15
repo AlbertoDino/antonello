@@ -28,7 +28,7 @@ public:
 
 private:
 	void handleInput(float32 elapse);
-	void updateUIScene();
+	void updateUIScene(float32 elapse);
 
 	oglElements::WinObj* window;
 

@@ -138,6 +138,9 @@
     <ClInclude Include="gl_elements\linearsurface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gl_elements\settingfile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gl_elements\framebuffer.cpp">
@@ -237,6 +240,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gl_elements\linearsurface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gl_elements\settingfile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

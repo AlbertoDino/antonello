@@ -31,6 +31,11 @@ namespace sceneobjs {
 			ImGui::DragFloat("animation speed", &sprite->animationSpeed, 0.05, -4, +4);
 			ImGui::DragFloat("speed jump", &sprite->jumpSpeed, 0.05, -4, +4);
 			ImGui::DragFloat3("vJump", sprite->vJump.data, 0.05, -4, +4);
+
+			if (ImGui::Button("Save")) {
+				sprite->saveSettingsToFile();
+			}
+
 		}
 
 		ImGui::End();
