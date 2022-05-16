@@ -55,11 +55,9 @@ namespace oglElements {
 			case 1:
 				glTexImage2D(texture->target, 0, GL_RED, imageDetails.width, imageDetails.height, 0, GL_RED, GL_UNSIGNED_BYTE, imageData);
 				break;
-
 			case 3:
 				glTexImage2D(texture->target, 0, GL_RGB, imageDetails.width, imageDetails.height, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
 				break;
-
 			case 4:
 				glTexImage2D(texture->target, 0, GL_RGBA, imageDetails.width, imageDetails.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
 				break;

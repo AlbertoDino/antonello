@@ -4,7 +4,8 @@ namespace rex {
 
 	enum ePreBuiltModel : int32 {
 		cube,
-		sphere
+		sphere,
+		rectangle
 	};
 
 	class Cube {
@@ -15,13 +16,21 @@ namespace rex {
 			static oglElements::gl_vertexObject cube;
 	};
 
+	// This Rectangle does not use Vertex but 2 data buffer for Pos and UV
+	class RectangleForSprite {
+	public:
+		const static oglElements::gl_vertexObject& getModel();
+	private:
+		static oglElements::gl_vertexObject rectangle;
+		
+	};
 
 	class Rectangle {
 	public:
 		const static oglElements::gl_vertexObject& getModel();
 	private:
 		static oglElements::gl_vertexObject rectangle;
-		
+
 	};
 
 

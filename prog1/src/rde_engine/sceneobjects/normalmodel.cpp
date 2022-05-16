@@ -29,6 +29,9 @@ namespace sceneobjs {
 		case rex::ePreBuiltModel::sphere:
 			rendering->vertexObject = rex::Sphere::getModel(1.0f, 36, 18);
 			break;
+		case rex::ePreBuiltModel::rectangle:
+			rendering->vertexObject = rex::Rectangle::getModel();
+			break;
 		default:
 			throwError("Model not supported");
 			break;

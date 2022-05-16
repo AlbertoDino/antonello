@@ -61,22 +61,8 @@ namespace oglElements {
 			v2.Tangent += Tangent;
 		}
 
-		// See "Going Further"
 		for (unsigned int i = 0; i < vertices.size(); i ++)
 		{
-			/*
-			glm::vec3& n = vertices[i].Normal;
-			glm::vec3& t = vertices[i].Tangent;
-			glm::vec3& b = vertices[i].BitTangent;
-
-			// Gram-Schmidt orthogonalize
-			t = glm::normalize(t - n * glm::dot(n, t));
-
-			// Calculate handedness
-			if (glm::dot(glm::cross(n, t), b) < 0.0f) {
-				t = t * -1.0f;
-			}
-			*/
 			glm::normalize(vertices[i].Tangent);
 		}
 	}

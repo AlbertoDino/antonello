@@ -16,6 +16,11 @@ namespace oglElements {
 		{
 		}
 
+		Vertex(const glm::vec3& pos, const glm::vec3& normal, const glm::vec2& uv, const glm::vec3& tangent)
+			: Pos(pos), Normal(normal), UV(uv), Tangent(tangent)
+		{
+		}
+
 		~Vertex() = default;
 
 		glm::vec3 Pos;

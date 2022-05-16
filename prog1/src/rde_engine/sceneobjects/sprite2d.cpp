@@ -86,7 +86,7 @@ namespace sceneobjs {
 		vJump{ 0.25,1.0,0 }
 	{
 		refRender = render = new DrawSprite2D();
-		render->vertexObject = rex::Rectangle::getModel();
+		render->vertexObject = rex::RectangleForSprite::getModel();
 
 		settingList = {
 			oglElements::ConfigRecord{"name",oglElements::eConfigType::eString, &data->name },

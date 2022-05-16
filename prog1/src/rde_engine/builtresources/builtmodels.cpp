@@ -176,18 +176,19 @@ namespace rex {
 
 		return cube;
 	}
+	//----------------------------------------------------------------------------
 
-	oglElements::gl_vertexObject Rectangle::rectangle;
+	oglElements::gl_vertexObject RectangleForSprite::rectangle;
 
-	const oglElements::gl_vertexObject& Rectangle::getModel()
+	const oglElements::gl_vertexObject& RectangleForSprite::getModel()
 	{
 		if (rectangle.VAO != 0) return rectangle;
 
-		rectangle.drawMode = GL_TRIANGLES;
-		rectangle.count = 6;
-
 		float32 fRadius = 1.0f;
 
+		rectangle.drawMode = GL_TRIANGLES;
+		rectangle.count = 6;
+		
 		float32 vVerts[] = {
 			fRadius, 0, 0,
 			fRadius, fRadius, 0,
@@ -196,15 +197,9 @@ namespace rex {
 			0, 0, 0,
 			fRadius,0, 0 };
 
-		float32 vNormals[] = {
-			0.0f, 0.0f, fRadius,
-			0.0f, 0.0f, fRadius,
-			0.0f, 0.0f, fRadius,
-			0.0f, 0.0f, fRadius,
-			0.0f, 0.0f, fRadius,
-			0.0f, 0.0f, fRadius };
 
-		float32 vTexts[] = { 1.0f, 0.0f,
+		float32 vTexts[] = { 
+			1.0f, 0.0f,
 			1.0f, 1.0f,
 			0.0f, 1.0f,
 			0.0f, 1.0f,
@@ -212,12 +207,10 @@ namespace rex {
 			1.0f, 0.0f };
 
 		glGenVertexArrays(1, &rectangle.VAO);
-		glGenBuffers(1, &rectangle.VBO);
-		//glGenBuffers(1, &draw->vertexObject.CBO);
-		glGenBuffers(1, &rectangle.UVO);
-
-
 		glBindVertexArray(rectangle.VAO);
+
+		glGenBuffers(1, &rectangle.VBO);
+		glGenBuffers(1, &rectangle.UVO);		
 
 		// for add buffer ..
 		glBindBuffer(GL_ARRAY_BUFFER, rectangle.VBO);
@@ -233,15 +226,44 @@ namespace rex {
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, NULL);
 
-
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		return rectangle;
 	}
 
+
+	//----------------------------------------------------------------------------
+
+	oglElements::gl_vertexObject Rectangle::rectangle;
+
+	const oglElements::gl_vertexObject& Rectangle::getModel() {
+
+		if (rectangle.VAO != 0) return rectangle;
+
+		float32 fRadius = 1.0f;
+
+		oglElements::TriangleMesh mesh;
+
+		mesh.addVertex({ fRadius, 0, 0 }, { 0.0f, 0.0f, fRadius }, { 1.0f, 0.0f });
+		mesh.addVertex({ fRadius, fRadius, 0 }, { 0.0f, 0.0f, fRadius }, { 1.0f, 1.0f });
+		mesh.addVertex({ 0, fRadius, 0 }, { 0.0f, 0.0f, fRadius }, { 0.0f, 1.0f });
+		mesh.addVertex({ 0, fRadius, 0 }, { 0.0f, 0.0f, fRadius }, { 0.0f, 1.0f });
+		mesh.addVertex({ 0, 0, 0 }, { 0.0f, 0.0f, fRadius }, { 0.0f, 0.0f });
+		mesh.addVertex({ fRadius,0, 0 }, { 0.0f, 0.0f, fRadius }, { 1.0f, 0.0f });
+		
+		mesh.addIndex(0, 1, 2);// first triangle
+		mesh.addIndex(3, 4, 5); // second triangle
+	
+		mesh.computeTangents();
+
+		mesh.create(&rectangle, GL_TRIANGLES);
+
+		return rectangle;
+	}
+
+	//----------------------------------------------------------------------------
+
 	oglElements::gl_vertexObject Sphere::sphere;
-
-
 
 	const oglElements::gl_vertexObject& Sphere::getModel(float32 fRadius, int32 sectors, int32 stacks)
 	{

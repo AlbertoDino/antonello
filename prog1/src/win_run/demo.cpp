@@ -80,6 +80,18 @@ void Demo::init()
 	sceneNode->addChild(sphereNormal->getSceneNode());
 
 	//-----------
+	
+	floor2dTile = std::make_unique<sceneobjs::NormalModel>();
+	floor2dTile->data->name = "floor2dTile";
+	floor2dTile->data->position = { +10,0,0 };
+	floor2dTile->setModel(rex::ePreBuiltModel::rectangle);
+	floor2dTile->setTextureByFilename("assets/textures/concrete_texel.tga");
+	floor2dTile->setNormalTextureByFilename("assets/textures/concrete_texel_normal.tga");
+	floor2dTile->add2scene();
+
+	sceneNode->addChild(floor2dTile->getSceneNode());
+
+	//-----------
 
 	sphererender->textureObject = sphereNormal->getRendering()->textureNormal;
 
@@ -98,6 +110,7 @@ void Demo::init()
 	sceneNode->addChild(sprite->getSceneNode());
 
 	//#####################
+
 
 	taskQueue = std::make_unique<oglElements::TaskQueue>();
 	surface = std::make_unique<oglElements::LinearSurface>();

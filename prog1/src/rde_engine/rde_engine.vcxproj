@@ -164,6 +164,7 @@
     <ClInclude Include="lib.h" />
     <ClInclude Include="sceneobjects\genmodel.h" />
     <ClInclude Include="sceneobjects\normalmodel.h" />
+    <ClInclude Include="sceneobjects\platformmap.h" />
     <ClInclude Include="sceneobjects\sprite2d.h" />
     <ClInclude Include="sceneobjects\uicameraproperties.h" />
     <ClInclude Include="sceneobjects\uilightpositionproperties.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="sceneobjects\light.cpp" />
     <ClCompile Include="sceneobjects\genmodel.cpp" />
     <ClCompile Include="sceneobjects\normalmodel.cpp" />
+    <ClCompile Include="sceneobjects\platformmap.cpp" />
     <ClCompile Include="sceneobjects\sprite2d.cpp" />
     <ClCompile Include="sceneobjects\uicameraproperties.cpp" />
     <ClCompile Include="sceneobjects\uilightpositionproperties.cpp" />
