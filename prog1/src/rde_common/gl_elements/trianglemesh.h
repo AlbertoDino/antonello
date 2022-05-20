@@ -12,7 +12,7 @@ namespace oglElements {
 		//Requires Vertices
 		void computeTangents();
 		void create(gl_vertexObject* vertexObject, GLenum drawmode = GL_TRIANGLES);
-	private:
+
 		std::vector<Vertex> vertices;
 		std::vector<GLuint> indexes;
 		int32 indexCount;

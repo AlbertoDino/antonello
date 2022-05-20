@@ -52,6 +52,7 @@ private:
 	std::unique_ptr<sceneobjs::LightPosition> lightPosition;
 	std::unique_ptr<sceneobjs::NormalModel> sphereNormal;
 	std::unique_ptr<sceneobjs::NormalModel> floor2dTile;
+	std::unique_ptr<sceneobjs::Platform2DMap> map;
 
 	sceneobjs::Model* currentModelSelected;
 	

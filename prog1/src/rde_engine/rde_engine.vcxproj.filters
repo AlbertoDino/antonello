@@ -120,7 +120,7 @@
     <ClInclude Include="sceneobjects\uigameobjectproperties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sceneobjects\platformmap.h">
+    <ClInclude Include="sceneobjects\platform2dmap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -200,7 +200,7 @@
     <ClCompile Include="sceneobjects\uigameobjectproperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sceneobjects\platformmap.cpp">
+    <ClCompile Include="sceneobjects\platform2dmap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

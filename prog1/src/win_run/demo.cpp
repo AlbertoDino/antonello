@@ -83,13 +83,31 @@ void Demo::init()
 	
 	floor2dTile = std::make_unique<sceneobjs::NormalModel>();
 	floor2dTile->data->name = "floor2dTile";
-	floor2dTile->data->position = { +10,0,0 };
+	floor2dTile->data->position = { -1,0,0 };
 	floor2dTile->setModel(rex::ePreBuiltModel::rectangle);
-	floor2dTile->setTextureByFilename("assets/textures/concrete_texel.tga");
-	floor2dTile->setNormalTextureByFilename("assets/textures/concrete_texel_normal.tga");
+	
+	floor2dTile->setTextureByFilename("assets/textures/176.JPG");
+	floor2dTile->setNormalTextureByFilename("assets/textures/176_norm.JPG");
+
 	floor2dTile->add2scene();
 
 	sceneNode->addChild(floor2dTile->getSceneNode());
+
+	//-----------
+
+	std::vector<sceneobjs::ImageMap> textures;
+	sceneobjs::ImageMap img;
+	img.key = 'X';
+	img.imagePath =       "assets/textures/concrete_texel.tga";
+	img.imageNormalPath = "assets/textures/concrete_texel_normal.tga";
+	textures.push_back(img);
+
+	map = std::make_unique<sceneobjs::Platform2DMap>();
+	map->createTexturePool(textures);
+	map->generateByFile("");
+	map->add2scene();
+
+	sceneNode->addChild(map->getSceneNode());
 
 	//-----------
 
@@ -266,26 +284,26 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 
 	// Keyboard
 	bool8 isActive;
-	isActive = (key == GLFW_KEY_W /* && (action == GLFW_PRESS || action == GLFW_REPEAT)*/);
+	isActive = (key == GLFW_KEY_W);
 	moveforward.Set(
 		vDirection[0] * isActive,
 		vDirection[1] * isActive,
 		vDirection[2] * isActive);
 
-	isActive = (key == GLFW_KEY_S /* && (action == GLFW_PRESS || action == GLFW_REPEAT) */);
+	isActive = (key == GLFW_KEY_S);
 	movebackwards.Set(
 		-vDirection[0] * isActive,
 		-vDirection[1] * isActive,
 		-vDirection[2] * isActive);
 
-	isActive = (key == GLFW_KEY_A /* && (action == GLFW_PRESS || action == GLFW_REPEAT) */);
+	isActive = (key == GLFW_KEY_A);
 	moveLeft.Cross(World::World_Y_Axis, vDirection);
 	moveLeft.Set(
 		moveLeft[0] * isActive,
 		moveLeft[1] * isActive,
 		moveLeft[2] * isActive);
 
-	isActive = (key == GLFW_KEY_D /* && (action == GLFW_PRESS || action == GLFW_REPEAT) */);
+	isActive = (key == GLFW_KEY_D);
 	moveRight.Cross(World::World_Y_Axis, vDirection);
 	moveRight.Set(
 		-moveRight[0] * isActive,
@@ -403,9 +421,10 @@ void Demo::loop(float32 elapse)
 		obj->updateMatrixes();
 	}
 
+	map->updateMatrixes();
 	sprite->updateSpriteFrame(elapse);
 
-
+	floor2dTile->updateMatrixes();
 	sphere->updateMatrixes();
 
 	light->update(cameraAgent->getPosition());

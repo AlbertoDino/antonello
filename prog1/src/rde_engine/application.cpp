@@ -165,6 +165,20 @@ void Application::loadRenderingContexts()
 		tracelog("Error loading ShaderLight");
 	}
 	//---------------------------------------------------
+	rex::NormalTextureLightInstanced nmTextureLightInstanced;
+	if (nmTextureLightInstanced.init())
+	{
+		// Add Rendering Layout
+		oglElements::ShaderContext* layout = new oglElements::ShaderContext(api::eRenderingContext::ShaderNormalTextureLightInstanced);
+		layout->shader.init(nmTextureLightInstanced.programId);
+		renderingLayouts.push_back(layout);
+		tracelog(format("shader: NormalTextureLightInstanced [%i] added.", nmTextureLightInstanced.programId));
+	}
+	else
+	{
+		tracelog("Error loading NormalTextureLightInstanced");
+	}
+	//---------------------------------------------------
 	renderingLayouts.push_back(new render::UIContext(api::eRenderingContext::UICxt));
 
 }

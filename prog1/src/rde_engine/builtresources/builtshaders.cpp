@@ -80,4 +80,15 @@ namespace rex {
 		programId = shader.get_program_id();
 		return programId != 0;
 	}
+
+
+	//NormalTextureLightInstaced
+
+	bool8 NormalTextureLightInstanced::init()
+	{
+		oglElements::Shader shader;
+		shader.loadFromFile("assets/shaders/NormalMappingInstanced.vs", "assets/shaders/NormalMappingInstanced.fs");
+		programId = shader.get_program_id();
+		return programId != 0;
+	}
 }

@@ -78,7 +78,7 @@ namespace oglElements {
 	class gl_vertexObject
 	{
 	public:
-		gl_vertexObject() : VBO{ 0 }, VAO{ 0 }, IBO{ 0 }, CBO{0}, UVO{ 0 }, count{ 0 }, drawMode{ GL_TRIANGLES }{}
+		gl_vertexObject() : VBO{ 0 }, VAO{ 0 }, IBO{ 0 }, CBO{ 0 }, UVO{ 0 }, INS{0}, count{ 0 }, drawMode{ GL_TRIANGLES }{}
 		GLsizei count;
 		GLsizei drawMode;
 		GLuint VAO;  // Vertex Array Object
@@ -86,6 +86,7 @@ namespace oglElements {
 		GLuint CBO;  // Color Buffer Object	
 		GLuint IBO;	 // Index Buffer Object
 		GLuint UVO;	 // Text Coord Buffer Object
+		GLuint INS;	 // Instance Buffer Object (for index data)
 	};
 
 	class gl_facts

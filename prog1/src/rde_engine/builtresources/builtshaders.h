@@ -27,4 +27,11 @@ namespace rex {
 		uint32 programId;
 	};
 
+	class NormalTextureLightInstanced {
+	public:
+		bool8 init();
+		uint32 programId;
+	};
+
+
 }

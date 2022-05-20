@@ -10,7 +10,8 @@ namespace api {
 		ShaderFlat,
 		ShaderLight,
 		ShaderFlatTexture,
-		ShaderNormalTextureLight
+		ShaderNormalTextureLight,
+		ShaderNormalTextureLightInstanced,
 	};
 
 

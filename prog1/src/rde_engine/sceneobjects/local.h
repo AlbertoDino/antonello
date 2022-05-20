@@ -12,3 +12,4 @@
 #include "lightposition.h"
 #include "normalmodel.h"
 #include "uigameobjectproperties.h"
+#include "platform2dmap.h"

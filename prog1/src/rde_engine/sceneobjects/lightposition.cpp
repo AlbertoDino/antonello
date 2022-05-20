@@ -17,15 +17,20 @@ namespace sceneobjs {
 
 	void LightPosition::add2scene()
 	{
-		oglElements::ShaderContext* rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::ShaderNormalTextureLight);
-		shaderValues = rendering->shader;
-		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "lightPos", &lightPosition.data);
-		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "viewPos", &cameraPosition.data);		
-		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V4f, "ambientColor", &ambientColor.data);
-		/*shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V4f, "diffuseColor", &diffuseColor.data);
-		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1f, "lightPower", &lightPower);
-		*/
-		rendering->add2Context(this);
+		auto rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::ShaderNormalTextureLight);		
+		shaderNormal.shaderValues = rendering->shader;
+		shaderNormal.shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "lightPos", &lightPosition.data);
+		shaderNormal.shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "viewPos", &cameraPosition.data);
+		shaderNormal.shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V4f, "ambientColor", &ambientColor.data);
+		rendering->add2Context(&shaderNormal);
+
+		//---
+		rendering = (oglElements::ShaderContext*)api::getRenderingContext(api::eRenderingContext::ShaderNormalTextureLightInstanced);
+		shaderNormalInstance.shaderValues = rendering->shader;
+		shaderNormalInstance.shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "lightPos", &lightPosition.data);
+		shaderNormalInstance.shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V3f, "viewPos", &cameraPosition.data);
+		shaderNormalInstance.shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V4f, "ambientColor", &ambientColor.data);
+		rendering->add2Context(&shaderNormalInstance);
 	}
 
 	void LightPosition::update(const CVector3f& cameraPos)
