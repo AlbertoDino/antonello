@@ -7,9 +7,15 @@ using namespace func;
 
 Demo::Demo() :
 	running{ true },
+	camera(0),
 	currentModelSelected(0)
 {
+	cameraNode = std::make_unique<oglElements::CameraScene>();
+	cameraNode->setDebugName("camera");
+
 	cameraAgent = std::make_unique<oglElements::Camera>();
+	thirdCameraView = std::make_unique<oglElements::ThirdCameraView>();
+
 	sceneNode = std::make_unique<oglElements::SceneNode>();
 	sceneNode->setDebugName("sceneNode");
 
@@ -34,12 +40,14 @@ void Demo::init()
 {
 	window = &(gApp->gWinHandler);
 
-	oglElements::CameraScene* cameraNode = cameraAgent->getCameraScene();
-	cameraNode->setDebugName("camera");
-	cameraAgent->setOrigin(CVector3f(0, 0, 0));
+	oglElements::CameraScene* cameraScene = cameraNode.get();	
+	cameraAgent->setCameraNode(cameraScene);	
 
-	gApp->getRoot().addChild(cameraNode);
+	cameraAgent->setOrigin(CVector3f(0, 0, 0));
+	gApp->getRoot().addChild(cameraScene);
 	cameraNode->addChild(sceneNode.get());
+
+	camera = cameraAgent.get();
 
 	//-----------
 	grid1 = std::make_unique<sceneobjs::Grid>();
@@ -56,11 +64,8 @@ void Demo::init()
 	pickingCtx->setOnSelected([this](uint32 id) { onModelSelected(id); uiModelProperties->setModelSelected(currentModelSelected); });
 
 	//-----------
-	oglElements::DrawElementTextured* sphererender = new oglElements::DrawElementTextured();
-	sphererender->vertexObject = rex::Sphere::getModel(1.0f, 36, 18);
-	sphererender->textureObject = api::getDefaultTexture();
-	sphere = std::make_unique<sceneobjs::GenModel>(sphererender);
-	sphere->data->position = { 10,10,10 };
+	sphere = std::make_unique<sceneobjs::GenModel>(rex::ePreBuiltModel::sphere);
+	sphere->data->position = { 10,0,10 };
 	sphere->add2scene(api::eRenderingContext::ShaderFlatTexture);
 	sceneNode->addChild(sphere->getSceneNode());
 
@@ -68,6 +73,8 @@ void Demo::init()
 
 	lightPosition = std::make_unique<sceneobjs::LightPosition>();
 	lightPosition->add2scene();
+
+	//-----------
 
 	sphereNormal = std::make_unique<sceneobjs::NormalModel>();
 	sphereNormal->data->name = "NormalSphere";
@@ -80,6 +87,18 @@ void Demo::init()
 	sceneNode->addChild(sphereNormal->getSceneNode());
 
 	//-----------
+	// background
+
+	background1 = std::make_unique<sceneobjs::GenModel>(rex::ePreBuiltModel::rectangle);
+	background1->setTextureByFilename("assets/textures/s1/background1.jpg");
+	background1->data->name = "background1";
+	background1->data->position = { 10,0,-15 };
+	background1->data->scale = { 10,10,10 };
+	background1->add2scene(api::eRenderingContext::ShaderFlatTexture);
+	sceneNode->addChild(background1->getSceneNode());
+
+	//-----------
+
 	
 	floor2dTile = std::make_unique<sceneobjs::NormalModel>();
 	floor2dTile->data->name = "floor2dTile";
@@ -110,8 +129,6 @@ void Demo::init()
 	sceneNode->addChild(map->getSceneNode());
 
 	//-----------
-
-	sphererender->textureObject = sphereNormal->getRendering()->textureNormal;
 
 	sprite = std::make_unique<sceneobjs::Sprite2D>();
 	sprite->setConfigFile("assets/settings/antonello.txt");	
@@ -158,6 +175,7 @@ void Demo::init()
 	uiCameraProperties = std::make_unique<sceneobjs::UiCameraProperties>();
 	uiCameraProperties->setTextList(&uiText);
 	uiCameraProperties->setCamera(cameraAgent.get());
+	uiCameraProperties->setCameraThirdView(thirdCameraView.get());
 	uiCtx->uiComponents.push_back(uiCameraProperties.get());
 
 	uiLightPosProperties = std::make_unique<sceneobjs::UILightPositionProperties>();
@@ -165,8 +183,8 @@ void Demo::init()
 	uiCtx->uiComponents.push_back(uiLightPosProperties.get());
 
 	uiCtx->uiComponents.push_back(new sceneobjs::UIGameObjectProperties(sprite.get()));
-
 	uiCtx->uiComponents.push_back(new sceneobjs::UIGameObjectProperties(sphereNormal.get()));
+	uiCtx->uiComponents.push_back(new sceneobjs::UIGameObjectProperties(background1.get()));
 
 	//#####################
 
@@ -337,7 +355,6 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 		taskQueue->addTaskToQueue(jump);
 		tracelog(format("Task [%i] Jump added", jump->getId()));
 		sprite->render->playAnimation(oglElements::AnimationType::Jumps);
-
 	}
 
 	if (key == GLFW_KEY_LEFT_SHIFT)
@@ -349,7 +366,6 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 	{
 		sprite->render->playAnimation(oglElements::AnimationType::Idle);
 	}
-
 
 	if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE) {
 		sprite->render->playAnimation(oglElements::AnimationType::Idle);
@@ -400,6 +416,21 @@ void Demo::handleInput(float32 elapse)
 		break;
 	}
 
+	if (sprite->data->getPosition()[0] > 10)
+	{
+ 		tracelog("3rd Camera View");
+		
+		thirdCameraView->setCameraScene(cameraNode.get());
+		thirdCameraView->setObjectToFollow(sprite.get());
+
+		camera = thirdCameraView.get();
+	}
+	else
+	{
+		tracelog("Camera Free node");
+		cameraAgent->setCameraNode(cameraNode.get());
+		camera = cameraAgent.get();
+	}
 
 	inputRotation *= rotationActive;
 }
@@ -409,11 +440,12 @@ void Demo::loop(float32 elapse)
 {
 	handleInput(elapse);
 
-	cameraAgent->setProjection(window->width, window->height);
-	cameraAgent->move(inputMovement, elapse);
-	cameraAgent->rotate(inputRotation, elapse);
-	cameraAgent->updateViewMatrix();
-
+	if (camera) {
+		camera->setProjection(window->width, window->height);
+		camera->move(inputMovement, elapse);
+		camera->rotate(inputRotation, elapse);
+		camera->updateViewMatrix();
+	}
 
 	taskExecuter.loop(elapse);
 
@@ -431,6 +463,7 @@ void Demo::loop(float32 elapse)
 	lightPosition->update(cameraAgent->getPosition());
 
 	sphereNormal->updateMatrixes();
+	background1->updateMatrixes();
 
 	updateUIScene(elapse);
 

@@ -153,7 +153,6 @@ namespace sceneobjs {
 		{
 			text.activeBind();
 		}
-		
 
 		glBindVertexArray(vertexObject.VAO);
 

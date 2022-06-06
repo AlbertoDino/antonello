@@ -2,6 +2,7 @@
 #include "scenenode.h"
 #include "renderingelement.h"
 #include "..\math\local.h"
+#include "settingfile.h"
 
 namespace oglElements {
 
@@ -43,8 +44,14 @@ namespace oglElements {
 		void render() const;
 
 		void updateMatrixes();
+
+		void setConfigFile(const std::string& filename);
+		void loadSettingsFromFile();
+		void saveSettingsToFile();
 	protected:
-		SceneNode* pSceneNode;  // view/projection matrixes
+		SceneNode		*pSceneNode;  // view/projection matrixes
+		std::string		configFile;   //configFile for properties	
+		std::vector<oglElements::ConfigRecord> settingList;
 	};
 
 }

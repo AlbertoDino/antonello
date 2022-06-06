@@ -1,5 +1,6 @@
 #include <rdecommon.h>
 #include "renderingelement.h"
+#include "settingfile.h"
 #include "gameobject.h"
 
 namespace oglElements {
@@ -26,6 +27,14 @@ namespace oglElements {
 		refRender(0),
 		data(new GameObjectData())
 	{
+		settingList = {
+			oglElements::ConfigRecord{"name",oglElements::eConfigType::eString, &data->name },
+			oglElements::ConfigRecord{"defaultspeed",oglElements::eConfigType::eFloat32,&data->defaultSpeed },
+			oglElements::ConfigRecord{"scale",oglElements::eConfigType::eVector3f,data->scale.data },
+			oglElements::ConfigRecord{"position",oglElements::eConfigType::eVector3f,data->position.data },
+			oglElements::ConfigRecord{"positionoffset",oglElements::eConfigType::eVector3f,data->positionOffset.data },
+		};
+
 	}
 
 	GameObject::~GameObject()
@@ -81,6 +90,35 @@ namespace oglElements {
 		scaling.Scale(data->scale.data);
 
 		pSceneNode->view = trans * scaling * viewmatrix;
+	}
+
+	void GameObject::setConfigFile(const std::string& filename)
+	{
+		configFile = filename;
+	}
+
+	void GameObject::loadSettingsFromFile()
+	{
+		if (configFile.empty()) {
+			tracelog("Cannot load setting - config file not set");
+			return;
+		}
+
+		oglElements::SettingFile f;
+		f.setSettings(settingList);
+		f.load(configFile);
+	}
+
+	void GameObject::saveSettingsToFile()
+	{
+		if (configFile.empty()) {
+			tracelog("Cannot save setting - config file not set");
+			return;
+		}
+
+		oglElements::SettingFile f;
+		f.setSettings(settingList);
+		f.save(configFile);
 	}
 
 }

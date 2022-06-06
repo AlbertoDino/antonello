@@ -8,7 +8,10 @@ GameFirstRoom::GameFirstRoom()
 {	
 	sceneRoot = std::make_unique<oglElements::SceneNode>();
 
+	cameraNode = std::make_unique<oglElements::CameraScene>();
+
 	camera = std::make_unique<oglElements::Camera>();
+	camera->setCameraNode(cameraNode.get());
 	camera->setOrigin(CVector3f(0, 0, 0));
 
 	auto cameraRoot = camera->getCameraScene();
@@ -20,8 +23,21 @@ GameFirstRoom::GameFirstRoom()
 	dbGrid->add2scene();
 	sceneRoot->addChild(dbGrid->getSceneNode());
 
-	// antonello
+	
+
+	// background
+	background1 = std::make_unique<sceneobjs::GenModel>(rex::ePreBuiltModel::rectangle);
+	background1->setTextureByFilename("assets/textures/s1/background1.jpg");
+	background1->setConfigFile("assets/settings/antonello-game1.txt");
+	background1->data->name = "background1";
+	background1->data->position = { 0,0,-10 };
+	background1->add2scene(api::eRenderingContext::ShaderFlatTexture);
+	sceneRoot->addChild(background1->getSceneNode());
+
+	// antonello [last for transparency]
 	antonello = std::make_unique<sceneobjs::Sprite2D>();
+	antonello->setConfigFile("assets/settings/antonello-game1.txt");
+	antonello->loadSettingsFromFile();
 	auto spriteRnd = antonello->render;
 	spriteRnd->setTextureByFilename("assets/textures/sprite/spritesheet.png");
 	spriteRnd->addAnimation("assets/textures/sprite/Run.txt", oglElements::AnimationType::Run);
@@ -29,7 +45,6 @@ GameFirstRoom::GameFirstRoom()
 	spriteRnd->addAnimation("assets/textures/sprite/Jump.txt", oglElements::AnimationType::Jumps);
 	spriteRnd->playAnimation(oglElements::AnimationType::Idle);
 	antonello->data->name = "Antonello";
-	antonello->data->positionOffset = { 0,-2,-5 };
 	antonello->data->position = { 0,0,0 };
 	antonello->add2scene();
 	sceneRoot->addChild(antonello->getSceneNode());
@@ -42,6 +57,7 @@ GameFirstRoom::GameFirstRoom()
 	uiCtx->uiComponents.push_back(dbUiCameraProperties.get());
 	uiCtx->uiComponents.push_back(new UIAntonelloExploreMenu());
 	uiCtx->uiComponents.push_back(new sceneobjs::UIGameObjectProperties(antonello.get()));
+	uiCtx->uiComponents.push_back(new sceneobjs::UIGameObjectProperties(background1.get()));
 
 	
 }
@@ -66,4 +82,6 @@ void GameFirstRoom::loop(float32 elapse)
 	camera->updateViewMatrix();
 
 	antonello->updateSpriteFrame(elapse);
+	background1->updateMatrixes();
+	
 }

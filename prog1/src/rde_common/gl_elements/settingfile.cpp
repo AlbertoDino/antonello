@@ -39,7 +39,7 @@ namespace oglElements {
 		const int bufferlen = 255;
 		char line[bufferlen];
 		fopen_s(&fp, filePath.c_str(), "r");
-
+		bool success = false;
 		if (fp != nullptr)
 		{
 			std::vector<StrKeyValue> fileConfigs;
@@ -60,28 +60,30 @@ namespace oglElements {
 
 				fileConfigs.push_back(rec);
 			}
-			fclose(fp);
 
+			fclose(fp);
 			// implement loading values to varList
 
 			for (auto config : fileConfigs)
 			{
 				setConfigValue(getConfig(config.name), config.value);
 			}
+			success = true;
 		}
 		else
 		{
 			tracelog(format("error reading file %s", filePath.c_str()));
-			return false;
 		}
 
-		return true;
+		
+		return success;
 	}
 
 	bool SettingFile::save(const std::string& filePath)
 	{
 		std::fstream file;
-		file.open(filePath.c_str(), std::ios_base::out);
+	
+		file.open(filePath.c_str(), std::fstream::out);
 
 		if (!file.is_open())
 		{

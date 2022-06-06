@@ -88,40 +88,17 @@ namespace sceneobjs {
 		refRender = render = new DrawSprite2D();
 		render->vertexObject = rex::RectangleForSprite::getModel();
 
-		settingList = {
-			oglElements::ConfigRecord{"name",oglElements::eConfigType::eString, &data->name },
+		std::vector<oglElements::ConfigRecord> localSettings = {
 			oglElements::ConfigRecord{"animationspeed",oglElements::eConfigType::eFloat32,&animationSpeed },
-			oglElements::ConfigRecord{"defaultspeed",oglElements::eConfigType::eFloat32,&data->defaultSpeed },
 			oglElements::ConfigRecord{"jumpspeed",oglElements::eConfigType::eFloat32,&jumpSpeed },
-			oglElements::ConfigRecord{"jumpvector",oglElements::eConfigType::eVector3f,vJump.data },
-			oglElements::ConfigRecord{"scale",oglElements::eConfigType::eVector3f,data->scale.data },
-			oglElements::ConfigRecord{"positionoffset",oglElements::eConfigType::eVector3f,data->positionOffset.data },
-		};
+			oglElements::ConfigRecord{"jumpvector",oglElements::eConfigType::eVector3f,vJump.data }
+		};		
+
+		settingList.reserve(settingList.size() + localSettings.size());
+		settingList.insert(settingList.end(), localSettings.begin(), localSettings.end());
 	}
 
-	void Sprite2D::loadSettingsFromFile()
-	{
-		if (configFile.empty()) {
-			tracelog("Cannot load setting - config file not set");
-			return;
-		}
-
-		oglElements::SettingFile f;
-		f.setSettings(settingList);
-		f.load(configFile);
-	}
-
-	void Sprite2D::saveSettingsToFile()
-	{
-		if (configFile.empty()) {
-			tracelog("Cannot save setting - config file not set");
-			return;
-		}
-
-		oglElements::SettingFile f;
-		f.setSettings(settingList);
-		f.save(configFile);
-	}
+	
 
 	void Sprite2D::updateSpriteFrame(float32 elaps)
 	{
@@ -143,11 +120,6 @@ namespace sceneobjs {
 		shaderValues.add((oglElements::UniformLocationFunc)oglElements::UniformLocation_V1i, "sampler", &render->textureObject.unit);
 
 		rendering->add2Context(this);
-	}
-
-	void Sprite2D::setConfigFile(const std::string& filename)
-	{
-		configFile = filename;
 	}
 
 

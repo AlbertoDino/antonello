@@ -14,10 +14,13 @@ namespace sceneobjs {
 	class GenModel : public oglElements::GameObject {
 	public:
 
-		GenModel(oglElements::RenderingElement* drawModel);
+		GenModel(rex::ePreBuiltModel modelType);
 		~GenModel();
 
+		void setTextureByFilename(const std::string& filename);
 		void add2scene(api::eRenderingContext ctx);
+
+		oglElements::DrawElementTextured	*rendering;
 
 		func::CVector4f color;
 		int32			textureUnit;

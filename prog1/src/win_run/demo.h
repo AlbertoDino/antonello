@@ -31,13 +31,17 @@ private:
 	void updateUIScene(float32 elapse);
 
 	oglElements::WinObj* window;
+	oglElements::ICamera* camera;
 
 	CVector3f inputMovement, inputRotation, lastRotation;
 
+	std::unique_ptr<oglElements::CameraScene> cameraNode;
 	std::unique_ptr<oglElements::SceneNode> sceneNode;
 	std::unique_ptr<sceneobjs::Grid> grid1;
 	std::unique_ptr<sceneobjs::Light> light;
 	std::unique_ptr<oglElements::Camera> cameraAgent;
+	std::unique_ptr<oglElements::ThirdCameraView> thirdCameraView;
+	
 	std::unique_ptr<sceneobjs::UiModelProperties> uiModelProperties;
 	std::unique_ptr<sceneobjs::UILightProperties> uiLightProperties;
 	std::unique_ptr<sceneobjs::UILightPositionProperties> uiLightPosProperties;
@@ -45,13 +49,14 @@ private:
 	std::vector<sceneobjs::Model*> models;
 
 	bool8 running;
+
 	std::unique_ptr<sceneobjs::Sprite2D> sprite;
 	std::unique_ptr<sceneobjs::GenModel> sphere;
-
 
 	std::unique_ptr<sceneobjs::LightPosition> lightPosition;
 	std::unique_ptr<sceneobjs::NormalModel> sphereNormal;
 	std::unique_ptr<sceneobjs::NormalModel> floor2dTile;
+	std::unique_ptr < sceneobjs::GenModel>	background1;
 	std::unique_ptr<sceneobjs::Platform2DMap> map;
 
 	sceneobjs::Model* currentModelSelected;

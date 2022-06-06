@@ -2,27 +2,18 @@
 #include "..\math\local.h"
 #include "frustum.h"
 #include "scenenode.h"
+#include "icamera.h"
 
 using namespace func;
 
 namespace oglElements {
 
-	enum eCameraMode {
-		CameraFree,
-		Camera3rd,
-	};
-
-	class CameraScene : public SceneNode {
-	public:
-		CameraScene();
-		~CameraScene();
-	};
-
-	class Camera {
+	class Camera : public ICamera {
 	public:
 		Camera();
 		~Camera();
 
+		void	setCameraNode(CameraScene* node);
 		void	setOrigin(const CVector3f& vector);
 		void	setOffset(const CVector3f& v);
 		void    rotate(const CVector3f& vector, float32 elapsedTimeSec);
@@ -41,6 +32,7 @@ namespace oglElements {
 
 		float32 defaultSpeed, rotationSpeed;
 		float32 fovx, znear, zfar;
+
 	private:
 
 		void	updateFrustum();

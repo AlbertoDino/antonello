@@ -41,14 +41,15 @@ namespace rex {
 
 	// FlatShaderWithTexture
 	static const char* szFlatShaderTextureVP =
-		"#version 330\n"
-		"in vec4 vVertex;"
-		"in vec2 vTexCoord0;"
+		"#version 330 core\n"
+		"layout (location = 0) in vec3 vVertex;"
+		"layout (location = 1) in vec3 vNormal;"
+		"layout (location = 2) in vec2 vTexCoord0;"
 		"uniform mat4 mvpMatrix;"
 		"smooth out vec2 vTex;"
 		"void main(void) "
 		"{ vTex = vTexCoord0;"
-		" gl_Position = mvpMatrix * vVertex; "
+		" gl_Position = mvpMatrix * vec4(vVertex, 1.0); "
 		"}";
 
 	static const char* szFlatShaderTextureFP =

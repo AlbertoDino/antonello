@@ -223,8 +223,8 @@ namespace rex {
 		glBindBuffer(GL_ARRAY_BUFFER, rectangle.UVO);
 		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vector2f), &vTexts[0], GL_DYNAMIC_DRAW);
 
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, NULL);
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 2, GL_FLOAT, false, 0, NULL);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 

@@ -150,6 +150,7 @@
     <ClInclude Include="gl_elements\drawobjects.h" />
     <ClInclude Include="gl_elements\freephysic.h" />
     <ClInclude Include="gl_elements\frustum.h" />
+    <ClInclude Include="gl_elements\icamera.h" />
     <ClInclude Include="gl_elements\iinteractivesurface.h" />
     <ClInclude Include="gl_elements\irenderingctx.h" />
     <ClInclude Include="gl_elements\iuicomponent.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="gl_elements\taskexecuter.h" />
     <ClInclude Include="gl_elements\taskqueue.h" />
     <ClInclude Include="gl_elements\texture.h" />
+    <ClInclude Include="gl_elements\thirdcamerview.h" />
     <ClInclude Include="gl_elements\trianglemesh.h" />
     <ClInclude Include="header\externals.h" />
     <ClInclude Include="math\matrix.h" />
@@ -194,6 +196,7 @@
     <ClCompile Include="gl_elements\drawobjects.cpp" />
     <ClCompile Include="gl_elements\freephysic.cpp" />
     <ClCompile Include="gl_elements\frustum.cpp" />
+    <ClCompile Include="gl_elements\icamera.cpp" />
     <ClCompile Include="gl_elements\iinteractivesurface.cpp" />
     <ClCompile Include="gl_elements\irenderingctx.cpp" />
     <ClCompile Include="gl_elements\linearmovent.cpp" />
@@ -204,6 +207,7 @@
     <ClCompile Include="gl_elements\taskexecuter.cpp" />
     <ClCompile Include="gl_elements\taskqueue.cpp" />
     <ClCompile Include="gl_elements\texture.cpp" />
+    <ClCompile Include="gl_elements\thirdcamerview.cpp" />
     <ClCompile Include="gl_elements\trianglemesh.cpp" />
     <ClCompile Include="math\matrix.cpp" />
     <ClCompile Include="gl_elements\perspective.cpp" />

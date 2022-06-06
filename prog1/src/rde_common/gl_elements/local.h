@@ -4,6 +4,7 @@
 #include "vertexindexbuffer.h"
 #include "framebuffer.h"
 #include "shader.h"
+#include "icamera.h"
 #include "camera.h"
 #include "face.h"
 #include "mesh.h"
@@ -27,3 +28,4 @@
 #include "taskqueue.h"
 #include "taskexecuter.h"
 #include "settingfile.h"
+#include "thirdcamerview.h"

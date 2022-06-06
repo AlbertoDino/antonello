@@ -56,6 +56,12 @@ void GamePrototype::OnMouseScroll(double xoffset, double yoffset)
 
 void GamePrototype::OnWindowSizeChange(int width, int height)
 {
+	int32 gameViewHeight = getPerCent(height, 75);
+	
+	gApp->gWinHandler.viewPort[0] = 0;
+	gApp->gWinHandler.viewPort[1] = height - gameViewHeight;
+	gApp->gWinHandler.viewPort[2] = width;
+	gApp->gWinHandler.viewPort[3] = gameViewHeight;
 }
 
 void GamePrototype::OnWindowClose()

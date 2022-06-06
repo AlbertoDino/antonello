@@ -5,22 +5,12 @@
 #include "renderingelement.h"
 #include "frustum.h"
 #include "perspective.h"
+#include "icamera.h"
 #include "camera.h"
 
 using namespace func;
 
 namespace oglElements {
-
-	CameraScene::CameraScene() 
-	{
-
-	}
-
-	CameraScene::~CameraScene()
-	{
-	}
-
-	//============================================================
 
 	Camera::Camera() : cameraNode(0)
 		, defaultSpeed(150.0f)
@@ -36,14 +26,16 @@ namespace oglElements {
 
 
 		frustum = std::make_unique<Frustum>();
-		cameraNode = new CameraScene();
 	}
 
 	Camera::~Camera()
 	{
-		if (cameraNode)
-			delete cameraNode;
 		cameraNode = 0;
+	}
+
+	void Camera::setCameraNode(CameraScene* node)
+	{
+		cameraNode = node;
 	}
 
 	void Camera::setOrigin(const CVector3f& vector)
@@ -124,6 +116,11 @@ namespace oglElements {
 		frustum->calculateFrom(cameraNode->worldview, cameraNode->worldprojection);
 	}
 
+	CameraScene* Camera::getCameraScene()
+	{
+		return cameraNode;
+	}
+
 	const CVector3f& Camera::getDirection() const
 	{
 		return direction;
@@ -132,11 +129,6 @@ namespace oglElements {
 	const CVector3f& Camera::getRotation() const
 	{
 		return rotation;
-	}
-
-	CameraScene* Camera::getCameraScene()
-	{
-		return cameraNode;
 	}
 
 	const CVector3f& Camera::getPosition() const
