@@ -18,6 +18,7 @@ namespace render
 		virtual void init(oglElements::WinObj* window);
 		virtual void render() const;
 		virtual void end();
+		virtual void reset();
 
 		std::vector<oglElements::IUIComponent*> uiComponents;
 

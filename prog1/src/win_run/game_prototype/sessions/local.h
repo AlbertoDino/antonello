@@ -1,3 +1,5 @@
 #pragma once
 
-#include "firstroom.h"
+#include "gamefirstroom.h"
+#include "gamesecondroom.h"
+#include "gamemainmenu.h"

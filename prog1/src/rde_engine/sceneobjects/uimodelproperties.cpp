@@ -66,7 +66,6 @@ namespace sceneobjs {
 				ImGui::ColorEdit3("color", modelSelected->color);
 				ImGui::SliderFloat("specularIntensity", &modelSelected->specularIntensity, 0.0f, 1.0f);
 				ImGui::SliderFloat("specularPower", &modelSelected->specularPower, -10.0f, 64.0f);
-
 			}
 		}
 

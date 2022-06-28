@@ -34,13 +34,39 @@ namespace oglElements {
 
 		if (!pFirstChild)
 			pFirstChild = node;
-		else
+		else {
 			pLastChild->pNextNode = node;
+			node->pPrevnode = pLastChild;
+		}
 
 		pLastChild = node;
 		node->pParent = this;
 
 		childCount++;
+	}
+
+	void SceneNode::removeChild(SceneNode* node)
+	{
+		if (!node) return;
+
+		childCount--;
+
+		auto nextNode = node->pNextNode;
+		auto prevNode = node->pPrevnode;
+
+		if(prevNode)
+			prevNode->pNextNode = pNextNode;
+		else
+			pFirstChild = 0;
+
+		if (nextNode)
+			nextNode->pPrevnode = prevNode;
+		else
+			//no nodex -> update Last 
+			pLastChild = prevNode;
+
+		node->pNextNode = 0;
+		
 	}
 
 	void SceneNode::setDebugName(std::string name) {

@@ -17,6 +17,7 @@ public:
 	void end();
 	void resize(int32 width, int32 height);
 	void render();
+	void resetRenderingLayouts();
 
 	void calculateStats(float32 elapse);
 

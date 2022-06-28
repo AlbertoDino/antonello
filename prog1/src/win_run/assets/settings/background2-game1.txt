@@ -1,0 +1,5 @@
+name : background2 
+defaultspeed : 0.100000 
+scale : 4.950000,2.400000,1.000000 
+position : 0.000000,0.000000,0.000000 
+positionoffset : -2.500000,-1.200000,-5.100000 

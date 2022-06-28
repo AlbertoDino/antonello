@@ -59,4 +59,9 @@ namespace render {
 		ImGui::DestroyContext();
 	}
 
+	void UIContext::reset()
+	{
+		uiComponents.clear();
+	}
+
 }

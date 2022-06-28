@@ -10,6 +10,9 @@ namespace oglElements {
 
 		float32   gravityAcceleration;
 		CVector3f gravityDirection;
+		float32   defaultHeight;
+
+		void setDefaultHeight(float32 height);
 
 		void getInteractionResponse(
 			  const InteractionRequest& request

@@ -45,5 +45,10 @@ namespace oglElements {
 	{
 	}
 
+	void ShaderContext::reset()
+	{
+		shaderObjects.clear();
+	}
+
 
 }

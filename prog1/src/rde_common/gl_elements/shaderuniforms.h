@@ -49,6 +49,8 @@ namespace oglElements {
 
 		void updateUniforms() const;
 
+		bool8 doesUniformAlreadyExist(int32 location) const;
+
 	private:
 		std::vector<ShaderValueInput> inputValues;
 		uint32				programId;

@@ -151,17 +151,17 @@ void Demo::init()
 	surface = std::make_unique<oglElements::LinearSurface>();
 
 	taskExecuter.init(taskQueue.get());
-	taskExecuter.setSurface(surface.get());
+	taskExecuter.setInteraction(surface.get());
 
 
 	//#####################
 	// ui
 	render::UIContext* uiCtx = (render::UIContext*)api::getRenderingContext(api::eRenderingContext::UICxt);
 	uiText.list.push_back("<place_holder>");
-	uiText.list.push_back("press v : reset camera");
+	uiText.list.push_back("press v  : reset camera");
 	uiText.list.push_back("press F1 : turn campera 90 dg");
 	uiText.list.push_back("press F2 : turn campera -90 dg");
-	uiText.list.push_back("press J : for jump");
+	uiText.list.push_back("press J  : for jump");
 
 	uiModelProperties = std::make_unique<sceneobjs::UiModelProperties>();
 	uiModelProperties->set_mesh_load_callback([this](std::string filepath) { addObjectFromFile(filepath); });
@@ -377,9 +377,9 @@ void Demo::OnKey(int key, int scancode, int action, int mods)
 
 	if (key == GLFW_KEY_J && action == GLFW_PRESS)
 	{
-		oglElements::TaskLinearJump* jump = new oglElements::TaskLinearJump();
+		oglElements::TaskLinearMovement* jump = new oglElements::TaskLinearMovement();
 		jump->gameObj = sphereNormal.get();
-		jump->currentJumpVector = CVector3f{ 0,1,1 } *sphereNormal->data->defaultSpeed;
+		jump->currentMovementVector = CVector3f{ 0,1,1 } *sphereNormal->data->defaultSpeed;
 
 		taskQueue->addTaskToQueue(jump);
 		tracelog(format("Task [%i] Jump added", jump->getId()));
@@ -418,7 +418,7 @@ void Demo::handleInput(float32 elapse)
 
 	if (sprite->data->getPosition()[0] > 10)
 	{
- 		tracelog("3rd Camera View");
+ 		//tracelog("3rd Camera View");
 		
 		thirdCameraView->setCameraScene(cameraNode.get());
 		thirdCameraView->setObjectToFollow(sprite.get());
@@ -427,7 +427,7 @@ void Demo::handleInput(float32 elapse)
 	}
 	else
 	{
-		tracelog("Camera Free node");
+		//tracelog("Camera Free node");
 		cameraAgent->setCameraNode(cameraNode.get());
 		camera = cameraAgent.get();
 	}

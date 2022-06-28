@@ -8,6 +8,7 @@ namespace oglElements {
 		virtual void init(oglElements::WinObj* window) = 0;
 		virtual void render() const = 0;
 		virtual void end() = 0;
+		virtual void reset() = 0;
 
 		int32 getContextId() const;
 	protected: 

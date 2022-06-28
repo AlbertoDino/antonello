@@ -34,17 +34,26 @@ namespace oglElements {
 
 	//-----------------------------------------------------
 
-	void TaskLinearJump::updateView(float32 elapse, InteractionRequest* out_request)
+	TaskLinearMovement::TaskLinearMovement() 
 	{
-		out_request->origin = gameObj->data->position;
-		out_request->vMovement = currentJumpVector;
 	}
 
-	void TaskLinearJump::processResponse(const InteractionResponse* response)
+	TaskLinearMovement::TaskLinearMovement(GameObject* obj)
+	{
+		gameObj = obj;
+	}
+
+	void TaskLinearMovement::updateInteractionRequest(float32 elapse, InteractionRequest* out_request)
+	{
+		out_request->origin = gameObj->data->position;
+		out_request->vMovement = currentMovementVector;
+	}
+
+	void TaskLinearMovement::processResponse(const InteractionResponse* response)
 	{
 		gameObj->data->currentSpeed = response->vMovement.Length();
 		gameObj->data->position = response->destination;
-		currentJumpVector = response->vMovement;
+		currentMovementVector = response->vMovement;
 	}
 
 }

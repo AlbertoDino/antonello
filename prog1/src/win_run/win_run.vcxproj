@@ -147,8 +147,12 @@
     <ClCompile Include="demo.cpp" />
     <ClCompile Include="game_prototype.cpp" />
     <ClCompile Include="game_prototype\common\gameapi.cpp" />
-    <ClCompile Include="game_prototype\sessions\firstroom.cpp" />
+    <ClCompile Include="game_prototype\model\fixedframeinteraction.cpp" />
+    <ClCompile Include="game_prototype\sessions\gamefirstroom.cpp" />
+    <ClCompile Include="game_prototype\sessions\gamemainmenu.cpp" />
+    <ClCompile Include="game_prototype\sessions\gamesecondroom.cpp" />
     <ClCompile Include="game_prototype\ui\uiantonelloexploremenu.cpp" />
+    <ClCompile Include="game_prototype\ui\uimainmenu.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -157,10 +161,15 @@
     <ClInclude Include="game_prototype\common\gameapi.h" />
     <ClInclude Include="game_prototype\common\gamesession.h" />
     <ClInclude Include="game_prototype\common\local.h" />
-    <ClInclude Include="game_prototype\sessions\firstroom.h" />
+    <ClInclude Include="game_prototype\model\fixedframeinteraction.h" />
+    <ClInclude Include="game_prototype\model\local.h" />
+    <ClInclude Include="game_prototype\sessions\gamefirstroom.h" />
     <ClInclude Include="game_prototype\sessions\local.h" />
+    <ClInclude Include="game_prototype\sessions\gamemainmenu.h" />
+    <ClInclude Include="game_prototype\sessions\gamesecondroom.h" />
     <ClInclude Include="game_prototype\ui\local.h" />
     <ClInclude Include="game_prototype\ui\uiantonelloexploremenu.h" />
+    <ClInclude Include="game_prototype\ui\uimainmenu.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\3rdparty\3rdParty.vcxproj">

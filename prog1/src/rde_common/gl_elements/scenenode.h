@@ -19,6 +19,7 @@ namespace oglElements {
 
 		int32 count() const;
 		void addChild(SceneNode* node);
+		void removeChild(SceneNode* node);
 		void setDebugName(std::string name);
 
 		SceneNode* pParent;

@@ -39,8 +39,21 @@ namespace sceneobjs {
 		bool8 isFacingRightX();
 		bool8 isFacingLeftX();
 
+		CVector3f getRightMovement();
+		CVector3f getLeftMovement();
+
+		void faceRightX();
+		void faceLeftX();
+
 		void runRightX(float32 elapse);
 		void runLefttX(float32 elapse);
+
+		// create a task for moving to right (+X) direction
+		oglElements::Task* createRightMovement();
+		// create a task for moving to left (-X) direction
+		oglElements::Task* createLeftMovement();
+
+		// create a task for a jump into the facing direction
 		oglElements::Task* createJump();
 
 		CVector3f		vJump;				//jump vector

@@ -28,14 +28,13 @@ namespace sceneobjs {
 
 		auto sprite = (sceneobjs::Sprite2D*)instance;
 		if (sprite) {
-			ImGui::DragFloat("animation speed", &sprite->animationSpeed, 0.05, -4, +4);
-			ImGui::DragFloat("speed jump", &sprite->jumpSpeed, 0.05, -4, +4);
-			ImGui::DragFloat3("vJump", sprite->vJump.data, 0.05, -4, +4);
+			ImGui::DragFloat("animation speed", &sprite->animationSpeed, 0.01, -4, +4);
+			ImGui::DragFloat("speed jump", &sprite->jumpSpeed, 0.01, -4, +4);
+			ImGui::DragFloat3("vJump", sprite->vJump.data, 0.01, -4, +4);
+		}
 
-			if (ImGui::Button("Save")) {
-				sprite->saveSettingsToFile();
-			}
-
+		if (ImGui::Button("Save")) {
+			instance->saveSettingsToFile();
 		}
 
 		ImGui::End();

@@ -24,13 +24,25 @@
     <ClCompile Include="game_prototype.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game_prototype\sessions\firstroom.cpp">
+    <ClCompile Include="game_prototype\sessions\gamefirstroom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game_prototype\ui\uiantonelloexploremenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game_prototype\common\gameapi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game_prototype\model\fixedframeinteraction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game_prototype\sessions\gamesecondroom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game_prototype\sessions\gamemainmenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game_prototype\ui\uimainmenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +56,7 @@
     <ClInclude Include="game_prototype\common\gamesession.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game_prototype\sessions\firstroom.h">
+    <ClInclude Include="game_prototype\sessions\gamefirstroom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game_prototype\common\local.h">
@@ -60,6 +72,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game_prototype\common\gameapi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype\model\local.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype\model\fixedframeinteraction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype\sessions\gamesecondroom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype\sessions\gamemainmenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype\ui\uimainmenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

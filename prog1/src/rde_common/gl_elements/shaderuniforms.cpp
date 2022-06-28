@@ -3,7 +3,7 @@
 
 namespace oglElements {
 
-	void UniformLocation_M4f(const void* v, const int32 count, int32 index, int32 location, bool8 transpose) {		
+	void UniformLocation_M4f(const void* v, const int32 count, int32 index, int32 location, bool8 transpose) {
 		glUniformMatrix4fv(location, count, transpose, (const float32*)v);
 
 		const Matrix4f32* d = (const Matrix4f32*)v;
@@ -50,7 +50,7 @@ namespace oglElements {
 	ShaderValueInput::ShaderValueInput() :
 		uniformFunc(0),
 		location(0),
-		value (0),
+		value(0),
 		count(1),
 		transpose(false)
 	{
@@ -94,7 +94,7 @@ namespace oglElements {
 	}
 
 	void ShaderUniforms::add(UniformLocationFunc f, const char8* uniformName, void* value)
-	{	
+	{
 		ShaderValueInput unif;
 
 		unif.transpose = false;
@@ -103,13 +103,24 @@ namespace oglElements {
 		unif.count = 1;
 		unif.value = value;
 		unif.__debugName = uniformName;
-	
+
 		if (unif.location < 0) {
-			tracelog(format("shader [%i] Uniform [%s] not valid", programId,uniformName));
+			tracelog(format("shader [%i] Uniform [%s] not valid", programId, uniformName));
 			return;
 		}
 
-		inputValues.push_back(unif);	
+		if (!doesUniformAlreadyExist(unif.location))
+			inputValues.push_back(unif);
+	}
+
+	bool8 ShaderUniforms::doesUniformAlreadyExist(int32 location) const
+	{
+		for (auto const& uniform : std::as_const(inputValues))
+		{
+			if (uniform.location == location)
+				return true;
+		}
+		return false;
 	}
 
 	ShaderUniforms& ShaderUniforms::operator=(const ShaderUniforms& u) {
@@ -136,11 +147,11 @@ namespace oglElements {
 
 	/**/
 
-	ShaderSetter::ShaderSetter() : programId(0) 
+	ShaderSetter::ShaderSetter() : programId(0)
 	{
 	}
 
-	void ShaderSetter::init(uint32 _programId) 
+	void ShaderSetter::init(uint32 _programId)
 	{
 		programId = _programId;
 	}

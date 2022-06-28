@@ -116,6 +116,7 @@ namespace oglElements {
 			return;
 		}
 
+		tracelog(format("Settings saved to file [%s]", configFile.c_str()));
 		oglElements::SettingFile f;
 		f.setSettings(settingList);
 		f.save(configFile);

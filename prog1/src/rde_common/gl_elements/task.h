@@ -15,7 +15,7 @@ namespace oglElements {
 			int32 getId() const;
 
 			// Update views and create a interaction request
-			virtual void updateView(float32 elapse,InteractionRequest * out_request) = 0;
+			virtual void updateInteractionRequest(float32 elapse,InteractionRequest * out_request) = 0;
 
 			virtual void processResponse(const InteractionResponse* response) = 0;
 						
@@ -28,12 +28,18 @@ namespace oglElements {
 
 	};
 
-	class TaskLinearJump : public Task {
+
+	// This Task represent any linear movent
+	// it could represent a linear Jump
+	class TaskLinearMovement : public Task {
 	public:
 
-		func::CVector3f currentJumpVector;
+		TaskLinearMovement();
+		TaskLinearMovement(GameObject* obj);
 
-		void updateView(float32 elapse, InteractionRequest* out_request);
+		func::CVector3f currentMovementVector;
+
+		void updateInteractionRequest(float32 elapse, InteractionRequest* out_request);
 
 		void processResponse(const InteractionResponse* response);
 	};

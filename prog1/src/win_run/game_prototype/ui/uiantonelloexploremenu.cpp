@@ -8,8 +8,6 @@ UIAntonelloExploreMenu::UIAntonelloExploreMenu()
 
 void UIAntonelloExploreMenu::render()
 {
-	
-	
 	//
 
 	float32 posX = 20;

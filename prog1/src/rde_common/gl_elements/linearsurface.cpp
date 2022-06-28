@@ -8,10 +8,10 @@ using namespace func;
 namespace oglElements {
 
 	LinearSurface::LinearSurface() :
-		gravityAcceleration(3.9)
+		gravityAcceleration(3.9),
+		defaultHeight(0)
 	{
 		gravityDirection = { 0,-1,0 };
-
 	}
 
 	void LinearSurface::getInteractionResponse(
@@ -46,9 +46,13 @@ namespace oglElements {
 		}
 	}
 
+	void LinearSurface::setDefaultHeight(float32 height)
+	{
+		defaultHeight = height;
+	}
 
 	float32 LinearSurface::getHeight(float32 x, float32 z) const
 	{
-		return 0;
+		return defaultHeight;
 	}
 }

@@ -16,6 +16,7 @@ namespace oglElements {
 		virtual void init(oglElements::WinObj* window);
 		virtual void render() const;
 		virtual void end();
+		virtual void reset();
 
 		oglElements::ShaderUniforms shader;
 	private:

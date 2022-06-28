@@ -59,6 +59,13 @@ void Application::render() {
 	renderCtx->post_render();
 }
 
+void Application::resetRenderingLayouts()
+{
+	for (auto &renderingLayout : renderingLayouts) {
+		renderingLayout->reset();
+	}
+}
+
 void Application::calculateStats(float32 elapse)
 {
 	static int32	frames_count = 0;

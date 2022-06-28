@@ -98,8 +98,6 @@ namespace sceneobjs {
 		settingList.insert(settingList.end(), localSettings.begin(), localSettings.end());
 	}
 
-	
-
 	void Sprite2D::updateSpriteFrame(float32 elaps)
 	{
 		updateMatrixes();
@@ -132,9 +130,42 @@ namespace sceneobjs {
 		return func::IsEqual(data->orientation.y, 1);
 	}
 
+	CVector3f Sprite2D::getRightMovement()
+	{
+		CVector3f vDirection = data->direction;
+		CVector3f vMoveRight;
+		vMoveRight.Cross(World::World_Y_Axis, vDirection * data->defaultSpeed);
+		return vMoveRight;
+	}
+
+	CVector3f Sprite2D::getLeftMovement()
+	{
+		CVector3f vDirection = data->direction;
+		CVector3f vMoveLeft;
+		vMoveLeft.Cross(World::World_Y_Axis, vDirection * data->defaultSpeed);
+		return vMoveLeft;
+	}
+
+	void Sprite2D::faceRightX()
+	{
+		if (!isFacingRightX()) {
+			data->orientation.Rotate(CVector3f{ 180,0,0 }, 1);
+			updateMatrixes();
+		}
+	}
+
+	void Sprite2D::faceLeftX()
+	{
+		if (!isFacingLeftX()) {
+			data->orientation.Rotate(CVector3f{ -180,0,0 }, 1);
+			updateMatrixes();
+		}
+	}
+
 	void Sprite2D::runRightX(float32 elapse)
 	{
-		tracelog("Sprite running right X");
+		//tracelog("Sprite running right X");
+
 		if (!isFacingRightX()) {
 			data->orientation.Rotate(CVector3f{ 180,0,0 }, 1);
 			updateMatrixes();
@@ -142,19 +173,17 @@ namespace sceneobjs {
 
 		CVector3f vDirection = data->direction;
 		oglElements::FreePhysic physic(this);
-
 		CVector3f moveRight;
 		moveRight.Cross(World::World_Y_Axis, vDirection * data->defaultSpeed);
-
 		physic.move(moveRight, elapse);
-		//updateMatrixes();
 
 		render->playAnimation(oglElements::AnimationType::Run);
 	}
 
 	void Sprite2D::runLefttX(float32 elapse)
 	{
-		tracelog("Sprite running left X");
+		//tracelog("Sprite running left X");
+
 		if (!isFacingLeftX()) {
 			data->orientation.Rotate(CVector3f{ -180,0,0 }, 1);
 			updateMatrixes();
@@ -166,23 +195,50 @@ namespace sceneobjs {
 
 		CVector3f moveLeft;
 		moveLeft.Cross(World::World_Y_Axis, vDirection * data->defaultSpeed);
-
 		physic.move(moveLeft, elapse);
-		//updateMatrixes();
+
 
 		render->playAnimation(oglElements::AnimationType::Run);
 
+	}
+
+	
+
+	oglElements::Task* Sprite2D::createRightMovement()
+	{
+		faceRightX();
+		int32 direction2d = isFacingLeftX() ? -1 : 1;
+
+		auto task = new oglElements::TaskLinearMovement(this);
+		task->currentMovementVector = getRightMovement();
+
+		render->playAnimation(oglElements::AnimationType::Run);
+
+		return task;
+	}
+
+	oglElements::Task* Sprite2D::createLeftMovement()
+	{
+		faceLeftX();
+		int32 direction2d = isFacingLeftX() ? -1 : 1;
+
+		auto task = new oglElements::TaskLinearMovement(this);
+		task->currentMovementVector = getRightMovement();
+
+		render->playAnimation(oglElements::AnimationType::Run);
+
+		return task;
 	}
 
 	oglElements::Task* Sprite2D::createJump()
 	{
 		int32 direction2d = isFacingLeftX() ? -1 : 1;
 
-		auto jump = new oglElements::TaskLinearJump();
-		jump->gameObj = this;
-		jump->currentJumpVector = vJump;
-		jump->currentJumpVector[0] *= direction2d;
-		jump->currentJumpVector *= jumpSpeed;
+		auto jump = new oglElements::TaskLinearMovement(this);
+		
+		jump->currentMovementVector = vJump;
+		jump->currentMovementVector[0] *= direction2d;
+		jump->currentMovementVector *= jumpSpeed;
 
 		jump->onComplete(
 			[this](oglElements::Task* t) {

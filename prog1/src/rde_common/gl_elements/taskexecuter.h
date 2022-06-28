@@ -15,7 +15,7 @@ namespace oglElements {
 		~TaskExecuter();
 
 		void init(oglElements::TaskQueue* q);
-		void setSurface(oglElements::IInteractiveSurface* w);
+		void setInteraction(oglElements::IInteractiveSurface* w);
 		
 		void loop(float32 elapse);
 

@@ -22,7 +22,7 @@ namespace oglElements {
 		queue = q;
 	}
 
-	void TaskExecuter::setSurface(oglElements::IInteractiveSurface* w)
+	void TaskExecuter::setInteraction(oglElements::IInteractiveSurface* w)
 	{
 		world = w;
 	}
@@ -72,7 +72,7 @@ namespace oglElements {
 		oglElements::InteractionRequest request;
 		oglElements::InteractionResponse response;
 
-		task->updateView(elapse, &request);
+		task->updateInteractionRequest(elapse, &request);
 
 		world->getInteractionResponse(request, response,elapse);
 
