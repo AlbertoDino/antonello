@@ -156,6 +156,7 @@
     <ClInclude Include="gl_elements\iuicomponent.h" />
     <ClInclude Include="gl_elements\linearmovent.h" />
     <ClInclude Include="gl_elements\linearsurface.h" />
+    <ClInclude Include="gl_elements\map2d.h" />
     <ClInclude Include="gl_elements\renderingelement.h" />
     <ClInclude Include="gl_elements\settingfile.h" />
     <ClInclude Include="gl_elements\task.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="gl_elements\irenderingctx.cpp" />
     <ClCompile Include="gl_elements\linearmovent.cpp" />
     <ClCompile Include="gl_elements\linearsurface.cpp" />
+    <ClCompile Include="gl_elements\map2d.cpp" />
     <ClCompile Include="gl_elements\renderingelement.cpp" />
     <ClCompile Include="gl_elements\settingfile.cpp" />
     <ClCompile Include="gl_elements\task.cpp" />

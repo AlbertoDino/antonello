@@ -108,25 +108,23 @@ void Demo::init()
 	floor2dTile->setTextureByFilename("assets/textures/176.JPG");
 	floor2dTile->setNormalTextureByFilename("assets/textures/176_norm.JPG");
 
-	floor2dTile->add2scene();
+	//floor2dTile->add2scene();
 
 	sceneNode->addChild(floor2dTile->getSceneNode());
 
 	//-----------
+	map = std::make_unique<oglElements::Map2D>();
+	map->loadTextureMapKeyFromFile("assets/maps/gmS1E3_map.txt");
+	map->loadFromFile("assets/maps/gmS1E3.txt");
 
-	std::vector<sceneobjs::ImageMap> textures;
-	sceneobjs::ImageMap img;
-	img.key = 'X';
-	img.imagePath =       "assets/textures/concrete_texel.tga";
-	img.imageNormalPath = "assets/textures/concrete_texel_normal.tga";
-	textures.push_back(img);
 
-	map = std::make_unique<sceneobjs::Platform2DMap>();
-	map->createTexturePool(textures);
-	map->generateByFile("");
-	map->add2scene();
+	//-----------
 
-	sceneNode->addChild(map->getSceneNode());
+	mapNode = std::make_unique<sceneobjs::Platform2DMap>();
+	mapNode->setMap2D(map.get());
+	mapNode->add2scene();
+	sceneNode->addChild(mapNode->getSceneNode());
+
 
 	//-----------
 
@@ -185,6 +183,8 @@ void Demo::init()
 	uiCtx->uiComponents.push_back(new sceneobjs::UIGameObjectProperties(sprite.get()));
 	uiCtx->uiComponents.push_back(new sceneobjs::UIGameObjectProperties(sphereNormal.get()));
 	uiCtx->uiComponents.push_back(new sceneobjs::UIGameObjectProperties(background1.get()));
+	uiCtx->uiComponents.push_back(new sceneobjs::UIGameObjectProperties(mapNode.get()));
+	
 
 	//#####################
 
@@ -453,7 +453,7 @@ void Demo::loop(float32 elapse)
 		obj->updateMatrixes();
 	}
 
-	map->updateMatrixes();
+	mapNode->updateMatrixes();
 	sprite->updateSpriteFrame(elapse);
 
 	floor2dTile->updateMatrixes();

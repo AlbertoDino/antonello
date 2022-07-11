@@ -23,7 +23,7 @@ namespace oglElements {
 
     void gl_to::unbind() const
     {
-        glActiveTexture(GL_TEXTURE0+0);
+        glActiveTexture(GL_TEXTURE0+unit);
         glBindTexture(target, 0);
     }
 

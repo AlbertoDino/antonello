@@ -34,14 +34,8 @@ namespace sceneobjs {
 		Platform2DMap();
 		~Platform2DMap();
 
-
-		//Create the texture pool
-		void createTexturePool(const std::vector<ImageMap>& map);
-
-		void generateByFile(const std::string &mapfile);
-
+		void setMap2D(oglElements::Map2D* map);
 		void add2scene();
-
 
 		float32 cellHight;      //Space for empty row
 		float32 tileSizeWith;   //Tile Width
@@ -53,11 +47,14 @@ namespace sceneobjs {
 		// Create Opengl objects supporting instancing
 		void createRendering();
 
-		std::vector<TextureMap> textureHash;
+		oglElements::Map2D* map2d;
+
+		//std::vector<TextureMap> textureHash;
 		NormalModelRenderingInstanced* rendering;
 
-		std::vector<glm::vec3> positions;
-		std::vector<int32> textureIndexes;
+		//std::vector<glm::vec3> positions;
+		//std::vector<int32> textureIndexes;
+		int32 units[10];
 	};
 
 }

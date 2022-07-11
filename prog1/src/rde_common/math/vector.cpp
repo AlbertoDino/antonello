@@ -7,6 +7,108 @@ namespace func {
 
 /*
 ========================================================================
+CVector2i
+========================================================================
+*/
+	CVector2i::CVector2i()
+	{
+		init();
+	}
+
+	CVector2i::CVector2i(int32 i)
+	{
+		data[0] = i;
+		data[1] = i;
+	}
+
+	CVector2i::CVector2i(const CVector2i& _v)
+	{
+		(*this) = _v;
+	}
+
+	CVector2i::CVector2i(int32 _x, int32 _y)
+	{
+		data[0] = _x;
+		data[1] = _y;
+	}
+
+	void CVector2i::init()
+	{
+		data[0] = 0; data[1] = 0;
+	}
+
+	CVector2i& CVector2i::operator=(const CVector2i& a)
+	{
+		data[0] = a[0];
+		data[1] = a[1];
+		return *this;
+	}
+
+	int32 CVector2i::operator[](const int32 _i) const
+	{
+		return data[_i];
+	}
+
+	int32& CVector2i::operator[](const int32 _i)
+	{
+		return data[_i];
+	}
+
+/*
+========================================================================
+CVector3i
+========================================================================
+*/
+
+	CVector3i::CVector3i()
+	{
+		init();
+	}
+
+	CVector3i::CVector3i(int32 i)
+	{
+		data[0] = i;
+		data[1] = i;
+		data[2] = i;
+	}
+
+	CVector3i::CVector3i(const CVector3i& _v)
+	{
+		(*this) = _v;
+	}
+
+	CVector3i::CVector3i(int32 _x, int32 _y, int32 _z)
+	{
+		data[0] = _x;
+		data[1] = _y;
+		data[2] = _z;
+	}
+
+	void CVector3i::init()
+	{
+		data[0] = 0; data[1] = 0; data[2] = 0;
+	}
+
+	CVector3i& CVector3i::operator=(const CVector3i& a)
+	{
+		data[0] = a[0];
+		data[1] = a[1];
+		data[2] = a[2];
+		return *this;
+	}
+
+	int32 CVector3i::operator[](const int32 _i) const
+	{
+		return data[_i];
+	}
+
+	int32& CVector3i::operator[](const int32 _i)
+	{
+		return data[_i];
+	}
+
+/*
+========================================================================
 CVector2f
 ========================================================================
 */
@@ -80,7 +182,7 @@ CVector3f
 		data[0] = data[1] = data[2] = _x;
 	}
 
-	CVector3f::CVector3f(const float32 _x, const float32 _y, const float32 _z)
+	CVector3f::CVector3f(float32 _x, float32 _y, float32 _z)
 	{
 		data[0] = _x;
 		data[1] = _y;
@@ -94,7 +196,7 @@ CVector3f
 		data[2] = e;
 	}
 
-	void CVector3f::Set(const float32 _x, const float32 _y, const float32 _z)
+	void CVector3f::Set(float32 _x, float32 _y, float32 _z)
 	{
 		data[0] = _x;
 		data[1] = _y;

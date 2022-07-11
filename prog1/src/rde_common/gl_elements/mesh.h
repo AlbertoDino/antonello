@@ -23,6 +23,8 @@ namespace oglElements {
 
 	private:
 
+		
+
 		VertexIndexBuffer vertexBuffer;
 		std::vector<Vertex> Vertices;
 		std::vector<unsigned int> VertexIndices;

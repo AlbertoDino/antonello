@@ -26,7 +26,7 @@ namespace sceneobjs {
 		ImGui::DragFloat3("direction", instance->data->direction.data, 0.1, -10, 50);
 		ImGui::DragFloat3("rotation", instance->data->rotation.data, 0.1, -10, 50);
 
-		auto sprite = (sceneobjs::Sprite2D*)instance;
+		auto sprite = dynamic_cast<sceneobjs::Sprite2D*>(instance);
 		if (sprite) {
 			ImGui::DragFloat("animation speed", &sprite->animationSpeed, 0.01, -4, +4);
 			ImGui::DragFloat("speed jump", &sprite->jumpSpeed, 0.01, -4, +4);

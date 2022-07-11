@@ -3,6 +3,41 @@
 
 namespace func {
 
+	class CVector2i
+	{
+	public:
+		Vector2i data;
+
+		CVector2i();
+		CVector2i(int32 i);
+		CVector2i(const CVector2i& _v);
+		CVector2i(int32 _x, int32 _y);
+
+		void init();
+
+		CVector2i& operator=	(const CVector2i& a);
+		int32	   operator[]	(const int32 _i) const;
+		int32&     operator[]	(const int32 _i);
+	};
+
+	class CVector3i
+	{
+	public:
+		Vector3i data;
+
+		CVector3i();
+		CVector3i(int32 i);
+		CVector3i(const CVector3i& _v);
+		CVector3i(int32 _x, int32 _y, int32 _z);
+
+		void init();
+
+		CVector3i& operator=	(const CVector3i& a);
+		int32	   operator[]	(const int32 _i) const;
+		int32& operator[]	(const int32 _i);
+	};
+
+
 	class CVector2f
 	{
 	public:
@@ -30,10 +65,10 @@ namespace func {
 
 		explicit	CVector3f(const Vector3f& _e);
 		explicit	CVector3f(const float32 _x);
-		explicit	CVector3f(const float32 _x, const float32 _y, const float32 _z);
+		explicit	CVector3f(float32 _x, float32 _y, float32 _z);
 
 		void		Set(float32 e);
-		void		Set(const float32 _x, const float32 _y, const float32 _z);
+		void		Set(float32 _x, float32 _y, float32 _z);
 		float32		Dot(const CVector3f& _e) const;
 		CVector3f	Cross(const CVector3f& _e) const;
 		CVector3f&  Cross(const CVector3f& _p, const CVector3f& _q);

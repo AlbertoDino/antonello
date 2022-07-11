@@ -13,14 +13,23 @@ flat in int iTextureIndex;
 
 uniform vec4      ambientColor;
 
+// texture index 0
 uniform sampler2D colorMap1;
 uniform sampler2D normalMap1;
+
+// texture index 1
 uniform sampler2D colorMap2;
 uniform sampler2D normalMap2;
+
+// texture index 2
 uniform sampler2D colorMap3;
 uniform sampler2D normalMap3;
+
+// texture index 3
 uniform sampler2D colorMap4;
 uniform sampler2D normalMap4;
+
+// texture index 4
 uniform sampler2D colorMap5;
 uniform sampler2D normalMap5;
 
@@ -34,12 +43,8 @@ void main()
 	// obtain normal from normal map in range [0,1]
 	vec3 normal;
 	// get diffuse color
-	vec3 color;
-	
-	color = texture(colorMap1, fs_in.TexCoords).rgb;
-	normal = texture(normalMap1, fs_in.TexCoords).rgb;
-			
-	/*
+	vec3 color;		
+	iTextureIndex =1;
 	switch(iTextureIndex)
 	{
 	case 0: color=texture(colorMap1, fs_in.TexCoords).rgb;
@@ -58,7 +63,7 @@ void main()
 			normal = texture(normalMap5, fs_in.TexCoords).rgb;
 			break;
 	}
-	*/
+	
 	
     // transform normal vector to range [-1,1]
     normal = normalize(normal * 2.0 - 1.0);  // this normal is in tangent space

@@ -57,7 +57,8 @@ private:
 	std::unique_ptr<sceneobjs::NormalModel> sphereNormal;
 	std::unique_ptr<sceneobjs::NormalModel> floor2dTile;
 	std::unique_ptr<sceneobjs::GenModel>	background1;
-	std::unique_ptr<sceneobjs::Platform2DMap> map;
+	std::unique_ptr<oglElements::Map2D>     map;
+	std::unique_ptr<sceneobjs::Platform2DMap> mapNode;
 
 	sceneobjs::Model* currentModelSelected;
 	

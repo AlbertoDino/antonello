@@ -45,6 +45,9 @@
     <ClCompile Include="game_prototype\ui\uimainmenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game_prototype\sessions\gmS1E3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="demo.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game_prototype\ui\uimainmenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_prototype\sessions\gmS1E3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,14 +13,23 @@ flat in int iTextureIndex;
 
 uniform vec4      ambientColor;
 
+// texture index 0
 uniform sampler2D colorMap1;
 uniform sampler2D normalMap1;
+
+// texture index 1
 uniform sampler2D colorMap2;
 uniform sampler2D normalMap2;
+
+// texture index 2
 uniform sampler2D colorMap3;
 uniform sampler2D normalMap3;
+
+// texture index 3
 uniform sampler2D colorMap4;
 uniform sampler2D normalMap4;
+
+// texture index 4
 uniform sampler2D colorMap5;
 uniform sampler2D normalMap5;
 

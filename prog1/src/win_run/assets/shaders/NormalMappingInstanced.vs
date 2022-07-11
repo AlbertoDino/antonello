@@ -4,7 +4,7 @@ layout (location = 1) in vec3 aNormal;
 layout (location = 2) in vec2 aTexCoords;
 layout (location = 3) in vec3 aTangent;
 layout (location = 4) in vec3 i_vInstancePosition;
-layout (location = 5) in ivec2 i_vTextureIndex;
+layout (location = 5) in vec3 i_vTextureIndex;
 
 out VS_OUT {
     vec3 FragPos;
@@ -25,7 +25,7 @@ uniform vec3 viewPos;
 
 void main()
 {
-	iTextureIndex = i_vTextureIndex[0];
+	iTextureIndex = int(i_vTextureIndex[0]);
 
     vs_out.FragPos = vec3(model * vec4((aPos+i_vInstancePosition), 1.0));   
     vs_out.TexCoords = aTexCoords;

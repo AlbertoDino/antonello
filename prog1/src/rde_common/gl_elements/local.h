@@ -29,3 +29,4 @@
 #include "taskexecuter.h"
 #include "settingfile.h"
 #include "thirdcamerview.h"
+#include "map2d.h"

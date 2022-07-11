@@ -19,6 +19,5 @@ public:
 
 
 	// Fixed Frame Limit. frameBox[0] left limit. frameBox[1] right limit
-
 	Vector2f frameBox;
 };

@@ -151,6 +151,7 @@
     <ClCompile Include="game_prototype\sessions\gamefirstroom.cpp" />
     <ClCompile Include="game_prototype\sessions\gamemainmenu.cpp" />
     <ClCompile Include="game_prototype\sessions\gamesecondroom.cpp" />
+    <ClCompile Include="game_prototype\sessions\gmS1E3.cpp" />
     <ClCompile Include="game_prototype\ui\uiantonelloexploremenu.cpp" />
     <ClCompile Include="game_prototype\ui\uimainmenu.cpp" />
     <ClCompile Include="main.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="game_prototype\model\fixedframeinteraction.h" />
     <ClInclude Include="game_prototype\model\local.h" />
     <ClInclude Include="game_prototype\sessions\gamefirstroom.h" />
+    <ClInclude Include="game_prototype\sessions\gmS1E3.h" />
     <ClInclude Include="game_prototype\sessions\local.h" />
     <ClInclude Include="game_prototype\sessions\gamemainmenu.h" />
     <ClInclude Include="game_prototype\sessions\gamesecondroom.h" />

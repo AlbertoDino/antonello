@@ -1,0 +1,4 @@
+X,assets/textures/concrete_texel.tga,assets/textures/concrete_texel_normal.tga
+Y,assets/textures/176.JPG,assets/textures/176_norm.JPG
+Z,assets/textures/mtl_O_c.png,assets/textures/mtl_O_n.png
+K,assets/textures/redbrick01_prebaked.png,assets/textures/redbrick01_n.png

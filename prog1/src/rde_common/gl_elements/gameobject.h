@@ -33,7 +33,7 @@ namespace oglElements {
 	class GameObject {
 	public:
 		GameObject();
-		~GameObject();
+		virtual ~GameObject();
 
 		GameObjectData		*data;
 		ShaderUniforms		shaderValues; // shader uniform links		
